@@ -19,8 +19,8 @@ model usuarios {
   cpf       String    @unique @db.VarChar(14)
   celular   String    @db.Char(13)
   telefone  String?   @db.VarChar(12)
-  senha     String    @db.VarChar(32)
-  role      String?   @default("usuario") @db.VarChar(20)
+  senha     String
+  role      Role?     @default(usuario)
   google_id String?   @unique
   criado_em DateTime? @default(now()) @db.Timestamp(6)
 }
