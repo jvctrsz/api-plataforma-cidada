@@ -1,4 +1,4 @@
-import { string } from "zod";
+import { string, email as zEmail } from "zod";
 
 export const stringRequired = { error: "deve ser uma string." };
 export const celular = string(stringRequired).regex(/^\(\d{2}\) \d{5}-\d{4}$/, {
@@ -11,5 +11,6 @@ export const telefone = string(stringRequired).regex(
   }
 );
 export const cpf = string(stringRequired).regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, {
-  error: "deve ser no formato 000.000.000-45.",
+  error: "deve ser no formato 000.000.000-00.",
 });
+export const email = zEmail({ error: "Deve ser um email válido." });

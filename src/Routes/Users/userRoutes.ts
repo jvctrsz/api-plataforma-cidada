@@ -9,5 +9,6 @@ userRouter.get("/usuarios/:id", usersController.show);
 userRouter.delete("/usuarios/:id", usersController.destroy);
 userRouter.put("/usuarios/:id", usersController.update);
 userRouter.post("/usuarios/trocar-senha/:id", usersController.change); //passando parametro temporariamente - middleware
+userRouter.post("/usuarios/recuperar-senha", usersController.recovery);
 
 export default userRouter;

@@ -1,0 +1,32 @@
+import { sign } from "jsonwebtoken";
+import { prisma } from "../../Utils/prisma";
+import { CError } from "../../Utils/Errors/CError";
+import nodemailer from "nodemailer";
+
+export const recoveryUsers = async (parsed: { email: string }) => {
+  try {
+    const SECRET_HASH = process.env.RECOVERY_JWT_SECRET;
+    const { email } = parsed;
+    const user = await prisma.usuarios.findUnique({ where: { email } });
+    if (!user) throw new CError({ error: "Usuário não encontrado." }, 404);
+
+    const token = sign({ id: user?.id }, SECRET_HASH!, { expiresIn: "10m" });
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Recuperação de senha",
+      text: `esse é o token - ${token}`,
+    });
+    return "Link de recuperação enviado com sucesso.";
+  } catch (error) {
+    throw error;
+  }
+};
