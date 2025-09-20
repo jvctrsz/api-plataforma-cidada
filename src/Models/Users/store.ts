@@ -12,13 +12,13 @@ const validation = object({
   cpf: string(stringRequired),
   celular: string(stringRequired).max(13),
   telefone: string(stringRequired).max(13).optional(),
-  senha: string(stringRequired).optional(),
+  senha: string(stringRequired),
 });
-type teste = typeof validation;
 export const store = async (req: Request<{}, {}, UserType>, res: Response) => {
   try {
-    const parsed = zodParse<teste>(req, validation);
-    createUser(parsed?.data);
+    const parsed = zodParse<typeof validation>(req, validation);
+    const user = await createUser(parsed?.data);
+    res.status(201).json(user);
   } catch (error) {
     if (error instanceof CError)
       return res.status(error.status).json(error.data);
