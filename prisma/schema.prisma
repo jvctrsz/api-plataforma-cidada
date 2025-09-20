@@ -13,14 +13,16 @@ enum Role {
 }
 
 model usuarios {
-  id        Int       @id @default(autoincrement())
-  nome      String    @db.VarChar(100)
-  email     String    @unique @db.VarChar(150)
-  cpf       String    @unique @db.VarChar(14)
-  celular   String    @db.Char(13)
-  telefone  String?   @db.VarChar(12)
-  senha     String?
-  role      Role?     @default(usuario)
-  google_id String?   @unique
-  criado_em DateTime? @default(now()) @db.Timestamp(6)
+  id                   Int       @id @default(autoincrement())
+  nome                 String    @db.VarChar(100)
+  email                String    @unique @db.VarChar(150)
+  cpf                  String    @unique @db.VarChar(14)
+  celular              String    @db.Char(13)
+  telefone             String?   @db.VarChar(12)
+  senha                String?
+  role                 Role?     @default(usuario)
+  google_id            String?   @unique
+  criado_em            DateTime? @default(now()) @db.Timestamp(6)
+  refreshPasswordToken String?
+  refreshPasswordTime  DateTime?
 }

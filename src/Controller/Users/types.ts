@@ -9,4 +9,6 @@ export interface UserType {
   role?: string;
   google_id?: string;
   criado_em?: string;
+  refreshPasswordToken?: string;
+  refreshPasswordTime?: string;
 }
