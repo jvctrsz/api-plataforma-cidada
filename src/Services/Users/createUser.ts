@@ -17,7 +17,6 @@ export const createUser = async (parsed: UserType) => {
     if (!!existingCPF)
       throw new CError({ error: "Já existe usuário com este cpf." }, 409);
 
-    if (!senha) throw new CError([{ senha: "é obrigatório." }], 400);
     const hash = await hashPassword(senha!);
     const user = await prisma.usuarios.create({
       data: {
