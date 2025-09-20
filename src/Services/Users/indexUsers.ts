@@ -1,5 +1,5 @@
 import { prisma } from "../../Utils/prisma";
-import { omitUser } from "./functions";
+import { omitUser } from "./Utils/functions";
 
 export const indexUsers = async () => {
   try {

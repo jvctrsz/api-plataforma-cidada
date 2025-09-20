@@ -1,7 +1,7 @@
 import { UserType } from "../../Controller/types";
 import { CError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
-import { omitUser } from "./functions";
+import { omitUser } from "./Utils/functions";
 
 export const updateUser = async (id: number, parsed: Partial<UserType>) => {
   try {
