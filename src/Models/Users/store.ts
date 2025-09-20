@@ -3,7 +3,7 @@ import { string, email, object } from "zod";
 import { zodParse } from "../../Utils/Functions/zodParse";
 import { CError } from "../../Utils/Errors/CError";
 import { stringRequired } from "../../Utils/Errors/Zod/stringRequired";
-import { UserType } from "../../Controller/Users/types";
+import { UserType } from "../../Controller/types";
 import { createUser } from "../../Services/Users/createUser";
 
 const validation = object({

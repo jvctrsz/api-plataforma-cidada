@@ -1,4 +1,4 @@
-import { UserType } from "../../Controller/Users/types";
+import { UserType } from "../../Controller/types";
 import { CError } from "../../Utils/Errors/CError";
 import { hashPassword } from "../../Utils/Functions/hashPassword";
 import { prisma } from "../../Utils/prisma";
