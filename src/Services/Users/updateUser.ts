@@ -20,7 +20,7 @@ export const updateUser = async (id: number, parsed: Partial<UserType>) => {
     });
     if (!!existingCPF)
       throw new CError({ error: "Já existe usuário com este cpf." }, 409);
-
+    console.log(cpf?.length);
     const update = prisma.usuarios.update({
       where: { id },
       data: {
