@@ -1,8 +1,5 @@
-import { Response } from "express";
+import { store } from "../../Models/Users/store";
 
-export class usersControllers {
-  async store(req: Response, res: Response) {
-    try {
-    } catch (error) {}
-  }
-}
+export const usersController = {
+  store,
+};
