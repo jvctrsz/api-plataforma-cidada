@@ -20,6 +20,7 @@ export const store = async (req: Request<{}, {}, UserType>, res: Response) => {
     const user = await createUser(parsed?.data);
     res.status(201).json(user);
   } catch (error) {
+    console.error(error);
     if (error instanceof CError)
       return res.status(error.status).json(error.data);
     res.status(500).json({ message: "Internal Server error!", error });
