@@ -1,14 +1,10 @@
 import { prisma } from "../../Utils/prisma";
+import { omitUser } from "./functions";
 
 export const indexUsers = async () => {
   try {
     const users = await prisma.usuarios.findMany({
-      omit: {
-        google_id: true,
-        refreshPasswordTime: true,
-        refreshPasswordToken: true,
-        senha: true,
-      },
+      omit: omitUser,
     });
     return users;
   } catch (error) {

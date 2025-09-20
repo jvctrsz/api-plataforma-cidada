@@ -2,14 +2,14 @@ import { CError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 import { omitUser } from "./functions";
 
-export const showUsers = async (id: number) => {
+export const destroyUser = async (id: number) => {
   try {
     const user = await prisma.usuarios.findUnique({
       where: { id },
       omit: omitUser,
     });
     if (!user) throw new CError({ error: "Usuário não encontrado." }, 404);
-    return user;
+    return "Usuário deletado com sucesso.";
   } catch (error) {
     throw error;
   }
