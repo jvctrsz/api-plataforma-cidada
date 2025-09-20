@@ -4,6 +4,7 @@ import { zodParse } from "../../Utils/Functions/zodParse";
 import { CError } from "../../Utils/Errors/CError";
 import {
   celular,
+  cpf,
   stringRequired,
   telefone,
 } from "../../Utils/Errors/Zod/validation";
@@ -13,7 +14,7 @@ import { updateUser } from "../../Services/Users/updateUser";
 const validation = object({
   nome: string(stringRequired).optional(),
   email: email({ error: "Deve ser um email válido." }).optional(),
-  cpf: string(stringRequired).optional(),
+  cpf: cpf.optional(),
   celular: celular.optional(),
   telefone: telefone.optional(),
 });

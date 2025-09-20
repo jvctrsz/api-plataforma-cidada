@@ -10,3 +10,6 @@ export const telefone = string(stringRequired).regex(
     error: "deve ser no formato (99) 9999-9999.",
   }
 );
+export const cpf = string(stringRequired).regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, {
+  error: "deve ser no formato 000.000.000-45.",
+});
