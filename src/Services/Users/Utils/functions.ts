@@ -3,8 +3,7 @@ import { CError } from "../../../Utils/Errors/CError";
 
 export const omitUser = {
   google_id: true,
-  refreshPasswordTime: true,
-  refreshPasswordToken: true,
+  recoveryPassword: true,
   senha: true,
 };
 
