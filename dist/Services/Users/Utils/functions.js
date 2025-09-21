@@ -5,8 +5,7 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const CError_1 = require("../../../Utils/Errors/CError");
 exports.omitUser = {
     google_id: true,
-    refreshPasswordTime: true,
-    refreshPasswordToken: true,
+    redefinido_em: true,
     senha: true,
 };
 const verifyPasswordToken = async (token, hash) => {

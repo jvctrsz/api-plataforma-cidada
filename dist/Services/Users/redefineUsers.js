@@ -15,6 +15,8 @@ const redefineUsers = async (token, parsed) => {
         });
         if (!user)
             throw new CError_1.CError({ error: "Usuário não encontrado." }, 404);
+        if (user.redefinido_em && decoded.iat * 1000 < user.redefinido_em.getTime())
+            throw new CError_1.CError({ error: "Não foi possível continuar, token inválido" }, 410);
         if (confirma_senha !== nova_senha)
             throw new CError_1.CError({ error: "Nova senha e confirma senha não coincidem." }, 400);
         const hashNewPassoword = await (0, hashPassword_1.hashPassword)(nova_senha);
@@ -22,6 +24,7 @@ const redefineUsers = async (token, parsed) => {
             where: { id: user?.id },
             data: {
                 senha: hashNewPassoword,
+                redefinido_em: new Date(),
             },
         });
         return "Senha alterada com sucesso.";

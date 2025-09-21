@@ -8,6 +8,7 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const prisma_1 = require("../../Utils/prisma");
 const CError_1 = require("../../Utils/Errors/CError");
 const nodemailer_1 = __importDefault(require("nodemailer"));
+const redefineHTML_1 = require("./Utils/redefineHTML");
 const recoveryUsers = async (parsed) => {
     try {
         const SECRET_HASH = process.env.RECOVERY_JWT_SECRET;
@@ -23,11 +24,12 @@ const recoveryUsers = async (parsed) => {
                 pass: process.env.EMAIL_PASS,
             },
         });
+        const html = (0, redefineHTML_1.redefineHTML)(user.nome, token);
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: email,
             subject: "Recuperação de senha",
-            text: `esse é o token - ${token}`,
+            html,
         });
         return "Link de recuperação enviado com sucesso.";
     }

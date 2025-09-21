@@ -16,7 +16,7 @@ const redefine = async (req, res) => {
         const { token } = req.params;
         const parsed = (0, zodParse_1.zodParse)(req, validation);
         const message = await (0, redefineUsers_1.redefineUsers)(token, parsed?.data);
-        res.status(201).json({ message });
+        res.status(200).json({ message });
     }
     catch (error) {
         console.error(error);

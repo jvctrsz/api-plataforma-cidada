@@ -7,7 +7,7 @@ const destroy = async (req, res) => {
     try {
         const { id } = req.params;
         const message = await (0, destroyUser_1.destroyUser)(Number(id));
-        res.status(201).json({ message });
+        res.status(200).json({ message });
     }
     catch (error) {
         console.error(error);
