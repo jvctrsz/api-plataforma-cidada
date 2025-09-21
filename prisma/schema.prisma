@@ -24,4 +24,5 @@ model usuarios {
   google_id     String?   @unique
   criado_em     DateTime? @default(now()) @db.Timestamp(6)
   redefinido_em DateTime?
+  valido        Boolean   @default(false)
 }

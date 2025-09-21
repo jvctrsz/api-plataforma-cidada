@@ -2,6 +2,7 @@ import { sign } from "jsonwebtoken";
 import { prisma } from "../../Utils/prisma";
 import { CError } from "../../Utils/Errors/CError";
 import nodemailer from "nodemailer";
+import { redefineHTML } from "./Utils/redefineHTML";
 
 export const recoveryUsers = async (parsed: { email: string }) => {
   try {
@@ -19,11 +20,14 @@ export const recoveryUsers = async (parsed: { email: string }) => {
         pass: process.env.EMAIL_PASS,
       },
     });
+
+    const html = redefineHTML(user.nome, token);
+
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Recuperação de senha",
-      text: `esse é o token - ${token}`,
+      html,
     });
     return "Link de recuperação enviado com sucesso.";
   } catch (error) {
