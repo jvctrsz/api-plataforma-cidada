@@ -10,13 +10,22 @@ export const redefineUsers = async (
 ) => {
   try {
     const hash = process.env.RECOVERY_JWT_SECRET;
-    const decoded = (await verifyPasswordToken(token, hash!)) as { id: string };
+    const decoded = (await verifyPasswordToken(token, hash!)) as {
+      id: string;
+      iat: number;
+    };
     const { confirma_senha, nova_senha, email } = parsed;
 
     const user = await prisma.usuarios.findUnique({
       where: { id: Number(decoded?.id), AND: { email: { equals: email } } },
     });
     if (!user) throw new CError({ error: "Usuário não encontrado." }, 404);
+
+    if (user.redefinido_em && decoded.iat * 1000 < user.redefinido_em.getTime())
+      throw new CError(
+        { error: "Não foi possível continuar, token inválido" },
+        410
+      );
 
     if (confirma_senha !== nova_senha)
       throw new CError(
@@ -29,6 +38,7 @@ export const redefineUsers = async (
       where: { id: user?.id },
       data: {
         senha: hashNewPassoword,
+        redefinido_em: new Date(),
       },
     });
     return "Senha alterada com sucesso.";

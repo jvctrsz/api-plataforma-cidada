@@ -9,5 +9,5 @@ export interface UserType {
   role?: string;
   google_id?: string;
   criado_em?: string;
-  recoveryPassword?: string;
+  redefinido_em?: string;
 }

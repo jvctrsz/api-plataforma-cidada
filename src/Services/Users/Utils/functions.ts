@@ -3,7 +3,7 @@ import { CError } from "../../../Utils/Errors/CError";
 
 export const omitUser = {
   google_id: true,
-  recoveryPassword: true,
+  redefinido_em: true,
   senha: true,
 };
 
