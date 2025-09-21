@@ -26,7 +26,7 @@ export const redefine = async (
     const { token } = req.params as { token: string };
     const parsed = zodParse<typeof validation>(req, validation);
     const message = await redefineUsers(token, parsed?.data);
-    res.status(201).json({ message });
+    res.status(200).json({ message });
   } catch (error) {
     console.error(error);
     if (error instanceof CError)

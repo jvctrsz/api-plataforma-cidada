@@ -7,7 +7,7 @@ export const destroy = async (req: Request<UserType>, res: Response) => {
   try {
     const { id } = req.params;
     const message = await destroyUser(Number(id));
-    res.status(201).json({ message });
+    res.status(200).json({ message });
   } catch (error) {
     console.error(error);
     if (error instanceof CError) {
