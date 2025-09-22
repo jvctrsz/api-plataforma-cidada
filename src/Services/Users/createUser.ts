@@ -10,12 +10,12 @@ export const createUser = async (parsed: UserType) => {
       where: { email: email },
     });
     if (!!existingEmail)
-      throw new CError({ error: "Já existe usuário com este email." }, 409);
+      throw new CError({ error: "Já existe um usuário com este email." }, 409);
     const existingCPF = await prisma.usuarios.findUnique({
       where: { cpf: cpf },
     });
     if (!!existingCPF)
-      throw new CError({ error: "Já existe usuário com este cpf." }, 409);
+      throw new CError({ error: "Já existe um usuário com este cpf." }, 409);
 
     const hash = await hashPassword(senha!);
     const user = await prisma.usuarios.create({

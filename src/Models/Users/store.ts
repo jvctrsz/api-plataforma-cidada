@@ -11,7 +11,7 @@ import {
 import { UserType } from "../../Controller/types";
 import { createUser } from "../../Services/Users/createUser";
 
-const validation = object({
+export const postUserScheme = object({
   nome: string(stringRequired),
   email: email({ error: "Deve ser um email válido." }),
   cpf: cpf,
@@ -21,7 +21,7 @@ const validation = object({
 });
 export const store = async (req: Request<{}, {}, UserType>, res: Response) => {
   try {
-    const parsed = zodParse<typeof validation>(req, validation);
+    const parsed = zodParse<typeof postUserScheme>(req, postUserScheme);
     const user = await createUser(parsed?.data);
     res.status(201).json(user);
   } catch (error) {

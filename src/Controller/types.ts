@@ -4,7 +4,7 @@ export interface UserType {
   email: string;
   cpf: string;
   celular: string;
-  telefone?: string;
+  telefone?: string | null;
   senha?: string;
   role?: string;
   google_id?: string;
