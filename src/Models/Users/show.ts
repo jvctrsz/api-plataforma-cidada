@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import { UserType } from "../../Controller/types";
 import { CError } from "../../Utils/Errors/CError";
 import { showUsers } from "../../Services/Users/showUsers";
 
-export const show = async (req: Request<UserType>, res: Response) => {
+export const show = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await showUsers(Number(id));

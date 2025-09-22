@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import { UserType } from "../../Controller/types";
 import { CError } from "../../Utils/Errors/CError";
 import { destroyUser } from "../../Services/Users/destroyUser";
 
-export const destroy = async (req: Request<UserType>, res: Response) => {
+export const destroy = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const message = await destroyUser(Number(id));

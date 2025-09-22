@@ -22,7 +22,7 @@ export const change = async (
   res: Response
 ) => {
   try {
-    const { id } = req.params as { id: string };
+    const id = req.user_id;
     const parsed = zodParse<typeof validation>(req, validation);
     const message = await changeUser(Number(id), parsed.data);
     res.status(201).json({ message });
