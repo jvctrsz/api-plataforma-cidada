@@ -1,7 +1,7 @@
 import { sign } from "jsonwebtoken";
 import { prisma } from "../../Utils/prisma";
 import { CError } from "../../Utils/Errors/CError";
-import { redefineHTML } from "./Utils/redefineHTML";
+import { redefineAndLoginHTML } from "./Utils/redefineHTML";
 import { createTransporter } from "../../Utils/Functions/transporter";
 
 export const recoveryUsers = async (parsed: { email: string }) => {
@@ -15,7 +15,7 @@ export const recoveryUsers = async (parsed: { email: string }) => {
 
     const transporter = createTransporter();
 
-    const html = redefineHTML(user.nome, token);
+    const html = redefineAndLoginHTML(user.nome, token, "redefinir");
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,

@@ -8,6 +8,7 @@ import {
   createTransporter,
   sendLoginActivation,
 } from "../../Utils/Functions/transporter";
+import { redefineAndLoginHTML } from "../Users/Utils/redefineHTML";
 
 const defaultError = { error: "As credenciais informadas estão incorretas." };
 
@@ -27,8 +28,9 @@ export const authLogin = async (parsed: LoginType) => {
     if (!user.valido) {
       if (!isSameDay(user.criado_em!, new Date())) {
         const token = sign({ id: user.id }, hash, { expiresIn: "1d" });
+        const html = redefineAndLoginHTML(user.nome, token, "ativar");
         const transporter = createTransporter();
-        await transporter.sendMail(sendLoginActivation(user.email, token));
+        await transporter.sendMail(sendLoginActivation(user.email, html));
       }
       throw new CError(
         {

@@ -14,9 +14,9 @@ export const createTransporter = () => {
   }
 };
 
-export const sendLoginActivation = (email: string, token: string) => ({
+export const sendLoginActivation = (email: string, html: string) => ({
   to: email,
   from: process.env.EMAIL_USER,
-  subject: "Validação de Conta",
-  text: token,
+  subject: "Ativação de Conta",
+  html,
 });
