@@ -1,24 +1,10 @@
 import { Request, Response } from "express";
-import { string, email, object } from "zod";
 import { zodParse } from "../../Utils/Functions/zodParse";
 import { CError } from "../../Utils/Errors/CError";
-import {
-  celular,
-  cpf,
-  stringRequired,
-  telefone,
-} from "../../Utils/Errors/Zod/validation";
 import { UserType } from "../../Controller/types";
 import { createUser } from "../../Services/Users/createUser";
+import { postUserScheme } from "../../Schemes/user.scheme";
 
-export const postUserScheme = object({
-  nome: string(stringRequired),
-  email: email({ error: "Deve ser um email válido." }),
-  cpf: cpf,
-  celular: celular,
-  telefone: telefone.optional(),
-  senha: string(stringRequired),
-});
 export const store = async (req: Request<{}, {}, UserType>, res: Response) => {
   try {
     const parsed = zodParse<typeof postUserScheme>(req, postUserScheme);
