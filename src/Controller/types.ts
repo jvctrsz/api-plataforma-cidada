@@ -5,9 +5,9 @@ export interface UserType {
   cpf: string;
   celular: string;
   telefone?: string | null;
-  senha?: string;
-  role?: string;
-  google_id?: string;
-  criado_em?: string;
-  redefinido_em?: string;
+  senha?: string | null;
+  role?: string | null;
+  google_id?: string | null;
+  criado_em?: Date | null;
+  redefinido_em?: Date | null;
 }

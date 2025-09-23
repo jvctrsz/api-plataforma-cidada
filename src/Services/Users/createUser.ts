@@ -2,6 +2,7 @@ import { UserType } from "../../Controller/types";
 import { CError } from "../../Utils/Errors/CError";
 import { hashPassword } from "../../Utils/Functions/hashPassword";
 import { prisma } from "../../Utils/prisma";
+import { omitUser } from "./Utils/functions";
 
 export const createUser = async (parsed: UserType) => {
   try {
@@ -27,13 +28,7 @@ export const createUser = async (parsed: UserType) => {
         telefone,
         senha: hash,
       },
-      select: {
-        celular: true,
-        cpf: true,
-        email: true,
-        nome: true,
-        telefone: true,
-      },
+      omit: omitUser,
     });
     return user;
   } catch (error) {

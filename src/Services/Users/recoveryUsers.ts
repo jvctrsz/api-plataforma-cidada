@@ -1,8 +1,8 @@
 import { sign } from "jsonwebtoken";
 import { prisma } from "../../Utils/prisma";
 import { CError } from "../../Utils/Errors/CError";
-import nodemailer from "nodemailer";
 import { redefineHTML } from "./Utils/redefineHTML";
+import { createTransporter } from "../../Utils/Functions/transporter";
 
 export const recoveryUsers = async (parsed: { email: string }) => {
   try {
@@ -13,13 +13,7 @@ export const recoveryUsers = async (parsed: { email: string }) => {
 
     const token = sign({ id: user?.id }, SECRET_HASH!, { expiresIn: "10m" });
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    const transporter = createTransporter();
 
     const html = redefineHTML(user.nome, token);
 

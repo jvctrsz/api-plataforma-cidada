@@ -13,7 +13,7 @@ const validation = (0, zod_1.object)({
 });
 const change = async (req, res) => {
     try {
-        const { id } = req.params;
+        const id = req.user_id;
         const parsed = (0, zodParse_1.zodParse)(req, validation);
         const message = await (0, changeUser_1.changeUser)(Number(id), parsed.data);
         res.status(201).json({ message });

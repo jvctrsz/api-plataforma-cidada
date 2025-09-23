@@ -9,6 +9,7 @@ export const destroyUser = async (id: number) => {
       omit: omitUser,
     });
     if (!user) throw new CError({ error: "Usuário não encontrado." }, 404);
+    await prisma.usuarios.delete({ where: { id } });
     return "Usuário deletado com sucesso.";
   } catch (error) {
     throw error;
