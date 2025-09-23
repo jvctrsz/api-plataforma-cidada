@@ -13,3 +13,10 @@ export const createTransporter = () => {
     throw error;
   }
 };
+
+export const sendLoginActivation = (email: string, token: string) => ({
+  to: email,
+  from: process.env.EMAIL_USER,
+  subject: "Validação de Conta",
+  text: token,
+});

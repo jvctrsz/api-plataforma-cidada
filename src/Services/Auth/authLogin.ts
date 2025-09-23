@@ -3,6 +3,11 @@ import { LoginType } from "../../Models/Auth/login";
 import { CError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 import argon2 from "argon2";
+import { isSameDay } from "date-fns";
+import {
+  createTransporter,
+  sendLoginActivation,
+} from "../../Utils/Functions/transporter";
 
 const defaultError = { error: "As credenciais informadas estão incorretas." };
 
@@ -15,6 +20,23 @@ export const authLogin = async (parsed: LoginType) => {
 
     const user = await prisma.usuarios.findUnique({ where: { email } });
     if (!user) throw new CError(defaultError, 400);
+
+    if (!!user.google_id)
+      throw new CError({ error: "Usuário cadastrado através do google." }, 403);
+
+    if (!user.valido) {
+      if (!isSameDay(user.criado_em!, new Date())) {
+        const token = sign({ id: user.id }, hash, { expiresIn: "1d" });
+        const transporter = createTransporter();
+        await transporter.sendMail(sendLoginActivation(user.email, token));
+      }
+      throw new CError(
+        {
+          error: "Usuário aguardando validação - verificar caixa de email.",
+        },
+        403
+      );
+    }
 
     const isEqual = await argon2.verify(user.senha!, senha);
     if (!isEqual) throw new CError(defaultError, 400);
