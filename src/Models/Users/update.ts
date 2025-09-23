@@ -1,27 +1,14 @@
 import { Request, Response } from "express";
-import { string, email, object } from "zod";
 import { zodParse } from "../../Utils/Functions/zodParse";
 import { CError } from "../../Utils/Errors/CError";
-import {
-  celular,
-  cpf,
-  stringRequired,
-  telefone,
-} from "../../Utils/Errors/Zod/validation";
 import { UserType } from "../../Controller/types";
 import { updateUser } from "../../Services/Users/updateUser";
+import { putUserScheme } from "../../Schemes/user.scheme";
 
-const validation = object({
-  nome: string(stringRequired).optional(),
-  email: email({ error: "Deve ser um email válido." }).optional(),
-  cpf: cpf.optional(),
-  celular: celular.optional(),
-  telefone: telefone.optional(),
-});
 export const update = async (req: Request<{}, {}, UserType>, res: Response) => {
   try {
     const { id } = req.params as UserType;
-    const parsed = zodParse<typeof validation>(req, validation);
+    const parsed = zodParse(req, putUserScheme);
     const user = await updateUser(Number(id), parsed?.data);
     res.status(201).json(user);
   } catch (error) {
