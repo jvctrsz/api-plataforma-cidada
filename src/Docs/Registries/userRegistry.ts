@@ -17,6 +17,36 @@ extendZodWithOpenApi(z);
 
 const userRegistry = new OpenAPIRegistry();
 
+const userNotFound = {
+  description: "Usuário não encontrado",
+  content: {
+    "application/json": {
+      schema: {},
+      example: { error: "Usuário não encontrado." },
+    },
+  },
+};
+
+const userCpfEmail = {
+  "application/json": {
+    schema: {},
+    examples: {
+      emailError: {
+        summary: "Erro de email",
+        value: {
+          error: "Já existe um usuário com este email.",
+        },
+      },
+      cpfError: {
+        summary: "Erro de CPF",
+        value: {
+          error: "Já existe um usuário com este cpf.",
+        },
+      },
+    },
+  },
+};
+
 userRegistry.registerPath({
   method: "post",
   path: "/api/usuarios",
@@ -39,25 +69,7 @@ userRegistry.registerPath({
     "401": unauthorized,
     "409": {
       description: "Usuário já cadastrado",
-      content: {
-        "application/json": {
-          schema: {},
-          examples: {
-            emailError: {
-              summary: "Erro de email",
-              value: {
-                error: "Já existe um usuário com este email.",
-              },
-            },
-            cpfError: {
-              summary: "Erro de CPF",
-              value: {
-                error: "Já existe um usuário com este cpf.",
-              },
-            },
-          },
-        },
-      },
+      content: userCpfEmail,
     },
     "500": internalError,
   },
@@ -69,13 +81,61 @@ userRegistry.registerPath({
   summary: "Retorna um array com todos os usuário",
   tags: ["Usuários"],
   responses: {
-    "201": {
-      description: "Usuário atualizado com sucesso",
+    "200": {
+      description: "Usuário retornado com sucesso",
       content: {
-        "application/json": { schema: getUserScheme },
+        "application/json": { schema: z.array(getUserScheme) },
       },
     },
     "401": unauthorized,
+    "500": internalError,
+  },
+});
+
+userRegistry.registerPath({
+  method: "get",
+  path: "/api/usuarios/{id}",
+  summary: "Retorna um único usuário.",
+  tags: ["Usuários"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Usuário atualizado com sucesso",
+      content: {
+        "application/json": { schema: z.array(getUserScheme) },
+      },
+    },
+    "401": unauthorized,
+    "404": userNotFound,
+    "500": internalError,
+  },
+});
+
+userRegistry.registerPath({
+  method: "delete",
+  path: "/api/usuarios/{id}",
+  summary: "Deleta um usuário.",
+  tags: ["Usuários"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Usuário deletado com sucesso",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Usuário deletado com sucesso." }),
+          }),
+        },
+      },
+    },
+    "401": unauthorized,
+    "404": userNotFound,
     "500": internalError,
   },
 });
@@ -89,7 +149,7 @@ userRegistry.registerPath({
     params: idParams,
     body: {
       content: {
-        "application/json": { schema: postUserScheme },
+        "application/json": { schema: putUserScheme },
       },
     },
   },
@@ -107,36 +167,10 @@ userRegistry.registerPath({
       },
     },
     "401": unauthorized,
-    "404": {
-      description: "Usuário não encontrado",
-      content: {
-        "application/json": {
-          schema: {},
-          example: { error: "Usuário não encontrado." },
-        },
-      },
-    },
+    "404": userNotFound,
     "409": {
       description: "Conflitos na atualização",
-      content: {
-        "application/json": {
-          schema: {},
-          examples: {
-            emailError: {
-              summary: "Erro de email",
-              value: {
-                error: "Já existe um usuário com este email.",
-              },
-            },
-            cpfError: {
-              summary: "Erro de CPF",
-              value: {
-                error: "Já existe um usuário com este cpf.",
-              },
-            },
-          },
-        },
-      },
+      content: userCpfEmail,
     },
     "500": internalError,
   },
