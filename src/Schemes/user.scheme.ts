@@ -6,7 +6,7 @@ import {
   stringRequired,
   telefone,
 } from "../Utils/Errors/Zod/validation";
-import { exampleEmail, exampleString } from "./default.scheme";
+import { exampleString } from "./default.scheme";
 
 extendZodWithOpenApi(z);
 
@@ -17,6 +17,18 @@ export const postUserScheme = z.object({
   celular: celular,
   telefone: telefone.optional(),
   senha: z.string(stringRequired).openapi({ example: "12345" }),
+});
+
+export const getUserScheme = z.object({
+  id: z.string().openapi({ example: 3 }),
+  nome: z.string().openapi({ example: "Fernando da Silva" }),
+  email: z.email().openapi({ example: "test2e@gmail.com" }),
+  cpf: z.email().openapi({ example: "000.000.000-00" }),
+  celular: z.string().openapi({ example: "(66) 99999-9999" }),
+  telefone: z.string().openapi({ example: "(66) 9999-9999" }),
+  role: z.string().openapi({ example: "usuario" }),
+  criado_em: z.date().openapi({ example: "2025-09-20T02:40:59.540Z" }),
+  valido: z.boolean(),
 });
 
 export const putUserScheme = z.object({
