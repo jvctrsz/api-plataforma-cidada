@@ -9,5 +9,11 @@ secretariatsRouter.post(
   authToken,
   secretariatsController.store
 );
+secretariatsRouter.get("/secretarias", authToken, secretariatsController.index);
+secretariatsRouter.get(
+  "/secretarias/:id",
+  authToken,
+  secretariatsController.show
+);
 
 export default secretariatsRouter;
