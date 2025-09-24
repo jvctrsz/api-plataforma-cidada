@@ -2,17 +2,22 @@ import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { z } from "zod";
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import {
+  changeScheme,
   getUserScheme,
   postUserScheme,
   putErrorScheme,
   putUserScheme,
+  recoveryScheme,
+  redefineScheme,
 } from "../../Schemes/user.scheme";
 import {
   idParams,
   internalError,
   serverScheme,
+  tokenParams,
   unauthorized,
 } from "../../Schemes/default.scheme";
+import { error } from "console";
 extendZodWithOpenApi(z);
 
 const userRegistry = new OpenAPIRegistry();
@@ -47,6 +52,7 @@ const userCpfEmail = {
   },
 };
 
+//post
 userRegistry.registerPath({
   method: "post",
   path: "/api/usuarios",
@@ -75,6 +81,7 @@ userRegistry.registerPath({
   },
 });
 
+//get
 userRegistry.registerPath({
   method: "get",
   path: "/api/usuarios",
@@ -92,6 +99,7 @@ userRegistry.registerPath({
   },
 });
 
+//get index
 userRegistry.registerPath({
   method: "get",
   path: "/api/usuarios/{id}",
@@ -113,6 +121,7 @@ userRegistry.registerPath({
   },
 });
 
+//delete
 userRegistry.registerPath({
   method: "delete",
   path: "/api/usuarios/{id}",
@@ -140,6 +149,7 @@ userRegistry.registerPath({
   },
 });
 
+//put
 userRegistry.registerPath({
   method: "put",
   path: "/api/usuarios/{id}",
@@ -171,6 +181,170 @@ userRegistry.registerPath({
     "409": {
       description: "Conflitos na atualização",
       content: userCpfEmail,
+    },
+    "500": internalError,
+  },
+});
+
+//troca senha
+userRegistry.registerPath({
+  method: "post",
+  path: "/api/usuarios/trocar-senha",
+  summary: "Troca a senha de um usuário",
+  description:
+    "Rota destinada para a troca de senha de um usuário, usuário cadastrados com google não podem ter a senha trocada.",
+  tags: ["Usuários"],
+  request: {
+    body: {
+      content: {
+        "application/json": { schema: changeScheme },
+      },
+    },
+  },
+  responses: {
+    "200": {
+      description: "Senha alterada com sucesso",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Senha alterada com sucesso" }),
+          }),
+        },
+      },
+    },
+    "400": {
+      description: "Campos incorretos",
+      content: {
+        "application/json": { schema: putErrorScheme },
+      },
+    },
+    "401": unauthorized,
+    "403": {
+      description: "Usuário autenticado com google",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Usuário cadastrado através da autenticação com google.",
+            }),
+          }),
+        },
+      },
+    },
+    "404": userNotFound,
+    "409": {
+      description: "Compos incorretos",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            senhaError: {
+              summary: "Senha atual",
+              value: {
+                error: "A senha atual inserida é incorreta.",
+              },
+            },
+            confirmaError: {
+              summary: "Confirma senha",
+              value: {
+                error: "Nova senha e confirma senha não coincidem.",
+              },
+            },
+          },
+        },
+      },
+    },
+    "500": internalError,
+  },
+});
+
+//recupera senha
+userRegistry.registerPath({
+  method: "post",
+  path: "/api/usuarios/recuperar-senha",
+  summary: "Recupera a senha de um usuário",
+  description:
+    "Rota destinada para a recuperação da senha de um usuário. Deve ser utilizada no momento que o usuário clicar em esqueceu a senha. Será enviado um email com o link de recuperação para o usuário e após o usuário confirmar a recuperação em seu email, ele sera redirecionado para uma rota escolhida pelo front, e passará um token como parametro.",
+  tags: ["Usuários"],
+  request: {
+    body: {
+      content: {
+        "application/json": { schema: recoveryScheme },
+      },
+    },
+  },
+  responses: {
+    "200": {
+      description: "Link enviado com sucesso",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Link de recuperação enviado com sucesso." }),
+          }),
+        },
+      },
+    },
+    "404": userNotFound,
+    "500": internalError,
+  },
+});
+
+userRegistry.registerPath({
+  method: "post",
+  path: "/api/usuarios/redefinir-senha/{token}",
+  summary: "Redefine a senha de um usuário",
+  description:
+    "Rota destinada para redefinir a senha de um usuário. Esta rota será utilizada após a rota de 'Recuperar Senha'. Recebe como parametro um token JWT.",
+  tags: ["Usuários"],
+  request: {
+    params: tokenParams,
+    body: {
+      content: {
+        "application/json": { schema: redefineScheme },
+      },
+    },
+  },
+  responses: {
+    "200": {
+      description: "Senha alterada com sucesso.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Senha alterada com sucesso." }),
+          }),
+        },
+      },
+    },
+    "400": {
+      description: "Token inválido",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Nova senha e confirma senha não coincidem.",
+            }),
+          }),
+        },
+      },
+    },
+    "404": userNotFound,
+    "410": {
+      description: "Token inválido",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Não foi possível continuar, token inválido.",
+            }),
+          }),
+        },
+      },
     },
     "500": internalError,
   },

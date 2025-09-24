@@ -3,6 +3,7 @@ import z from "zod";
 import {
   celular,
   cpf,
+  email,
   stringRequired,
   telefone,
 } from "../Utils/Errors/Zod/validation";
@@ -44,3 +45,19 @@ export const putErrorScheme = z.array(
     error: z.string().openapi(exampleString),
   })
 );
+
+export const changeScheme = z.object({
+  senha_atual: z.string(stringRequired).openapi({ example: "12345678" }),
+  nova_senha: z.string(stringRequired).openapi({ example: "12345" }),
+  confirma_senha: z.string(stringRequired).openapi({ example: "12345" }),
+});
+
+export const recoveryScheme = z.object({
+  email: email,
+});
+
+export const redefineScheme = z.object({
+  email: email,
+  nova_senha: z.string(stringRequired).openapi({ example: "12345" }),
+  confirma_senha: z.string(stringRequired).openapi({ example: "12345" }),
+});

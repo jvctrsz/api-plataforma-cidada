@@ -18,4 +18,6 @@ export const cpf = z
   .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, {
     error: "deve ser no formato 000.000.000-00.",
   });
-export const email = z.email({ error: "Deve ser um email válido." });
+export const email = z
+  .email({ error: "Deve ser um email válido." })
+  .openapi({ example: "teste@gmail.com" });

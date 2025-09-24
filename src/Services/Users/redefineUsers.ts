@@ -23,7 +23,7 @@ export const redefineUsers = async (
 
     if (user.redefinido_em && decoded.iat * 1000 < user.redefinido_em.getTime())
       throw new CError(
-        { error: "Não foi possível continuar, token inválido" },
+        { error: "Não foi possível continuar, token inválido." },
         410
       );
 

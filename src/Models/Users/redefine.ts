@@ -5,6 +5,7 @@ import { zodParse } from "../../Utils/Functions/zodParse";
 import { redefineUsers } from "../../Services/Users/redefineUsers";
 import { object, string } from "zod";
 import { email, stringRequired } from "../../Utils/Errors/Zod/validation";
+import { redefineScheme } from "../../Schemes/user.scheme";
 
 export interface RedefinePassword {
   email: string;
@@ -12,19 +13,13 @@ export interface RedefinePassword {
   confirma_senha: string;
 }
 
-const validation = object({
-  email: email,
-  nova_senha: string(stringRequired),
-  confirma_senha: string(stringRequired),
-});
-
 export const redefine = async (
   req: Request<{}, {}, RedefinePassword>,
   res: Response
 ) => {
   try {
     const { token } = req.params as { token: string };
-    const parsed = zodParse<typeof validation>(req, validation);
+    const parsed = zodParse(req, redefineScheme);
     const message = await redefineUsers(token, parsed?.data);
     res.status(200).json({ message });
   } catch (error) {
