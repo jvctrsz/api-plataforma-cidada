@@ -34,7 +34,7 @@ const secretariatExisting = {
     },
   },
 };
-const notPermission = {
+const notAllowed = {
   description: "Usuário sem permissão.",
   content: {
     "application/json": {
@@ -54,7 +54,7 @@ secretariatsRegistry.registerPath({
   summary: "Cadastra uma nova secretaria.",
   description:
     'Usuários com role do tipo "usario" não podem cadastrar secretarias.',
-  tags: ["Secretaria"],
+  tags: ["Secretarias"],
   request: {
     body: {
       content: {
@@ -76,18 +76,7 @@ secretariatsRegistry.registerPath({
       },
     },
     "401": unauthorized,
-    "403": {
-      description: "Usuário sem permissão.",
-      content: {
-        "application/json": {
-          schema: z.object({
-            error: z.string().openapi({
-              example: "Usuário não tem permissão para esta operação",
-            }),
-          }),
-        },
-      },
-    },
+    "403": notAllowed,
     "409": secretariatExisting,
     "500": internalError,
   },
@@ -100,7 +89,7 @@ secretariatsRegistry.registerPath({
   summary: "Edita uma secretaria.",
   description:
     'Usuários com role do tipo "usario" não podem editar secretarias.',
-  tags: ["Secretaria"],
+  tags: ["Secretarias"],
   request: {
     params: idParams,
     body: {
@@ -123,18 +112,7 @@ secretariatsRegistry.registerPath({
       },
     },
     "401": unauthorized,
-    "403": {
-      description: "Usuário sem permissão.",
-      content: {
-        "application/json": {
-          schema: z.object({
-            error: z.string().openapi({
-              example: "Usuário não tem permissão para esta operação",
-            }),
-          }),
-        },
-      },
-    },
+    "403": notAllowed,
     "404": secretariatsNotFound,
     "409": secretariatExisting,
     "500": internalError,
@@ -146,7 +124,7 @@ secretariatsRegistry.registerPath({
   method: "get",
   path: "/api/secretarias",
   summary: "Retorna todas as secretarias.",
-  tags: ["Secretaria"],
+  tags: ["Secretarias"],
   responses: {
     "200": {
       description: "Retorna um array com todas as secretarias",
@@ -166,7 +144,7 @@ secretariatsRegistry.registerPath({
   method: "get",
   path: "/api/secretarias/{id}",
   summary: "Retorna uma única secretaria.",
-  tags: ["Secretaria"],
+  tags: ["Secretarias"],
   request: {
     params: idParams,
   },
@@ -192,7 +170,7 @@ secretariatsRegistry.registerPath({
   summary: "Deleta uma secretaria.",
   description:
     'Usuários com role do tipo "usario" não podem deletar secretarias.',
-  tags: ["Secretaria"],
+  tags: ["Secretarias"],
   request: {
     params: idParams,
   },
@@ -210,19 +188,17 @@ secretariatsRegistry.registerPath({
       },
     },
     "401": unauthorized,
-    "403": notPermission,
+    "403": notAllowed,
     "404": secretariatsNotFound,
     "409": {
       description: "Secretaria vinculada",
       content: {
         "application/json": {
           schema: z.object({
-            error: z
-              .string()
-              .openapi({
-                example:
-                  "Esta secretaria esta vinculada a solicitações, não é possível deletar.",
-              }),
+            error: z.string().openapi({
+              example:
+                "Esta secretaria esta vinculada a solicitações, não é possível deletar.",
+            }),
           }),
         },
       },
