@@ -6,6 +6,7 @@ import { redefine } from "../Models/Users/redefine";
 import { show } from "../Models/Users/show";
 import { store } from "../Models/Users/store";
 import { update } from "../Models/Users/update";
+import { user } from "../Models/Users/user";
 
 export const usersController = {
   store,
@@ -16,4 +17,5 @@ export const usersController = {
   change,
   recovery,
   redefine,
+  user,
 };

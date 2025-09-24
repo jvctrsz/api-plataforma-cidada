@@ -61,3 +61,15 @@ export const redefineScheme = z.object({
   nova_senha: z.string(stringRequired).openapi({ example: "12345" }),
   confirma_senha: z.string(stringRequired).openapi({ example: "12345" }),
 });
+
+export const userScheme = z.object({
+  id: z.string().openapi({ example: 1 }),
+  nome: z.string().openapi({ example: "Fernando da Silva" }),
+  email: email,
+  cpf: cpf,
+  celular: celular,
+  telefone: telefone,
+  role: z.string().openapi({ enum: ["usuario", "admin"] }),
+  google_id: z.string().openapi({ enum: [null, 1] }),
+  criado_em: z.string().openapi({ example: "2025-09-20T02:38:55.947Z" }),
+});

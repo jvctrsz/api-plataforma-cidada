@@ -9,6 +9,7 @@ import {
   putUserScheme,
   recoveryScheme,
   redefineScheme,
+  userScheme,
 } from "../../Schemes/user.scheme";
 import {
   idParams,
@@ -48,6 +49,26 @@ export const userCpfEmail = {
     },
   },
 };
+
+//get usuario
+userRegistry.registerPath({
+  method: "get",
+  path: "/api/usuario",
+  summary: "Retorna as informações do usuário logado",
+  description:
+    "Rota para que o front busque as informações do usuário logado de forma mais simples.",
+  tags: ["Usuários"],
+  responses: {
+    "200": {
+      description: "Retorna o objeto do usuário",
+      content: {
+        "application/json": { schema: userScheme },
+      },
+    },
+    "404": userNotFound,
+    "500": internalError,
+  },
+});
 
 //post
 userRegistry.registerPath({

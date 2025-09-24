@@ -5,6 +5,7 @@ import { authToken } from "../Services/MiddleWares/authToken";
 const userRouter = Router();
 
 userRouter.post("/usuarios", authToken, usersController.store);
+userRouter.get("/usuario", authToken, usersController.user);
 userRouter.get("/usuarios", authToken, usersController.index);
 userRouter.get("/usuarios/:id", authToken, usersController.show);
 userRouter.delete("/usuarios/:id", authToken, usersController.destroy);
