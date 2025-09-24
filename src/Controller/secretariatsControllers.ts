@@ -1,4 +1,5 @@
 import { index } from "../Models/Secretariats";
+import { destroy } from "../Models/Secretariats/destroy";
 import { show } from "../Models/Secretariats/show";
 import { store } from "../Models/Secretariats/store";
 import { update } from "../Models/Secretariats/update";
@@ -8,4 +9,5 @@ export const secretariatsController = {
   index,
   show,
   update,
+  destroy,
 };

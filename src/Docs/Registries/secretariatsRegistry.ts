@@ -34,6 +34,18 @@ const secretariatExisting = {
     },
   },
 };
+const notPermission = {
+  description: "Usuário sem permissão.",
+  content: {
+    "application/json": {
+      schema: z.object({
+        error: z.string().openapi({
+          example: "Usuário não tem permissão para esta operação",
+        }),
+      }),
+    },
+  },
+};
 
 //post
 secretariatsRegistry.registerPath({
@@ -173,4 +185,49 @@ secretariatsRegistry.registerPath({
   },
 });
 
+//delete
+secretariatsRegistry.registerPath({
+  method: "delete",
+  path: "/api/secretarias/{id}",
+  summary: "Deleta uma secretaria.",
+  description:
+    'Usuários com role do tipo "usario" não podem deletar secretarias.',
+  tags: ["Secretaria"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Secretaria deletada com sucesso.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Secretaria deletada com sucesso." }),
+          }),
+        },
+      },
+    },
+    "401": unauthorized,
+    "403": notPermission,
+    "404": secretariatsNotFound,
+    "409": {
+      description: "Secretaria vinculada",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z
+              .string()
+              .openapi({
+                example:
+                  "Esta secretaria esta vinculada a solicitações, não é possível deletar.",
+              }),
+          }),
+        },
+      },
+    },
+    "500": internalError,
+  },
+});
 export default secretariatsRegistry;

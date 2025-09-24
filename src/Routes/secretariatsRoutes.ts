@@ -28,5 +28,11 @@ secretariatsRouter.put(
   permission,
   secretariatsController.update
 );
+secretariatsRouter.delete(
+  "/secretarias/:id",
+  authToken,
+  permission,
+  secretariatsController.destroy
+);
 
 export default secretariatsRouter;
