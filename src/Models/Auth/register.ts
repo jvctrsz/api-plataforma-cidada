@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { UserType } from "../../Controller/types";
-import { postUserScheme } from "../Users/store";
 import { zodParse } from "../../Utils/Functions/zodParse";
 import { CError } from "../../Utils/Errors/CError";
 import { createUser } from "../../Services/Users/createUser";
 import { authRegister } from "../../Services/Auth/authRegister";
+import { postUserScheme } from "../../Schemes/user.scheme";
 
 export const register = async (
   req: Request<{}, {}, UserType>,

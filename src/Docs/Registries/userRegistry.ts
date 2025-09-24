@@ -19,7 +19,7 @@ import {
 
 const userRegistry = new OpenAPIRegistry();
 
-const userNotFound = {
+export const userNotFound = {
   description: "Usuário não encontrado",
   content: {
     "application/json": {
@@ -29,7 +29,7 @@ const userNotFound = {
   },
 };
 
-const userCpfEmail = {
+export const userCpfEmail = {
   "application/json": {
     schema: {},
     examples: {

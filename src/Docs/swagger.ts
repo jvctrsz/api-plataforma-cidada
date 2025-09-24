@@ -31,10 +31,11 @@ export const openApiDocJWT = {
   security: [{ BearerAuth: [] }],
 };
 
-if (openApiDocJWT.paths["/api/auth/login"]?.post) {
+if (openApiDocJWT.paths["/api/auth/login"]?.post)
   openApiDocJWT.paths["/api/auth/login"].post.security = [];
-}
 
-if (openApiDocJWT.paths["/api/auth/register"]?.post) {
+if (openApiDocJWT.paths["/api/auth/register"]?.post)
   openApiDocJWT.paths["/api/auth/register"].post.security = [];
-}
+
+if (openApiDocJWT.paths["/api/auth/ativar-conta/{token}"]?.post)
+  openApiDocJWT.paths["/api/auth/ativar-conta/{token}"].post.security = [];

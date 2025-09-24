@@ -1,7 +1,14 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { loginScheme } from "../../Schemes/auth.scheme";
 import z from "zod";
-import { internalError, tokenExample } from "../../Schemes/default.scheme";
+import {
+  internalError,
+  tokenExample,
+  tokenParams,
+  unauthorized,
+} from "../../Schemes/default.scheme";
+import { postUserScheme } from "../../Schemes/user.scheme";
+import { userCpfEmail, userNotFound } from "./userRegistry";
 
 const authRegistry = new OpenAPIRegistry();
 
@@ -9,6 +16,8 @@ authRegistry.registerPath({
   method: "post",
   path: "/api/auth/login",
   summary: "Faz o login do usuário.",
+  description:
+    'Após o usuário fazer login, será retornado um token que deve ser armenazado no session storage e DEVE ser passado como "Bearer {token}" no header de cada requsição.',
   tags: ["Autenticação"],
   request: {
     body: {
@@ -67,4 +76,78 @@ authRegistry.registerPath({
   },
 });
 
+authRegistry.registerPath({
+  method: "post",
+  path: "/api/auth/register",
+  summary: "Cria uma nova conta.",
+  description:
+    "Registra um novo usuário no sistema, ao ser criado a conta será enviado um email de confirmação ao usuário.",
+  tags: ["Autenticação"],
+  request: {
+    body: {
+      content: {
+        "application/json": { schema: postUserScheme },
+      },
+    },
+  },
+  responses: {
+    "201": {
+      description: "Conta criada com sucesso",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z.string().openapi({
+              example: "Usuário criado - email de confirmação enviado.",
+            }),
+          }),
+        },
+      },
+    },
+    "409": {
+      description: "Usuário já cadastrado",
+      content: userCpfEmail,
+    },
+    "500": internalError,
+  },
+});
+
+authRegistry.registerPath({
+  method: "post",
+  path: "/api/auth/ativar-conta/{token}",
+  summary: "Faz o login do usuário.",
+  description:
+    "Rota para ativar a conta do usuário, esse token sera enviado para o email do usuário quando ele criar a conta. Ou quando o usuário tentar fazer um login estando com a conta inativa.",
+  tags: ["Autenticação"],
+  request: {
+    params: tokenParams,
+  },
+  responses: {
+    "200": {
+      description: "Usuário ativado com sucesso",
+      content: {
+        "application/json": {
+          schema: z.object({
+            token: z
+              .string()
+              .openapi({ example: "Usuário ativado com sucesso." }),
+          }),
+        },
+      },
+    },
+    "404": userNotFound,
+    "422": {
+      description: "Token inválido.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Não é possível continuar, token inválido.",
+            }),
+          }),
+        },
+      },
+    },
+    "500": internalError,
+  },
+});
 export default authRegistry;
