@@ -1,7 +1,11 @@
 import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
 import userRegistry from "./Registries/userRegistry";
+import authRegistry from "./Registries/authRegistry";
 
-const generator = new OpenApiGeneratorV3([...userRegistry.definitions]);
+const generator = new OpenApiGeneratorV3([
+  ...authRegistry.definitions,
+  ...userRegistry.definitions,
+]);
 
 const openApiDoc = generator.generateDocument({
   openapi: "3.0.0",
@@ -26,3 +30,11 @@ export const openApiDocJWT = {
   },
   security: [{ BearerAuth: [] }],
 };
+
+if (openApiDocJWT.paths["/api/auth/login"]?.post) {
+  openApiDocJWT.paths["/api/auth/login"].post.security = [];
+}
+
+if (openApiDocJWT.paths["/api/auth/register"]?.post) {
+  openApiDocJWT.paths["/api/auth/register"].post.security = [];
+}

@@ -13,12 +13,9 @@ import {
 import {
   idParams,
   internalError,
-  serverScheme,
   tokenParams,
   unauthorized,
 } from "../../Schemes/default.scheme";
-import { error } from "console";
-extendZodWithOpenApi(z);
 
 const userRegistry = new OpenAPIRegistry();
 
@@ -293,6 +290,7 @@ userRegistry.registerPath({
   },
 });
 
+//redefinir senha
 userRegistry.registerPath({
   method: "post",
   path: "/api/usuarios/redefinir-senha/{token}",

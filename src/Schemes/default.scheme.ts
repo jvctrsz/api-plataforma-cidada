@@ -2,7 +2,7 @@ import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import z from "zod";
 extendZodWithOpenApi(z);
 
-const token =
+export const tokenExample =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzU4NDk3NTUyLCJleHAiOjE3NTg0OTgxNTJ9.5VYrZJXFB-P2WaHAsKUrC1tot8HSwrHdG4UNYJcYdGQ";
 
 export const serverScheme = z.object({
@@ -15,7 +15,7 @@ export const unauthorizedScheme = z.object({
 
 export const idParams = z.object({ id: z.string().openapi({ example: 1 }) });
 export const tokenParams = z.object({
-  token: z.string().openapi({ example: token }),
+  token: z.string().openapi({ example: tokenExample }),
 });
 
 export const exampleString = { example: "deve ser uma string." };

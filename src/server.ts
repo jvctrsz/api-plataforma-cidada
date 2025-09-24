@@ -3,6 +3,10 @@ import userRouter from "./Routes/userRoutes";
 import authRouter from "./Routes/authRoutes";
 import swaggerUi from "swagger-ui-express";
 import { openApiDocJWT } from "./Docs/swagger";
+import z from "zod";
+import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
+
+extendZodWithOpenApi(z);
 
 const port = 3000;
 const app = express();
