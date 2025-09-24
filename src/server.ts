@@ -6,6 +6,7 @@ import { openApiDocJWT } from "./Docs/swagger";
 import z from "zod";
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import cors from "cors";
+import secretariatsRouter from "./Routes/secretariatsRoutes";
 
 extendZodWithOpenApi(z);
 
@@ -41,6 +42,7 @@ app.use(
 
 app.use("/api", userRouter);
 app.use("/api", authRouter);
+app.use("/api", secretariatsRouter);
 
 app.listen(port, () => {
   console.log("servidor rodando em http://localhost:3000");

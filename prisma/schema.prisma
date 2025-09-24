@@ -13,16 +13,43 @@ enum Role {
 }
 
 model usuarios {
-  id            Int       @id @default(autoincrement())
-  nome          String    @db.VarChar(100)
-  email         String    @unique @db.VarChar(150)
-  cpf           String    @unique @db.VarChar(14)
-  celular       String    @db.Char(15)
-  telefone      String?   @db.VarChar(14)
+  id            Int           @id @default(autoincrement())
+  nome          String        @db.VarChar(100)
+  email         String        @unique @db.VarChar(150)
+  cpf           String        @unique @db.VarChar(14)
+  celular       String        @db.Char(15)
+  telefone      String?       @db.VarChar(14)
   senha         String?
-  role          Role?     @default(usuario)
-  google_id     String?   @unique
-  criado_em     DateTime? @default(now()) @db.Timestamp(6)
+  role          Role?         @default(usuario)
+  google_id     String?       @unique
+  criado_em     DateTime?     @default(now()) @db.Timestamp(6)
   redefinido_em DateTime?
-  valido        Boolean   @default(false)
+  valido        Boolean       @default(false)
+  solicitacao   solicitacao[]
+}
+
+model secretaria {
+  id          Int           @id @default(autoincrement())
+  nome        String        @unique @db.VarChar(40)
+  ativo       Boolean       @default(true)
+  solicitacao solicitacao[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model solicitacao {
+  id            Int        @id @default(autoincrement())
+  codigo        String     @unique @db.VarChar(4)
+  endereco      String     @db.VarChar(150)
+  numero        String     @db.VarChar(10)
+  referencia    String?    @db.VarChar(100)
+  bairro        String     @db.VarChar(100)
+  cidade        String     @db.VarChar(100)
+  uf            String     @db.Char(2)
+  cep           String     @db.Char(8)
+  observacao    String     @db.VarChar(500)
+  status        String     @default("N") @db.Char(1)
+  secretaria_id Int
+  usuarios_id   Int
+  secretaria    secretaria @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
+  usuarios      usuarios   @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
 }

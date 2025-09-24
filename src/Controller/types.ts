@@ -11,3 +11,9 @@ export interface UserType {
   criado_em?: Date | null;
   redefinido_em?: Date | null;
 }
+
+export interface SecretariatsType {
+  id?: number;
+  nome: string;
+  ativo?: boolean;
+}
