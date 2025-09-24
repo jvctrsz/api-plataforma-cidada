@@ -9,7 +9,7 @@ export const createSecretariats = async (parsed: SecretariatsType) => {
       where: { nome: nome },
     });
     if (!!secretariat)
-      throw new CError({ error: "Secretaria já cadastrada" }, 409);
+      throw new CError({ error: "Secretaria já cadastrada." }, 409);
 
     await prisma.secretaria.create({ data: { nome } });
     return "Secretaria cadastrada com sucesso.";

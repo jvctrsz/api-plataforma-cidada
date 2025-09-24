@@ -1,10 +1,12 @@
 import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
 import userRegistry from "./Registries/userRegistry";
 import authRegistry from "./Registries/authRegistry";
+import secretariatsRegistry from "./Registries/secretariatsRegistry";
 
 const generator = new OpenApiGeneratorV3([
   ...authRegistry.definitions,
   ...userRegistry.definitions,
+  ...secretariatsRegistry.definitions,
 ]);
 
 const openApiDoc = generator.generateDocument({

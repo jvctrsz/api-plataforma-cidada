@@ -10,7 +10,7 @@ export const permission = async (
     const role = req.role;
     if (role === "usuario")
       throw new CError(
-        { error: "Usuário não tem permissão para esta operação" },
+        { error: "Usuário não tem permissão para esta operação." },
         403
       );
     next();
