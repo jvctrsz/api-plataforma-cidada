@@ -22,5 +22,11 @@ secretariatsRouter.get(
   authToken,
   secretariatsController.show
 );
+secretariatsRouter.put(
+  "/secretarias/:id",
+  authToken,
+  permission,
+  secretariatsController.update
+);
 
 export default secretariatsRouter;

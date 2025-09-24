@@ -22,7 +22,20 @@ const secretariatsNotFound = {
     },
   },
 };
+const secretariatExisting = {
+  description: "Secretaria já cadastrada.",
+  content: {
+    "application/json": {
+      schema: z.object({
+        error: z
+          .string()
+          .openapi({ example: "Já existe uma secretaria com este nome" }),
+      }),
+    },
+  },
+};
 
+//post
 secretariatsRegistry.registerPath({
   method: "post",
   path: "/api/secretarias",
@@ -63,20 +76,60 @@ secretariatsRegistry.registerPath({
         },
       },
     },
-    "409": {
-      description: "Secretaria já cadastrada.",
-      content: {
-        "application/json": {
-          schema: z.object({
-            error: z.string().openapi({ example: "Secretaria já cadastrada." }),
-          }),
-        },
-      },
-    },
+    "409": secretariatExisting,
     "500": internalError,
   },
 });
 
+//put
+secretariatsRegistry.registerPath({
+  method: "put",
+  path: "/api/secretarias/{id}",
+  summary: "Edita uma secretaria.",
+  description:
+    'Usuários com role do tipo "usario" não podem editar secretarias.',
+  tags: ["Secretaria"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "application/json": { schema: postSecretariatsScheme },
+      },
+    },
+  },
+  responses: {
+    "201": {
+      description: "Secretaria editada com sucesso",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Secretaria editada com sucesso." }),
+          }),
+        },
+      },
+    },
+    "401": unauthorized,
+    "403": {
+      description: "Usuário sem permissão.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Usuário não tem permissão para esta operação",
+            }),
+          }),
+        },
+      },
+    },
+    "404": secretariatsNotFound,
+    "409": secretariatExisting,
+    "500": internalError,
+  },
+});
+
+//get
 secretariatsRegistry.registerPath({
   method: "get",
   path: "/api/secretarias",
@@ -96,6 +149,7 @@ secretariatsRegistry.registerPath({
   },
 });
 
+//get index
 secretariatsRegistry.registerPath({
   method: "get",
   path: "/api/secretarias/{id}",
