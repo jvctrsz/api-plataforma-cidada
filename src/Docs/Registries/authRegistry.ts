@@ -114,7 +114,7 @@ authRegistry.registerPath({
 authRegistry.registerPath({
   method: "post",
   path: "/api/auth/ativar-conta/{token}",
-  summary: "Faz o login do usuário.",
+  summary: "Ativa a conta do usuário.",
   description:
     "Rota para ativar a conta do usuário, esse token sera enviado para o email do usuário quando ele criar a conta. Ou quando o usuário tentar fazer um login estando com a conta inativa.",
   tags: ["Autenticação"],
