@@ -47,7 +47,8 @@ model solicitacao {
   cidade        String     @db.VarChar(100)
   uf            String     @db.Char(2)
   cep           String     @db.Char(8)
-  observacao    String     @db.VarChar(500)
+  descricao     String     @db.VarChar(180)
+  observacao    String?    @db.VarChar(500)
   status        Status     @default(criado)
   secretaria_id Int
   usuarios_id   Int
