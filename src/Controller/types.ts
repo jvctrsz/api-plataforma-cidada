@@ -17,3 +17,21 @@ export interface SecretariatsType {
   nome: string;
   ativo?: boolean;
 }
+
+export type StatusType = "criado" | "pendente" | "andamento" | "finalizado";
+export interface RequestsTypes {
+  id: number;
+  codigo: string;
+  endereco: string;
+  numero: string;
+  referencia: string;
+  bairro: string;
+  cidade: string;
+  uf: string;
+  cep: string;
+  descricao: string;
+  observacao: string;
+  status: StatusType;
+  secretaria_id: number;
+  usuarios_id: number;
+}
