@@ -34,5 +34,17 @@ secretariatsRouter.delete(
   permission,
   secretariatsController.destroy
 );
+secretariatsRouter.post(
+  "/secretarias/ativar/:id",
+  authToken,
+  permission,
+  secretariatsController.active
+);
+secretariatsRouter.post(
+  "/secretarias/desativar/:id",
+  authToken,
+  permission,
+  secretariatsController.deactive
+);
 
 export default secretariatsRouter;

@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "public"."Status" AS ENUM ('criado', 'pendente', 'andamento', 'finalizado');
+
+-- CreateEnum
 CREATE TYPE "public"."Role" AS ENUM ('usuario', 'admin');
 
 -- CreateTable
@@ -22,8 +25,8 @@ CREATE TABLE "public"."usuarios" (
 -- CreateTable
 CREATE TABLE "public"."secretaria" (
     "id" SERIAL NOT NULL,
-    "nome" VARCHAR(40),
-    "status" BOOLEAN NOT NULL DEFAULT true,
+    "nome" VARCHAR(40) NOT NULL,
+    "ativo" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "secretaria_pkey" PRIMARY KEY ("id")
 );
@@ -40,7 +43,7 @@ CREATE TABLE "public"."solicitacao" (
     "uf" CHAR(2) NOT NULL,
     "cep" CHAR(8) NOT NULL,
     "observacao" VARCHAR(500) NOT NULL,
-    "status" CHAR(1) NOT NULL DEFAULT 'N',
+    "status" "public"."Status" NOT NULL DEFAULT 'criado',
     "secretaria_id" INTEGER NOT NULL,
     "usuarios_id" INTEGER NOT NULL,
 
@@ -55,6 +58,9 @@ CREATE UNIQUE INDEX "usuarios_cpf_key" ON "public"."usuarios"("cpf");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "usuarios_google_id_key" ON "public"."usuarios"("google_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "secretaria_nome_key" ON "public"."secretaria"("nome");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "solicitacao_codigo_key" ON "public"."solicitacao"("codigo");

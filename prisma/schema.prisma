@@ -7,11 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  usuario
-  admin
-}
-
 model usuarios {
   id            Int           @id @default(autoincrement())
   nome          String        @db.VarChar(100)
@@ -35,7 +30,13 @@ model secretaria {
   solicitacao solicitacao[]
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+enum Status {
+  criado
+  pendente
+  andamento
+  finalizado
+}
+
 model solicitacao {
   id            Int        @id @default(autoincrement())
   codigo        String     @unique @db.VarChar(4)
@@ -47,9 +48,14 @@ model solicitacao {
   uf            String     @db.Char(2)
   cep           String     @db.Char(8)
   observacao    String     @db.VarChar(500)
-  status        String     @default("N") @db.Char(1)
+  status        Status     @default(criado)
   secretaria_id Int
   usuarios_id   Int
   secretaria    secretaria @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
   usuarios      usuarios   @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
+}
+
+enum Role {
+  usuario
+  admin
 }
