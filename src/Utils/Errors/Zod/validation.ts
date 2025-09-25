@@ -1,5 +1,6 @@
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import z from "zod";
+import { isValidCpf } from "../../Functions/isValidCpf";
 extendZodWithOpenApi(z);
 
 export const stringRequired = { error: "deve ser uma string." };
@@ -17,7 +18,8 @@ export const cpf = z
   .string(stringRequired)
   .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, {
     error: "deve ser no formato 000.000.000-00.",
-  });
+  })
+  .refine(isValidCpf, "Digite um cpf válido.");
 export const email = z
   .email({ error: "Deve ser um email válido." })
   .openapi({ example: "teste@gmail.com" });
