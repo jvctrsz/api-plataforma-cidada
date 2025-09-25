@@ -206,4 +206,84 @@ secretariatsRegistry.registerPath({
     "500": internalError,
   },
 });
+
+//ativar
+secretariatsRegistry.registerPath({
+  method: "post",
+  path: "/api/secretarias/ativar/{id}",
+  summary: "Ativa uma secretaria.",
+  tags: ["Secretarias"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Secretaria ativada com sucesso.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Secretaria ativada com sucesso." }),
+          }),
+        },
+      },
+    },
+    "401": unauthorized,
+    "403": notAllowed,
+    "404": secretariatsNotFound,
+    "409": {
+      description: "Secretaria já está ativa",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Secretaria já está ativa.",
+            }),
+          }),
+        },
+      },
+    },
+    "500": internalError,
+  },
+});
+secretariatsRegistry.registerPath({
+  method: "post",
+  path: "/api/secretarias/desativar/{id}",
+  summary: "Desativa uma secretaria.",
+  tags: ["Secretarias"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Secretaria desativada com sucesso.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Secretaria desativada com sucesso." }),
+          }),
+        },
+      },
+    },
+    "401": unauthorized,
+    "403": notAllowed,
+    "404": secretariatsNotFound,
+    "409": {
+      description: "Secretaria já está desativada",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Secretaria já está desativada.",
+            }),
+          }),
+        },
+      },
+    },
+    "500": internalError,
+  },
+});
 export default secretariatsRegistry;
