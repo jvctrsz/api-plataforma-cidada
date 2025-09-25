@@ -7,6 +7,7 @@ import z from "zod";
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import cors from "cors";
 import secretariatsRouter from "./Routes/secretariatsRoutes";
+import requestRouter from "./Routes/requestRoutes";
 
 extendZodWithOpenApi(z);
 
@@ -43,6 +44,7 @@ app.use(
 app.use("/api", userRouter);
 app.use("/api", authRouter);
 app.use("/api", secretariatsRouter);
+app.use("/api", requestRouter);
 
 app.listen(port, () => {
   console.log("servidor rodando em http://localhost:3000");
