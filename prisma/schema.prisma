@@ -52,6 +52,8 @@ model solicitacao {
   status        Status     @default(criado)
   secretaria_id Int
   usuarios_id   Int
+  criado_em     DateTime   @default(now())
+  atualizado_em DateTime?
   secretaria    secretaria @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
   usuarios      usuarios   @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
 }

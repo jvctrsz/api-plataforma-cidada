@@ -30,6 +30,8 @@ export const postRequestScheme = z.object({
   observacao: z.string(stringRequired).optional().openapi({
     example: "Esta queimada a um mês, e ja queimou três vezes este ano.",
   }),
+  criado_em: z.date(stringRequired).optional(),
+  atualizado_em: z.date(stringRequired).optional(),
   status: z.string(stringRequired).openapi({ enum: requesStatusEnum }),
   secretaria_id: z.string(stringRequired).openapi({ example: "1" }),
   usuarios_id: z.string(stringRequired).openapi({ example: "1" }),

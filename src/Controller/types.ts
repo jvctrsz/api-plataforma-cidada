@@ -24,14 +24,16 @@ export interface RequestsTypes {
   codigo: string;
   endereco: string;
   numero: string;
-  referencia: string;
+  referencia?: string;
   bairro: string;
   cidade: string;
   uf: string;
   cep: string;
   descricao: string;
-  observacao: string;
+  observacao?: string;
   status: StatusType;
+  criado_em: string;
+  atualizado_em: string;
   secretaria_id: number;
   usuarios_id: number;
 }
