@@ -30,7 +30,7 @@ export const updateSecretariats = async (
     });
     if (!!existingName)
       throw new CError(
-        { error: "Já existe uma secretaria com este nome" },
+        { error: "Já existe uma secretaria com este nome." },
         409
       );
 
@@ -49,6 +49,7 @@ export const updateSecretariats = async (
         telefone,
         uf,
         whatsapp,
+        atualizado_em: new Date(),
       },
     });
     return "Secretaria editada com sucesso.";
