@@ -1,5 +1,6 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import {
+  putSecretariatsScheme,
   getSecretariatsScheme,
   postSecretariatsScheme,
 } from "../../Schemes/secretariats.scheme";
@@ -94,7 +95,7 @@ secretariatsRegistry.registerPath({
     params: idParams,
     body: {
       content: {
-        "application/json": { schema: postSecretariatsScheme },
+        "application/json": { schema: putSecretariatsScheme },
       },
     },
   },
@@ -247,6 +248,7 @@ secretariatsRegistry.registerPath({
     "500": internalError,
   },
 });
+//desativar
 secretariatsRegistry.registerPath({
   method: "post",
   path: "/api/secretarias/desativar/{id}",

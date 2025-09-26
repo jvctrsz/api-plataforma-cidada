@@ -21,13 +21,50 @@ model usuarios {
   redefinido_em DateTime?
   valido        Boolean       @default(false)
   solicitacao   solicitacao[]
+  secretaria    secretaria?
 }
 
 model secretaria {
-  id          Int           @id @default(autoincrement())
-  nome        String        @unique @db.VarChar(40)
-  ativo       Boolean       @default(true)
-  solicitacao solicitacao[]
+  id              Int           @id @default(autoincrement())
+  nome            String        @unique @db.VarChar(150)
+  ativo           Boolean       @default(true)
+  celular         String?       @db.VarChar(15)
+  telefone        String?       @db.VarChar(14)
+  email           String?       @db.VarChar(150)
+  logradouro      String?       @db.VarChar(150)
+  numero          String?       @db.VarChar(10)
+  cep             String?       @db.VarChar(9)
+  bairro          String?       @db.VarChar(30)
+  cidade          String?       @db.VarChar(100)
+  uf              String?       @db.Char(2)
+  descricao       String?       @db.VarChar(255)
+  criado_em       DateTime?     @default(now())
+  atualizado_em   DateTime?
+  whatsapp        String?       @db.VarChar(15)
+  secretario_nome String
+  secretario_id   String
+  usuarios        usuarios      @relation(fields: [id], references: [id])
+  solicitacao     solicitacao[]
+}
+
+model solicitacao {
+  id            Int        @id @default(autoincrement())
+  endereco      String     @db.VarChar(150)
+  numero        String     @db.VarChar(10)
+  referencia    String?    @db.VarChar(100)
+  bairro        String     @db.VarChar(100)
+  cidade        String     @db.VarChar(100)
+  uf            String     @db.Char(2)
+  cep           String     @db.Char(9)
+  observacao    String?    @db.VarChar(500)
+  status        Status     @default(criado)
+  secretaria_id Int
+  usuarios_id   Int
+  descricao     String     @db.VarChar(180)
+  atualizado_em DateTime?
+  criado_em     DateTime   @default(now())
+  secretaria    secretaria @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
+  usuarios      usuarios   @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
 }
 
 enum Status {
@@ -37,28 +74,8 @@ enum Status {
   finalizado
 }
 
-model solicitacao {
-  id            Int        @id @default(autoincrement())
-  codigo        String     @unique @db.VarChar(4)
-  endereco      String     @db.VarChar(150)
-  numero        String     @db.VarChar(10)
-  referencia    String?    @db.VarChar(100)
-  bairro        String     @db.VarChar(100)
-  cidade        String     @db.VarChar(100)
-  uf            String     @db.Char(2)
-  cep           String     @db.Char(8)
-  descricao     String     @db.VarChar(180)
-  observacao    String?    @db.VarChar(500)
-  status        Status     @default(criado)
-  secretaria_id Int
-  usuarios_id   Int
-  criado_em     DateTime   @default(now())
-  atualizado_em DateTime?
-  secretaria    secretaria @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
-  usuarios      usuarios   @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
-}
-
 enum Role {
   usuario
+  funcionario
   admin
 }

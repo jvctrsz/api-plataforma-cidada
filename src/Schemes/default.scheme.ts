@@ -18,6 +18,8 @@ export const tokenParams = z.object({
   token: z.string().openapi({ example: tokenExample }),
 });
 
+export const isoDateFormat = z.iso.datetime("deve ser no formato ISO.");
+
 export const exampleString = { example: "deve ser uma string." };
 export const exampleEmail = { example: "Deve ser um email válido." };
 

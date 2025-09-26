@@ -10,8 +10,8 @@ export const requesStatusEnum = [
 
 export const cep = z
   .string(stringRequired)
-  .regex(/^\d{5}-?\d{3}$/, "deve ser no formato 00000-000.")
-  .max(8, "deve ter no máximo 8 caracteres.");
+  .regex(/^\d{5}-\d{3}$/, "deve ser no formato 00000-000.")
+  .max(9, "deve ter no máximo 9 caracteres.");
 
 export const postRequestScheme = z.object({
   codigo: z

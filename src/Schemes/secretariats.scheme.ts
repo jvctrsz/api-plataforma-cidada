@@ -1,12 +1,77 @@
 import z from "zod";
-import { stringRequired } from "../Utils/Errors/Zod/validation";
+import {
+  celular,
+  email,
+  stringRequired,
+  telefone,
+} from "../Utils/Errors/Zod/validation";
+import { cep } from "./request.scheme";
+import { isoDateFormat } from "./default.scheme";
+
+export const defaultSecretariatScheme = {
+  nome: z
+    .string(stringRequired)
+    .max(150, "deve ter no máximo 150 caracteres.")
+    .openapi({ example: "Secretaria de saúde" }),
+  celular: celular.optional(),
+  telefone: telefone.optional(),
+  email: email.optional(),
+  logradouro: z
+    .string(stringRequired)
+    .max(150, "deve ter no máximo 150 caracteres.")
+    .openapi({ example: "xaxins" })
+    .optional(),
+  numero: z
+    .string(stringRequired)
+    .max(10, "deve ter no máximo 10 caracteres.")
+    .openapi({ example: "10" })
+    .optional(),
+  cep: cep,
+  bairro: z
+    .string(stringRequired)
+    .max(30, "deve ter no máximo 150 caracteres.")
+    .openapi({ example: "jd violetas" })
+    .optional(),
+  cidade: z
+    .string(stringRequired)
+    .max(100, "deve ter no máximo 100 caracteres.")
+    .openapi({ example: "sinop" })
+    .optional(),
+  uf: z
+    .string(stringRequired)
+    .max(2, "deve ter no máximo 2 caracteres.")
+    .openapi({ example: "MT" })
+    .optional(),
+  descricao: z
+    .string(stringRequired)
+    .max(255, "deve ter no máximo 255 caracteres.")
+    .openapi({ example: "descricao da secretaria" })
+    .optional(),
+  whatsapp: celular,
+};
+
+export const userSecretariatScheme = {
+  secretario_nome: z
+    .string(stringRequired)
+    .openapi({ example: "Fernando Da Silva" }),
+  secretario_id: z.string(stringRequired).openapi({ example: "1" }),
+};
 
 export const postSecretariatsScheme = z.object({
-  nome: z.string(stringRequired).openapi({ example: "Secretaria de saúde" }),
+  ...defaultSecretariatScheme,
+  ...userSecretariatScheme,
+});
+
+export const putSecretariatsScheme = z.object({
+  ...defaultSecretariatScheme,
+  atualizado_em: isoDateFormat,
 });
 
 export const getSecretariatsScheme = z.object({
   id: z.string(stringRequired).openapi({ example: 1 }),
-  nome: z.string(stringRequired).openapi({ example: "Secretaria de saúde" }),
-  ativo: z.string(stringRequired).openapi({ example: true }),
+  ativo: z.boolean(stringRequired).openapi({ example: true }),
+  ...defaultSecretariatScheme,
+  ...userSecretariatScheme,
+  criado_em: isoDateFormat,
+  atualizado_em: isoDateFormat,
 });
