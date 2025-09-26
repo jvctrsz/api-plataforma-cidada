@@ -2,16 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.recovery = void 0;
 const CError_1 = require("../../Utils/Errors/CError");
-const zod_1 = require("zod");
-const validation_1 = require("../../Utils/Errors/Zod/validation");
 const recoveryUsers_1 = require("../../Services/Users/recoveryUsers");
 const zodParse_1 = require("../../Utils/Functions/zodParse");
-const validation = (0, zod_1.object)({
-    email: validation_1.email,
-});
+const user_scheme_1 = require("../../Schemes/user.scheme");
 const recovery = async (req, res) => {
     try {
-        const parsed = (0, zodParse_1.zodParse)(req, validation);
+        const parsed = (0, zodParse_1.zodParse)(req, user_scheme_1.recoveryScheme);
         const message = await (0, recoveryUsers_1.recoveryUsers)(parsed?.data);
         res.status(200).json({ message });
     }

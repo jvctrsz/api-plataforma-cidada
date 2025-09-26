@@ -3,19 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authRegister = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
 const transporter_1 = require("../../Utils/Functions/transporter");
+const redefineHTML_1 = require("../Users/Utils/redefineHTML");
 const authRegister = async (user) => {
     try {
         const hash = process.env.LOGIN_JWT_SECRET;
-        console.log("user_id", user.id);
         const token = (0, jsonwebtoken_1.sign)({ id: user.id }, hash, { expiresIn: "1d" });
-        console.log("token", token);
+        const html = (0, redefineHTML_1.redefineAndLoginHTML)(user.nome, token, "ativar");
         const transporter = (0, transporter_1.createTransporter)();
-        await transporter.sendMail({
-            to: user.email,
-            from: process.env.EMAIL_USER,
-            subject: "Validação de Conta",
-            text: token,
-        });
+        await transporter.sendMail((0, transporter_1.sendLoginActivation)(user.email, html));
         return "Usuário criado - email de confirmação enviado.";
     }
     catch (error) {

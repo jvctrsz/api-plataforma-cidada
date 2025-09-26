@@ -1,13 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.redefineHTML = void 0;
-const redefineHTML = (nome, token) => `
+exports.redefineAndLoginHTML = void 0;
+const htmlInfo = {
+    redefinir: {
+        title: "Redefinição de Senha",
+        message: "Recebemos uma solicitação para redefinir a sua senha. Clique no botão abaixo para criar uma nova senha para a sua conta.",
+        alert: "Se você não solicitou a redefinição, por favor, ignore este e-mail.",
+        button: "Redefinir Senha",
+    },
+    ativar: {
+        title: "Ativação de Conta",
+        message: "Recebemos uma solicitação para ativar a sua senha. Clique no botão abaixo para realizar a ativação da sua conta.",
+        button: "Ativar Conta",
+    },
+};
+const redefineAndLoginHTML = (nome, token, type) => {
+    const infos = htmlInfo[type];
+    return `
     <!DOCTYPE html>
     <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Redefinição de Senha</title>
+        <title>${infos.title}</title>
         <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -73,13 +88,13 @@ const redefineHTML = (nome, token) => `
     <body>
         <div class="container">
             <div class="header">
-                <h2>Redefinição de Senha</h2>
+                <h2>${infos.title}</h2>
             </div>
             <div class="content">
                 <h1>Olá, ${nome}!</h1>
-                <p>Recebemos uma solicitação para redefinir a sua senha. Clique no botão abaixo para criar uma nova senha para a sua conta.</p>
-                <p>Se você não solicitou a redefinição, por favor, ignore este e-mail.</p>
-                <a href="${token}" class="button">Redefinir Senha</a>
+                <p>${infos.message}</p>
+                <p>${infos.alert ?? ""}</p>
+                <a href="${token}" class="button">${infos.button}</a>
                 <p style="margin-top: 30px;">Se o botão não funcionar, copie e cole o link abaixo em seu navegador:</p>
                 <p class="link-text">${token}</p>
             </div>
@@ -90,4 +105,5 @@ const redefineHTML = (nome, token) => `
     </body>
     </html>
 `;
-exports.redefineHTML = redefineHTML;
+};
+exports.redefineAndLoginHTML = redefineAndLoginHTML;

@@ -9,6 +9,7 @@ const redefine_1 = require("../Models/Users/redefine");
 const show_1 = require("../Models/Users/show");
 const store_1 = require("../Models/Users/store");
 const update_1 = require("../Models/Users/update");
+const user_1 = require("../Models/Users/user");
 exports.usersController = {
     store: store_1.store,
     index: Users_1.index,
@@ -18,4 +19,5 @@ exports.usersController = {
     change: change_1.change,
     recovery: recovey_1.recovery,
     redefine: redefine_1.redefine,
+    user: user_1.user,
 };

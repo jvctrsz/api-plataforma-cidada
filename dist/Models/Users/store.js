@@ -1,22 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.store = exports.postUserScheme = void 0;
-const zod_1 = require("zod");
+exports.store = void 0;
 const zodParse_1 = require("../../Utils/Functions/zodParse");
 const CError_1 = require("../../Utils/Errors/CError");
-const validation_1 = require("../../Utils/Errors/Zod/validation");
 const createUser_1 = require("../../Services/Users/createUser");
-exports.postUserScheme = (0, zod_1.object)({
-    nome: (0, zod_1.string)(validation_1.stringRequired),
-    email: (0, zod_1.email)({ error: "Deve ser um email válido." }),
-    cpf: validation_1.cpf,
-    celular: validation_1.celular,
-    telefone: validation_1.telefone.optional(),
-    senha: (0, zod_1.string)(validation_1.stringRequired),
-});
+const user_scheme_1 = require("../../Schemes/user.scheme");
 const store = async (req, res) => {
     try {
-        const parsed = (0, zodParse_1.zodParse)(req, exports.postUserScheme);
+        const parsed = (0, zodParse_1.zodParse)(req, user_scheme_1.postUserScheme);
         const user = await (0, createUser_1.createUser)(parsed?.data);
         res.status(201).json(user);
     }

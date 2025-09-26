@@ -15,7 +15,7 @@ const recoveryUsers = async (parsed) => {
             throw new CError_1.CError({ error: "Usuário não encontrado." }, 404);
         const token = (0, jsonwebtoken_1.sign)({ id: user?.id }, SECRET_HASH, { expiresIn: "10m" });
         const transporter = (0, transporter_1.createTransporter)();
-        const html = (0, redefineHTML_1.redefineHTML)(user.nome, token);
+        const html = (0, redefineHTML_1.redefineAndLoginHTML)(user.nome, token, "redefinir");
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: email,

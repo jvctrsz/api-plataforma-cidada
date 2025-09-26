@@ -4,17 +4,11 @@ exports.redefine = void 0;
 const CError_1 = require("../../Utils/Errors/CError");
 const zodParse_1 = require("../../Utils/Functions/zodParse");
 const redefineUsers_1 = require("../../Services/Users/redefineUsers");
-const zod_1 = require("zod");
-const validation_1 = require("../../Utils/Errors/Zod/validation");
-const validation = (0, zod_1.object)({
-    email: validation_1.email,
-    nova_senha: (0, zod_1.string)(validation_1.stringRequired),
-    confirma_senha: (0, zod_1.string)(validation_1.stringRequired),
-});
+const user_scheme_1 = require("../../Schemes/user.scheme");
 const redefine = async (req, res) => {
     try {
         const { token } = req.params;
-        const parsed = (0, zodParse_1.zodParse)(req, validation);
+        const parsed = (0, zodParse_1.zodParse)(req, user_scheme_1.redefineScheme);
         const message = await (0, redefineUsers_1.redefineUsers)(token, parsed?.data);
         res.status(200).json({ message });
     }

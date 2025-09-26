@@ -12,6 +12,7 @@ const destroyUser = async (id) => {
         });
         if (!user)
             throw new CError_1.CError({ error: "Usuário não encontrado." }, 404);
+        await prisma_1.prisma.usuarios.delete({ where: { id } });
         return "Usuário deletado com sucesso.";
     }
     catch (error) {

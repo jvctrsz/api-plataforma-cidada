@@ -5,6 +5,7 @@ const usersControllers_1 = require("../Controller/usersControllers");
 const authToken_1 = require("../Services/MiddleWares/authToken");
 const userRouter = (0, express_1.Router)();
 userRouter.post("/usuarios", authToken_1.authToken, usersControllers_1.usersController.store);
+userRouter.get("/usuario", authToken_1.authToken, usersControllers_1.usersController.user);
 userRouter.get("/usuarios", authToken_1.authToken, usersControllers_1.usersController.index);
 userRouter.get("/usuarios/:id", authToken_1.authToken, usersControllers_1.usersController.show);
 userRouter.delete("/usuarios/:id", authToken_1.authToken, usersControllers_1.usersController.destroy);
