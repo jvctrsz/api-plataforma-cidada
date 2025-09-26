@@ -30,7 +30,7 @@ const secretariatExisting = {
       schema: z.object({
         error: z
           .string()
-          .openapi({ example: "Já existe uma secretaria com este nome" }),
+          .openapi({ example: "Já existe uma secretaria com este nome." }),
       }),
     },
   },
@@ -43,6 +43,16 @@ const notAllowed = {
         error: z.string().openapi({
           example: "Usuário não tem permissão para esta operação",
         }),
+      }),
+    },
+  },
+};
+export const secretaryNotFound = {
+  description: "Secretario não encontrado.",
+  content: {
+    "application/json": {
+      schema: z.object({
+        error: z.string().openapi({ example: "Secretario não encontrado." }),
       }),
     },
   },
@@ -78,6 +88,7 @@ secretariatsRegistry.registerPath({
     },
     "401": unauthorized,
     "403": notAllowed,
+    "404": secretaryNotFound,
     "409": secretariatExisting,
     "500": internalError,
   },

@@ -51,9 +51,6 @@ export const defaultSecretariatScheme = {
 };
 
 export const userSecretariatScheme = {
-  secretario_nome: z
-    .string(stringRequired)
-    .openapi({ example: "Fernando Da Silva" }),
   secretario_id: z.string(stringRequired).openapi({ example: "1" }),
 };
 
@@ -72,6 +69,9 @@ export const getSecretariatsScheme = z.object({
   ativo: z.boolean(stringRequired).openapi({ example: true }),
   ...defaultSecretariatScheme,
   ...userSecretariatScheme,
+  secretario_nome: z
+    .string(stringRequired)
+    .openapi({ example: "Fernando Da Silva" }),
   criado_em: isoDateFormat,
   atualizado_em: isoDateFormat,
 });

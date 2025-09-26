@@ -11,7 +11,20 @@ export const updateSecretariats = async (
     if (!secretariat)
       throw new CError({ error: "Secretaria não encontrada" }, 404);
 
-    const { nome } = parsed;
+    const {
+      nome,
+      bairro,
+      celular,
+      cep,
+      cidade,
+      descricao,
+      email,
+      logradouro,
+      numero,
+      telefone,
+      uf,
+      whatsapp,
+    } = parsed;
     const existingName = await prisma.secretaria.findUnique({
       where: { nome, AND: { id: { not: id } } },
     });
@@ -21,7 +34,23 @@ export const updateSecretariats = async (
         409
       );
 
-    await prisma.secretaria.update({ where: { id }, data: { nome } });
+    await prisma.secretaria.update({
+      where: { id },
+      data: {
+        nome,
+        bairro,
+        celular,
+        cep,
+        cidade,
+        descricao,
+        email,
+        logradouro,
+        numero,
+        telefone,
+        uf,
+        whatsapp,
+      },
+    });
     return "Secretaria editada com sucesso.";
   } catch (error) {
     throw error;
