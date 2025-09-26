@@ -13,7 +13,7 @@ import z from "zod";
 
 const secretariatsRegistry = new OpenAPIRegistry();
 
-const secretariatsNotFound = {
+export const secretariatsNotFound = {
   description: "Secretaria não encontrada",
   content: {
     "application/json": {

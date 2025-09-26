@@ -69,7 +69,6 @@ const defaultRequestScheme = {
   observacao,
   descricao,
   secretaria_id,
-  usuarios_id: secretaria_id,
 };
 
 export const postRequestScheme = z.object(defaultRequestScheme);
@@ -88,6 +87,7 @@ export const putRequestScheme = z.object({
 export const getRequestScheme = z.object({
   id: secretaria_id,
   ...defaultRequestScheme,
+  usuarios_id: secretaria_id,
   status: requestStatus,
   criado_em: isoDateFormat,
   atualizado_em: isoDateFormat,

@@ -35,9 +35,8 @@ export interface SecretariatsType {
 }
 
 export type StatusType = "criado" | "pendente" | "andamento" | "finalizado";
-export interface RequestsTypes {
-  id: number;
-  codigo: string;
+
+export interface RequestFields {
   endereco: string;
   numero: string;
   referencia?: string;
@@ -47,9 +46,13 @@ export interface RequestsTypes {
   cep: string;
   descricao: string;
   observacao?: string;
+  secretaria_id: string;
+}
+
+export interface RequestsTypes extends RequestFields {
+  id: number;
   status: StatusType;
   criado_em: string;
   atualizado_em: string;
-  secretaria_id: number;
   usuarios_id: number;
 }
