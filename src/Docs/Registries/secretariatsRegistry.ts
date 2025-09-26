@@ -75,7 +75,7 @@ secretariatsRegistry.registerPath({
   },
   responses: {
     "201": {
-      description: "Usuário cadastrado com sucesso",
+      description: "Secretaria cadastrado com sucesso",
       content: {
         "application/json": {
           schema: z.object({

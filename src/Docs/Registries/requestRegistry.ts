@@ -1,10 +1,14 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
-import { postRequestScheme } from "../../Schemes/request.scheme";
+import {
+  getRequestScheme,
+  postRequestScheme,
+} from "../../Schemes/request.scheme";
 import z from "zod";
 import { internalError, unauthorized } from "../../Schemes/default.scheme";
 
 const requestRegistry = new OpenAPIRegistry();
 
+//post
 requestRegistry.registerPath({
   method: "post",
   path: "/api/solicitacoes",
@@ -65,6 +69,25 @@ requestRegistry.registerPath({
         },
       },
     },
+    "500": internalError,
+  },
+});
+
+requestRegistry.registerPath({
+  method: "get",
+  path: "/api/solicitacoes",
+  summary: "Retorna todas as solicitações.",
+  tags: ["Solicitações"],
+  responses: {
+    "200": {
+      description: "Retorna um array com todas as solicitações",
+      content: {
+        "application/json": {
+          schema: z.array(getRequestScheme),
+        },
+      },
+    },
+    "401": unauthorized,
     "500": internalError,
   },
 });
