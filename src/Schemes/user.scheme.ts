@@ -7,34 +7,43 @@ import {
   stringRequired,
   telefone,
 } from "../Utils/Errors/Zod/validation";
-import { exampleString } from "./default.scheme";
+import { exampleString, isoDateFormat } from "./default.scheme";
 
 extendZodWithOpenApi(z);
 
+const id = z.string(stringRequired).openapi({ example: 3 });
+const nome = z
+  .string(stringRequired)
+  .max(100, "deve ter no máximo 100 caracteres.")
+  .openapi({ example: "Fernando da Silva" });
+const role = z.enum(["usuario", "funcionario", "admin"]);
+const valido = z.boolean();
+const senha = z.string(stringRequired).openapi({ example: "12345" });
+
 export const postUserScheme = z.object({
-  nome: z.string(stringRequired).openapi({ example: "Fernando da Silva" }),
-  email: z.email({ error: "Deve ser um email válido." }),
+  nome: nome,
+  email: email,
   cpf: cpf,
   celular: celular,
   telefone: telefone.optional(),
-  senha: z.string(stringRequired).openapi({ example: "12345" }),
+  senha: senha,
 });
 
 export const getUserScheme = z.object({
-  id: z.string().openapi({ example: 3 }),
-  nome: z.string().openapi({ example: "Fernando da Silva" }),
-  email: z.email().openapi({ example: "test2e@gmail.com" }),
-  cpf: z.email().openapi({ example: "000.000.000-00" }),
-  celular: z.string().openapi({ example: "(66) 99999-9999" }),
-  telefone: z.string().openapi({ example: "(66) 9999-9999" }),
-  role: z.string().openapi({ example: "usuario" }),
-  criado_em: z.date().openapi({ example: "2025-09-20T02:40:59.540Z" }),
-  valido: z.boolean(),
+  id: id,
+  nome: nome,
+  email: email,
+  cpf: cpf,
+  celular: celular,
+  telefone: telefone,
+  role: role,
+  criado_em: isoDateFormat,
+  valido: valido,
 });
 
 export const putUserScheme = z.object({
-  nome: z.string(stringRequired).optional(),
-  email: z.email({ error: "Deve ser um email válido." }).optional(),
+  nome: nome.optional(),
+  email: email.optional(),
   cpf: cpf.optional(),
   celular: celular.optional(),
   telefone: telefone.optional(),
@@ -46,10 +55,12 @@ export const putErrorScheme = z.array(
   })
 );
 
+const novasenha = z.string(stringRequired).openapi({ example: "12345" });
+
 export const changeScheme = z.object({
   senha_atual: z.string(stringRequired).openapi({ example: "12345678" }),
-  nova_senha: z.string(stringRequired).openapi({ example: "12345" }),
-  confirma_senha: z.string(stringRequired).openapi({ example: "12345" }),
+  nova_senha: novasenha,
+  confirma_senha: novasenha,
 });
 
 export const recoveryScheme = z.object({
@@ -58,18 +69,18 @@ export const recoveryScheme = z.object({
 
 export const redefineScheme = z.object({
   email: email,
-  nova_senha: z.string(stringRequired).openapi({ example: "12345" }),
-  confirma_senha: z.string(stringRequired).openapi({ example: "12345" }),
+  nova_senha: novasenha,
+  confirma_senha: novasenha,
 });
 
 export const userScheme = z.object({
-  id: z.string().openapi({ example: 1 }),
-  nome: z.string().openapi({ example: "Fernando da Silva" }),
+  id: id,
+  nome: nome,
   email: email,
   cpf: cpf,
   celular: celular,
   telefone: telefone,
-  role: z.string().openapi({ enum: ["usuario", "admin"] }),
+  role: role,
   google_id: z.string().openapi({ enum: [null, 1] }),
-  criado_em: z.string().openapi({ example: "2025-09-20T02:38:55.947Z" }),
+  criado_em: isoDateFormat,
 });

@@ -16,6 +16,21 @@ export interface SecretariatsType {
   id?: number;
   nome: string;
   ativo?: boolean;
+  celular?: string;
+  telefone?: string;
+  email?: string;
+  logradouro?: string;
+  numero?: string;
+  cep?: string;
+  bairro?: string;
+  cidade?: string;
+  uf?: string;
+  descricao?: string;
+  criado_em?: string;
+  atualizado_em?: string;
+  whatsapp?: string;
+  secretario_nome: string;
+  secretario_id: string;
 }
 
 export type StatusType = "criado" | "pendente" | "andamento" | "finalizado";

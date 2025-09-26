@@ -22,4 +22,5 @@ export const cpf = z
   .refine(isValidCpf, "deve ser um cpf válido.");
 export const email = z
   .email({ error: "deve ser um email válido." })
+  .max(150, "deve ter no máximo 150 caracteres.")
   .openapi({ example: "teste@gmail.com" });
