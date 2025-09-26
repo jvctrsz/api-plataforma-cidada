@@ -36,7 +36,7 @@ export const createSecretariats = async (parsed: SecretariatsType) => {
     await prisma.secretaria.create({
       data: {
         nome,
-        secretario_id,
+        secretario_id: secretario_id!,
         secretario_nome: user.nome,
         bairro,
         celular,

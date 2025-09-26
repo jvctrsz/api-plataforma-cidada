@@ -26,7 +26,7 @@ export const defaultSecretariatScheme = {
     .max(10, "deve ter no máximo 10 caracteres.")
     .openapi({ example: "10" })
     .optional(),
-  cep: cep,
+  cep: cep.optional(),
   bairro: z
     .string(stringRequired)
     .max(30, "deve ter no máximo 150 caracteres.")
@@ -47,31 +47,27 @@ export const defaultSecretariatScheme = {
     .max(255, "deve ter no máximo 255 caracteres.")
     .openapi({ example: "descricao da secretaria" })
     .optional(),
-  whatsapp: celular,
+  whatsapp: celular.optional(),
 };
 
-export const userSecretariatScheme = {
-  secretario_id: z.string(stringRequired).openapi({ example: "1" }),
-};
+const secretario_id = z.string(stringRequired).openapi({ example: "1" });
+const secretario_nome = z
+  .string(stringRequired)
+  .openapi({ example: "Fernando Da Silva" });
 
 export const postSecretariatsScheme = z.object({
   ...defaultSecretariatScheme,
-  ...userSecretariatScheme,
+  secretario_id: secretario_id,
 });
 
-export const putSecretariatsScheme = z.object({
-  ...defaultSecretariatScheme,
-  atualizado_em: isoDateFormat,
-});
+export const putSecretariatsScheme = z.object(defaultSecretariatScheme);
 
 export const getSecretariatsScheme = z.object({
   id: z.string(stringRequired).openapi({ example: 1 }),
   ativo: z.boolean(stringRequired).openapi({ example: true }),
   ...defaultSecretariatScheme,
-  ...userSecretariatScheme,
-  secretario_nome: z
-    .string(stringRequired)
-    .openapi({ example: "Fernando Da Silva" }),
+  secretario_id: secretario_id,
+  secretario_nome: secretario_nome,
   criado_em: isoDateFormat,
   atualizado_em: isoDateFormat,
 });

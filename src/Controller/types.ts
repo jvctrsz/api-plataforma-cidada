@@ -29,8 +29,8 @@ export interface SecretariatsType {
   criado_em?: string;
   atualizado_em?: string;
   whatsapp?: string;
-  secretario_nome: string;
-  secretario_id: string;
+  secretario_nome?: string;
+  secretario_id?: string;
 }
 
 export type StatusType = "criado" | "pendente" | "andamento" | "finalizado";
