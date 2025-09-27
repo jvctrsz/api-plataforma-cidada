@@ -4,9 +4,24 @@ import {
   postRequestScheme,
 } from "../../Schemes/request.scheme";
 import z from "zod";
-import { internalError, unauthorized } from "../../Schemes/default.scheme";
+import {
+  idParams,
+  internalError,
+  unauthorized,
+} from "../../Schemes/default.scheme";
 
 const requestRegistry = new OpenAPIRegistry();
+
+export const requestNotFound = {
+  description: "Solicitação não encontrada",
+  content: {
+    "application/json": {
+      schema: z.object({
+        error: z.string().openapi({ example: "Solicitação não encontrada." }),
+      }),
+    },
+  },
+};
 
 //post
 requestRegistry.registerPath({
@@ -73,6 +88,7 @@ requestRegistry.registerPath({
   },
 });
 
+//get
 requestRegistry.registerPath({
   method: "get",
   path: "/api/solicitacoes",
@@ -88,6 +104,30 @@ requestRegistry.registerPath({
       },
     },
     "401": unauthorized,
+    "500": internalError,
+  },
+});
+
+//show
+requestRegistry.registerPath({
+  method: "get",
+  path: "/api/solicitacoes/{id}",
+  summary: "Retorna uma única solicitação.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Retorna uma solicitação",
+      content: {
+        "application/json": {
+          schema: getRequestScheme,
+        },
+      },
+    },
+    "401": unauthorized,
+    "404": requestNotFound,
     "500": internalError,
   },
 });
