@@ -1,5 +1,9 @@
 import { RedefinePassword } from "../../Models/Users/redefine";
-import { CError } from "../../Utils/Errors/CError";
+import {
+  BadRequestError,
+  CError,
+  NotFoundError,
+} from "../../Utils/Errors/CError";
 import { hashPassword } from "../../Utils/Functions/hashPassword";
 import { prisma } from "../../Utils/prisma";
 import { verifyPasswordToken } from "./Utils/functions";
@@ -19,7 +23,7 @@ export const redefineUsers = async (
     const user = await prisma.usuarios.findUnique({
       where: { id: Number(decoded?.id), AND: { email: { equals: email } } },
     });
-    if (!user) throw new CError({ error: "Usuário não encontrado." }, 404);
+    if (!user) throw new NotFoundError("Usuário não encontrado.");
 
     if (user.redefinido_em && decoded.iat * 1000 < user.redefinido_em.getTime())
       throw new CError(
@@ -28,10 +32,7 @@ export const redefineUsers = async (
       );
 
     if (confirma_senha !== nova_senha)
-      throw new CError(
-        { error: "Nova senha e confirma senha não coincidem." },
-        400
-      );
+      throw new BadRequestError("Nova senha e confirma senha não coincidem.");
 
     const hashNewPassoword = await hashPassword(nova_senha);
     await prisma.usuarios.update({

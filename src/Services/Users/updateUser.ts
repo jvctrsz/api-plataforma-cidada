@@ -1,12 +1,12 @@
 import { UserType } from "../../Controller/types";
-import { CError } from "../../Utils/Errors/CError";
+import { BadRequestError, ConflictError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 import { omitUser } from "./Utils/functions";
 
 export const updateUser = async (id: number, parsed: Partial<UserType>) => {
   try {
     const user = await prisma.usuarios.findUnique({ where: { id } });
-    if (!user) throw new CError({ error: "Usuário não encontrado." }, 404);
+    if (!user) throw new BadRequestError("Usuário não encontrado.");
 
     const { celular, cpf, email, nome, telefone } = parsed;
 
@@ -14,12 +14,12 @@ export const updateUser = async (id: number, parsed: Partial<UserType>) => {
       where: { email, AND: { id: { not: id } } },
     });
     if (!!existingEmail)
-      throw new CError({ error: "Já existe usuário com este email." }, 409);
+      throw new ConflictError("Já existe usuário com este email.");
     const existingCPF = await prisma.usuarios.findUnique({
       where: { cpf, AND: { id: { not: id } } },
     });
     if (!!existingCPF)
-      throw new CError({ error: "Já existe usuário com este cpf." }, 409);
+      throw new ConflictError("Já existe usuário com este cpf.");
     console.log(cpf?.length);
     const update = prisma.usuarios.update({
       where: { id },

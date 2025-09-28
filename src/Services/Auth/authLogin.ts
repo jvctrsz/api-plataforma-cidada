@@ -1,6 +1,11 @@
 import { sign } from "jsonwebtoken";
 import { LoginType } from "../../Models/Auth/login";
-import { CError } from "../../Utils/Errors/CError";
+import {
+  BadRequestError,
+  CError,
+  ForbiddenError,
+  ServerError,
+} from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 import argon2 from "argon2";
 import { isSameDay } from "date-fns";
@@ -10,20 +15,20 @@ import {
 } from "../../Utils/Functions/transporter";
 import { redefineAndLoginHTML } from "../Users/Utils/redefineHTML";
 
-const defaultError = { error: "As credenciais informadas estão incorretas." };
+const defaultError = "As credenciais informadas estão incorretas.";
 
 export const authLogin = async (parsed: LoginType) => {
   try {
     const hash = process.env.LOGIN_JWT_SECRET;
-    if (!hash) throw new CError({ message: "Internal Server Error!" }, 500);
+    if (!hash) throw new ServerError("Internal Server Error!");
 
     const { email, senha } = parsed;
 
     const user = await prisma.usuarios.findUnique({ where: { email } });
-    if (!user) throw new CError(defaultError, 400);
+    if (!user) throw new BadRequestError(defaultError);
 
     if (!!user.google_id)
-      throw new CError({ error: "Usuário cadastrado através do google." }, 403);
+      throw new ForbiddenError("Usuário cadastrado através do google.");
 
     if (!user.valido) {
       if (!isSameDay(user.criado_em!, new Date())) {
@@ -32,16 +37,13 @@ export const authLogin = async (parsed: LoginType) => {
         const transporter = createTransporter();
         await transporter.sendMail(sendLoginActivation(user.email, html));
       }
-      throw new CError(
-        {
-          error: "Usuário aguardando validação - verificar caixa de email.",
-        },
-        403
+      throw new ForbiddenError(
+        "Usuário aguardando validação - verificar caixa de email."
       );
     }
 
     const isEqual = await argon2.verify(user.senha!, senha);
-    if (!isEqual) throw new CError(defaultError, 400);
+    if (!isEqual) throw new BadRequestError(defaultError);
 
     const token = sign({ id: user.id, role: user.role }, hash, {
       expiresIn: "1d",

@@ -1,5 +1,5 @@
 import { RequestFields } from "../../Controller/types";
-import { CError, NotFoundError } from "../../Utils/Errors/CError";
+import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export const createRequest = async (id: number, parsed: RequestFields) => {
@@ -25,7 +25,7 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
     });
     if (!secretariat) throw new NotFoundError("Secretaria não encontrada.");
     if (!secretariat.ativo)
-      throw new CError({ error: "Secretaria está desativada." }, 409);
+      throw new ConflictError("Secretaria está desativada.");
 
     await prisma.solicitacao.create({
       data: {

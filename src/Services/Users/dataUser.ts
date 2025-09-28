@@ -1,4 +1,4 @@
-import { CError } from "../../Utils/Errors/CError";
+import { NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export const dataUser = async (id: number) => {
@@ -11,7 +11,7 @@ export const dataUser = async (id: number) => {
         valido: true,
       },
     });
-    if (!user) throw new CError({ error: "Usuário não encontrado" }, 404);
+    if (!user) throw new NotFoundError("Usuário não encontrado");
     return user;
   } catch (error) {
     throw error;

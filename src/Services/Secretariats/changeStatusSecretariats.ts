@@ -1,4 +1,4 @@
-import { CError } from "../../Utils/Errors/CError";
+import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export type SecretariatsStatus = "ativar" | "desativar";
@@ -8,17 +8,16 @@ export const changeStatusSecretariats = async (
 ) => {
   try {
     const secretariat = await prisma.secretaria.findUnique({ where: { id } });
-    if (!secretariat)
-      throw new CError({ error: "Secretaria não encontrada." }, 404);
+    if (!secretariat) throw new NotFoundError("Secretaria não encontrada.");
 
     let ativo: boolean;
     if (status === "ativar") {
       if (secretariat.ativo)
-        throw new CError({ error: "Secretaria já está ativa." }, 409);
+        throw new ConflictError("Secretaria já está ativa.");
       ativo = true;
     } else {
       if (!secretariat.ativo)
-        throw new CError({ error: "Secretaria já está desativada." }, 409);
+        throw new ConflictError("Secretaria já está desativada.");
       ativo = false;
     }
     const message = status === "ativar" ? "ativada" : "desativada";

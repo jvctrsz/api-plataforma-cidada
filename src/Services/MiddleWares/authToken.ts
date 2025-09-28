@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { CError } from "../../Utils/Errors/CError";
+import {
+  CError,
+  ServerError,
+  UnauthorizedError,
+} from "../../Utils/Errors/CError";
 import { verifyToken } from "../../Utils/Functions/verifyToken";
 
 interface TokenProps {
@@ -16,10 +20,10 @@ export const authToken = async (
 ) => {
   try {
     const hash = process.env.LOGIN_JWT_SECRET;
-    if (!hash) throw new CError({ message: "Internal Server Error!" }, 500);
+    if (!hash) throw new ServerError("Internal Server Error!");
 
     const { authorization } = req.headers;
-    if (!authorization) throw new CError({ error: "Token não recebido" }, 401);
+    if (!authorization) throw new UnauthorizedError("Token não recebido");
 
     const [, token] = authorization.split(" ");
 

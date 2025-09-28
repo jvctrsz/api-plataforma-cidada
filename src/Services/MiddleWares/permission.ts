@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { CError } from "../../Utils/Errors/CError";
+import { CError, ForbiddenError } from "../../Utils/Errors/CError";
 
 export const permission = async (
   req: Request,
@@ -9,10 +9,7 @@ export const permission = async (
   try {
     const role = req.role;
     if (role === "usuario")
-      throw new CError(
-        { error: "Usuário não tem permissão para esta operação." },
-        403
-      );
+      throw new ForbiddenError("Usuário não tem permissão para esta operação.");
     next();
   } catch (error) {
     console.error(error);

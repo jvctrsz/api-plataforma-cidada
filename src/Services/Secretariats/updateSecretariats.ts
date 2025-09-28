@@ -1,5 +1,9 @@
 import { SecretariatsType } from "../../Controller/types";
-import { CError } from "../../Utils/Errors/CError";
+import {
+  CError,
+  ConflictError,
+  NotFoundError,
+} from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export const updateSecretariats = async (
@@ -8,8 +12,7 @@ export const updateSecretariats = async (
 ) => {
   try {
     const secretariat = await prisma.secretaria.findUnique({ where: { id } });
-    if (!secretariat)
-      throw new CError({ error: "Secretaria não encontrada" }, 404);
+    if (!secretariat) throw new NotFoundError("Secretaria não encontrada");
 
     const {
       nome,
@@ -29,10 +32,7 @@ export const updateSecretariats = async (
       where: { nome, AND: { id: { not: id } } },
     });
     if (!!existingName)
-      throw new CError(
-        { error: "Já existe uma secretaria com este nome." },
-        409
-      );
+      throw new ConflictError("Já existe uma secretaria com este nome.");
 
     await prisma.secretaria.update({
       where: { id },
