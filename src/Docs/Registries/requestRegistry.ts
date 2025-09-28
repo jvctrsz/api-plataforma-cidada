@@ -132,4 +132,32 @@ requestRegistry.registerPath({
   },
 });
 
+//delete
+requestRegistry.registerPath({
+  method: "delete",
+  path: "/api/solicitacoes/{id}",
+  summary: "Deleta uma solicitação.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Solicitação deletada com sucesso",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Solicitação deletada com sucesso." }),
+          }),
+        },
+      },
+    },
+    "401": unauthorized,
+    "404": requestNotFound,
+    "500": internalError,
+  },
+});
+
 export default requestRegistry;
