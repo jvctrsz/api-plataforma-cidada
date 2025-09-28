@@ -14,5 +14,10 @@ requestRouter.post(
   authToken,
   requestController.status
 );
+requestRouter.post(
+  "/solicitacoes/transferir/:id",
+  authToken,
+  requestController.secretariat
+);
 
 export default requestRouter;

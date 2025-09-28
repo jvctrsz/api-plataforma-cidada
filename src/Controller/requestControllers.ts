@@ -1,5 +1,6 @@
 import { index } from "../Models/Requests";
 import { destroy } from "../Models/Requests/destroy";
+import { secretariat } from "../Models/Requests/secretariat";
 import { show } from "../Models/Requests/show";
 import { status } from "../Models/Requests/status";
 import { store } from "../Models/Requests/store";
@@ -12,4 +13,5 @@ export const requestController = {
   destroy,
   update,
   status,
+  secretariat,
 };

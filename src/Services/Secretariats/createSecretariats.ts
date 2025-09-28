@@ -1,9 +1,5 @@
 import { SecretariatsType } from "../../Controller/types";
-import {
-  CError,
-  ConflictError,
-  NotFoundError,
-} from "../../Utils/Errors/CError";
+import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export const createSecretariats = async (parsed: SecretariatsType) => {
@@ -34,10 +30,18 @@ export const createSecretariats = async (parsed: SecretariatsType) => {
     });
     if (!user) throw new NotFoundError("Secretario não encontrado.");
 
+    const existingSecretariat = await prisma.secretaria.findUnique({
+      where: { secretario_id: Number(secretario_id) },
+    });
+    if (!!existingSecretariat)
+      throw new ConflictError(
+        "Já existe uma secretaria vinculada a este secretario."
+      );
+
     await prisma.secretaria.create({
       data: {
         nome,
-        secretario_id: secretario_id!,
+        secretario_id: Number(secretario_id),
         secretario_nome: user.nome,
         bairro,
         celular,

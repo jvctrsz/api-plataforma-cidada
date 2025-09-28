@@ -92,3 +92,4 @@ export const getRequestScheme = z.object({
 });
 
 export const statusRequestScheme = z.object({ status: requestStatus });
+export const secretariatRequestScheme = z.object({ secretaria_id });

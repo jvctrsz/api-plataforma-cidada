@@ -42,8 +42,8 @@ model secretaria {
   atualizado_em   DateTime?
   whatsapp        String?       @db.VarChar(15)
   secretario_nome String
-  secretario_id   String
-  usuarios        usuarios      @relation(fields: [id], references: [id])
+  secretario_id   Int           @unique
+  usuarios        usuarios      @relation(fields: [secretario_id], references: [id])
   solicitacao     solicitacao[]
 }
 

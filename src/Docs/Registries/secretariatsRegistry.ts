@@ -23,6 +23,25 @@ export const secretariatsNotFound = {
     },
   },
 };
+const secretariatConflict = {
+  "application/json": {
+    schema: {},
+    examples: {
+      nameError: {
+        summary: "Erro mesmo nome",
+        value: {
+          error: "Já existe uma secretaria com este nome.",
+        },
+      },
+      secretarioError: {
+        summary: "Erro mesmo secretario",
+        value: {
+          error: "Já existe uma secretaria vinculada a este secretario.",
+        },
+      },
+    },
+  },
+};
 const secretariatExisting = {
   description: "Secretaria já cadastrada.",
   content: {
@@ -89,7 +108,10 @@ secretariatsRegistry.registerPath({
     "401": unauthorized,
     "403": notAllowed,
     "404": secretaryNotFound,
-    "409": secretariatExisting,
+    "409": {
+      description: "Conflitro de secretaria",
+      content: secretariatConflict,
+    },
     "500": internalError,
   },
 });
