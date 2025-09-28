@@ -2,6 +2,7 @@ import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import {
   getRequestScheme,
   postRequestScheme,
+  putRequestScheme,
 } from "../../Schemes/request.scheme";
 import z from "zod";
 import {
@@ -9,6 +10,10 @@ import {
   internalError,
   unauthorized,
 } from "../../Schemes/default.scheme";
+import {
+  defaultError,
+  defaultOKStatus,
+} from "../../Utils/Functions/docFunctions";
 
 const requestRegistry = new OpenAPIRegistry();
 
@@ -37,18 +42,7 @@ requestRegistry.registerPath({
     },
   },
   responses: {
-    "201": {
-      description: "Solicitação cadastrada com sucesso",
-      content: {
-        "application/json": {
-          schema: z.object({
-            message: z
-              .string()
-              .openapi({ example: "Solicitação cadastrada com sucesso." }),
-          }),
-        },
-      },
-    },
+    "201": defaultOKStatus("Solicitação cadastrada com sucesso"),
     "401": unauthorized,
     "404": {
       description: "Registros não encontrados",
@@ -72,18 +66,29 @@ requestRegistry.registerPath({
         },
       },
     },
-    "409": {
-      description: "Secretaria esta desativada",
+    "409": defaultError("Secretaria esta desativada"),
+    "500": internalError,
+  },
+});
+
+//put
+requestRegistry.registerPath({
+  method: "put",
+  path: "/api/solicitacoes",
+  summary: "Edita uma solicitação.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+    body: {
       content: {
-        "application/json": {
-          schema: z.object({
-            error: z
-              .string()
-              .openapi({ example: "Secretaria esta desativada." }),
-          }),
-        },
+        "application/json": { schema: putRequestScheme },
       },
     },
+  },
+  responses: {
+    "201": defaultOKStatus("Solicitação editada com sucesso"),
+    "401": unauthorized,
+    "404": requestNotFound,
     "500": internalError,
   },
 });
@@ -142,18 +147,7 @@ requestRegistry.registerPath({
     params: idParams,
   },
   responses: {
-    "200": {
-      description: "Solicitação deletada com sucesso",
-      content: {
-        "application/json": {
-          schema: z.object({
-            message: z
-              .string()
-              .openapi({ example: "Solicitação deletada com sucesso." }),
-          }),
-        },
-      },
-    },
+    "200": defaultOKStatus("Solicitação deletada com sucesso"),
     "401": unauthorized,
     "404": requestNotFound,
     "500": internalError,
