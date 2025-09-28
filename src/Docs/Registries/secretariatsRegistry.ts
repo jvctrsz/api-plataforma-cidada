@@ -33,6 +33,12 @@ const secretariatConflict = {
           error: "Já existe uma secretaria com este nome.",
         },
       },
+      invalidError: {
+        summary: "Erro secretario não validado",
+        value: {
+          error: "Secretario aguardando validação.",
+        },
+      },
       secretarioError: {
         summary: "Erro mesmo secretario",
         value: {
