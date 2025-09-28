@@ -1,5 +1,5 @@
 import { RequestFields } from "../../Controller/types";
-import { CError } from "../../Utils/Errors/CError";
+import { CError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export const createRequest = async (id: number, parsed: RequestFields) => {
@@ -18,13 +18,12 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
     } = parsed;
 
     const user = await prisma.usuarios.findUnique({ where: { id } });
-    if (!user) throw new CError({ error: "Usuário não encontrado." }, 404);
+    if (!user) throw new NotFoundError("Usuário não encontrado.");
 
     const secretariat = await prisma.secretaria.findUnique({
       where: { id: Number(secretaria_id) },
     });
-    if (!secretariat)
-      throw new CError({ error: "Secretaria não encontrada." }, 404);
+    if (!secretariat) throw new NotFoundError("Secretaria não encontrada.");
     if (!secretariat.ativo)
       throw new CError({ error: "Secretaria está desativada." }, 409);
 

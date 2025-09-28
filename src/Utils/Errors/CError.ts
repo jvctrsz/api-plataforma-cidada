@@ -19,3 +19,16 @@ export class CError<T = any> extends Error {
     };
   }
 }
+
+export class NotFoundError extends Error {
+  message: string;
+  status: number;
+  data: { error: string };
+  constructor(message: string) {
+    super("Not Found");
+    this.status = 404;
+    this.message = message;
+    this.data = { error: message };
+    Object.setPrototypeOf(this, CError.prototype);
+  }
+}

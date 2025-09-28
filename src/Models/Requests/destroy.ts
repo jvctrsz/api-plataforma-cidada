@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { CError } from "../../Utils/Errors/CError";
-import { showRequests } from "../../Services/Request/showRequests";
+import { destroyRequest } from "../../Services/Request/destroyRequest";
 
-export const show = async (req: Request, res: Response) => {
+export const destroy = async (req: Request, res: Response) => {
   try {
     const id = req.user_id;
-    const request = await showRequests(Number(id));
-    res.status(200).json(request);
+    const message = await destroyRequest(Number(id));
+    res.status(200).json({ message });
   } catch (error) {
     console.error(error);
     if (error instanceof CError)
