@@ -52,12 +52,10 @@ const observacao = z
   });
 
 const secretaria_id = z.string(stringRequired).openapi({ example: "1" });
-export const requestStatus = z.enum([
-  "criado",
-  "pendente",
-  "andamento",
-  "finalizado",
-]);
+export const requestStatus = z.enum(
+  ["criado", "pendente", "andamento", "finalizado"],
+  { error: 'deve ser "criado", "pendente", "andamento" ou "finalizado".' }
+);
 const defaultRequestScheme = {
   endereco,
   numero,
@@ -92,3 +90,5 @@ export const getRequestScheme = z.object({
   criado_em: isoDateFormat,
   atualizado_em: isoDateFormat,
 });
+
+export const statusRequestScheme = z.object({ status: requestStatus });

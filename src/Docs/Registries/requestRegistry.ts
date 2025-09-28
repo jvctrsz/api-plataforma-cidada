@@ -3,6 +3,7 @@ import {
   getRequestScheme,
   postRequestScheme,
   putRequestScheme,
+  statusRequestScheme,
 } from "../../Schemes/request.scheme";
 import z from "zod";
 import {
@@ -150,6 +151,29 @@ requestRegistry.registerPath({
     "200": defaultOKStatus("Solicitação deletada com sucesso"),
     "401": unauthorized,
     "404": requestNotFound,
+    "500": internalError,
+  },
+});
+
+//status
+requestRegistry.registerPath({
+  method: "post",
+  path: "/api/solicitacoes/status/{id}",
+  summary: "Altera o status de uma solicitação.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "application/json": { schema: statusRequestScheme },
+      },
+    },
+  },
+  responses: {
+    "200": defaultOKStatus("Status alterado com sucesso"),
+    "401": unauthorized,
+    "404": requestNotFound,
+    "409": defaultError("A Solicitação já está com o status: criado"),
     "500": internalError,
   },
 });
