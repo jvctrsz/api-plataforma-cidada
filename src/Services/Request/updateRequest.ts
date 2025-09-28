@@ -38,6 +38,6 @@ export const updateRequest = async (
 
     return "Solicitação editada com sucesso.";
   } catch (error) {
-    throw Error;
+    throw error;
   }
 };

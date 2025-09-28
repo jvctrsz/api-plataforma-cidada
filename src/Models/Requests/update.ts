@@ -12,7 +12,7 @@ export const update = async (
   try {
     const { id } = req.params as { id: string };
     const parsed = zodParse(req, putRequestScheme);
-    const message = updateRequest(Number(id), parsed?.data);
+    const message = await updateRequest(Number(id), parsed?.data);
     res.status(201).json({ message });
   } catch (error) {
     TreatErrors(error, res);
