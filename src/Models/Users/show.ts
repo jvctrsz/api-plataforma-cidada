@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { CError } from "../../Utils/Errors/CError";
 import { showUsers } from "../../Services/Users/showUsers";
+import { TreatErrors } from "../../Utils/Errors/TreatErrors";
 
 export const show = async (req: Request, res: Response) => {
   try {
@@ -8,9 +8,6 @@ export const show = async (req: Request, res: Response) => {
     const user = await showUsers(Number(id));
     res.status(200).json(user);
   } catch (error) {
-    console.error(error);
-    if (error instanceof CError)
-      return res.status(error.status).json(error.data);
-    res.status(500).json({ message: "Internal Server error!", error });
+    TreatErrors(error, res);
   }
 };

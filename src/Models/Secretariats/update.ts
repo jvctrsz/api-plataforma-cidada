@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { zodParse } from "../../Utils/Functions/zodParse";
-import { CError } from "../../Utils/Errors/CError";
 import { putSecretariatsScheme } from "../../Schemes/secretariats.scheme";
 import { SecretariatsType } from "../../Controller/types";
 import { updateSecretariats } from "../../Services/Secretariats/updateSecretariats";
+import { TreatErrors } from "../../Utils/Errors/TreatErrors";
 
 export const update = async (
   req: Request<{}, {}, SecretariatsType>,
@@ -15,9 +15,6 @@ export const update = async (
     const message = await updateSecretariats(Number(id), parsed?.data);
     res.status(201).json({ message });
   } catch (error) {
-    console.error(error);
-    if (error instanceof CError)
-      return res.status(error.status).json(error.data);
-    res.status(500).json({ message: "Internal Server error!", error });
+    TreatErrors(error, res);
   }
 };

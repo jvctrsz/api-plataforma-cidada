@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
-import { ChangePassword } from "./change";
-import { CError } from "../../Utils/Errors/CError";
 import { zodParse } from "../../Utils/Functions/zodParse";
 import { redefineUsers } from "../../Services/Users/redefineUsers";
-import { object, string } from "zod";
-import { email, stringRequired } from "../../Utils/Errors/Zod/validation";
 import { redefineScheme } from "../../Schemes/user.scheme";
+import { TreatErrors } from "../../Utils/Errors/TreatErrors";
 
 export interface RedefinePassword {
   email: string;
@@ -23,9 +20,6 @@ export const redefine = async (
     const message = await redefineUsers(token, parsed?.data);
     res.status(200).json({ message });
   } catch (error) {
-    console.error(error);
-    if (error instanceof CError)
-      return res.status(error.status).json(error.data);
-    res.status(500).json({ message: "Internal Server error!", error });
+    TreatErrors(error, res);
   }
 };

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { zodParse } from "../../Utils/Functions/zodParse";
-import { CError } from "../../Utils/Errors/CError";
 import { RequestFields } from "../../Controller/types";
 import { postRequestScheme } from "../../Schemes/request.scheme";
 import { createRequest } from "../../Services/Request/createRequest";
+import { TreatErrors } from "../../Utils/Errors/TreatErrors";
 
 export const store = async (
   req: Request<{}, {}, RequestFields>,
@@ -16,8 +16,6 @@ export const store = async (
     res.status(201).json({ message });
   } catch (error) {
     console.error(error);
-    if (error instanceof CError)
-      return res.status(error.status).json(error.data);
-    res.status(500).json({ message: "Internal Server error!", error });
+    TreatErrors(error, res);
   }
 };

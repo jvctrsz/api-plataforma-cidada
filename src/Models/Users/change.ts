@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { CError } from "../../Utils/Errors/CError";
 import { zodParse } from "../../Utils/Functions/zodParse";
 import { changeUser } from "../../Services/Users/changeUser";
 import { changeScheme } from "../../Schemes/user.scheme";
+import { TreatErrors } from "../../Utils/Errors/TreatErrors";
 
 export interface ChangePassword {
   senha_atual: string;
@@ -20,9 +20,6 @@ export const change = async (
     const message = await changeUser(Number(id), parsed.data);
     res.status(200).json({ message });
   } catch (error) {
-    console.error(error);
-    if (error instanceof CError)
-      return res.status(error.status).json(error.data);
-    res.status(500).json({ message: "Internal Server error!", error });
+    TreatErrors(error, res);
   }
 };
