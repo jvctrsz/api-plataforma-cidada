@@ -8,11 +8,11 @@ export const statusRequest = async (
 ) => {
   try {
     const request = await prisma.solicitacao.findUnique({ where: { id } });
-    if (!request) throw new NotFoundError("Solicitação não encontrada");
+    if (!request) throw new NotFoundError("Solicitação não encontrada.");
 
     const { status } = parsed;
     if (request.status === status)
-      throw new ConflictError(`A Solicitação já está com o status: ${status}`);
+      throw new ConflictError(`A Solicitação já está com o status: ${status}.`);
 
     await prisma.solicitacao.update({
       where: { id },

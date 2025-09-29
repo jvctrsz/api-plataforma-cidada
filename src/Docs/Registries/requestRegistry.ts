@@ -3,6 +3,7 @@ import {
   getRequestScheme,
   postRequestScheme,
   putRequestScheme,
+  secretariatRequestScheme,
   statusRequestScheme,
 } from "../../Schemes/request.scheme";
 import z from "zod";
@@ -174,6 +175,71 @@ requestRegistry.registerPath({
     "401": unauthorized,
     "404": requestNotFound,
     "409": defaultError("A Solicitação já está com o status: criado"),
+    "500": internalError,
+  },
+});
+
+//alterar
+requestRegistry.registerPath({
+  method: "post",
+  path: "/api/solicitacoes/transferir/{id}",
+  summary: "Transferi uma solicitação para outra secretaria.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "application/json": { schema: secretariatRequestScheme },
+      },
+    },
+  },
+  responses: {
+    "200": defaultOKStatus("Solicitação transferida com sucesso"),
+    "401": unauthorized,
+    "404": {
+      description: "Registro não encontrados",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            requestError: {
+              summary: "Erro de Solicitação",
+              value: {
+                error: "Solicitação não encontrada.",
+              },
+            },
+            secretariatError: {
+              summary: "Erro de Secretaria",
+              value: {
+                error: "Secretaria não encontrada.",
+              },
+            },
+          },
+        },
+      },
+    },
+    "409": {
+      description: "Registro não encontrados",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            requestError: {
+              summary: "Erro de Solicitação",
+              value: {
+                error: "A Solicitação já pertence a esta secretaria.",
+              },
+            },
+            secretariatError: {
+              summary: "Erro de Secretaria",
+              value: {
+                error: "Secretaria esta inativa.",
+              },
+            },
+          },
+        },
+      },
+    },
     "500": internalError,
   },
 });
