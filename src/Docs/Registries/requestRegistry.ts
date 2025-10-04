@@ -16,6 +16,7 @@ import {
   defaultError,
   defaultOKStatus,
 } from "../../Utils/Functions/docFunctions";
+import { notAllowed } from "./secretariatsRegistry";
 
 const requestRegistry = new OpenAPIRegistry();
 
@@ -173,6 +174,7 @@ requestRegistry.registerPath({
   responses: {
     "200": defaultOKStatus("Status alterado com sucesso"),
     "401": unauthorized,
+    "403": notAllowed,
     "404": requestNotFound,
     "409": defaultError("A Solicitação já está com o status: criado"),
     "500": internalError,
@@ -196,6 +198,7 @@ requestRegistry.registerPath({
   responses: {
     "200": defaultOKStatus("Solicitação transferida com sucesso"),
     "401": unauthorized,
+    "403": notAllowed,
     "404": {
       description: "Registro não encontrados",
       content: {

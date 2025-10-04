@@ -60,13 +60,13 @@ const secretariatExisting = {
     },
   },
 };
-const notAllowed = {
+export const notAllowed = {
   description: "Usuário sem permissão.",
   content: {
     "application/json": {
       schema: z.object({
         error: z.string().openapi({
-          example: "Usuário não tem permissão para esta operação",
+          example: "Usuário não tem permissão para esta operação.",
         }),
       }),
     },

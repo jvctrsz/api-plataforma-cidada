@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { authToken } from "../Services/MiddleWares/authToken";
 import { requestController } from "../Controller/requestControllers";
+import { permission } from "../Services/MiddleWares/permission";
 
 const requestRouter = Router();
 
@@ -12,11 +13,13 @@ requestRouter.put("/solicitacoes/:id", authToken, requestController.update);
 requestRouter.post(
   "/solicitacoes/status/:id",
   authToken,
+  permission,
   requestController.status
 );
 requestRouter.post(
   "/solicitacoes/transferir/:id",
   authToken,
+  permission,
   requestController.secretariat
 );
 
