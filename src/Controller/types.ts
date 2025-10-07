@@ -56,3 +56,13 @@ export interface RequestsTypes extends RequestFields {
   atualizado_em: string;
   usuarios_id: number;
 }
+
+export interface RequestMessageFields {
+  mensagem: string;
+  usuario_id: string;
+  solicitacao_id: string;
+}
+export interface RequestMessages extends RequestMessageFields {
+  id: number;
+  enviado_em: string;
+}

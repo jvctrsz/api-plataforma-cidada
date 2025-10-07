@@ -22,5 +22,10 @@ requestRouter.post(
   permission,
   requestController.secretariat
 );
+requestRouter.post(
+  "/solicitacoes/:id/mensagem",
+  authToken,
+  requestController.send
+);
 
 export default requestRouter;

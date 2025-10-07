@@ -93,3 +93,18 @@ export const getRequestScheme = z.object({
 
 export const statusRequestScheme = z.object({ status: requestStatus });
 export const secretariatRequestScheme = z.object({ secretaria_id });
+
+const defaultMessageScheme = {
+  mensagem: z
+    .string(stringRequired)
+    .openapi({ example: "confirma o nome da rua." }),
+  usuario_id: secretaria_id,
+  solicitacao_id: secretaria_id,
+};
+
+export const postMessagesScheme = z.object(defaultMessageScheme);
+export const getMessagesScheme = z.object({
+  ...defaultMessageScheme,
+  id: secretaria_id,
+  enviado_em: isoDateFormat,
+});

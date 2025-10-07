@@ -22,6 +22,7 @@ model usuarios {
   valido        Boolean       @default(false)
   solicitacao   solicitacao[]
   secretaria    secretaria?
+  Mensagens     Mensagens[]
 }
 
 model secretaria {
@@ -48,23 +49,24 @@ model secretaria {
 }
 
 model solicitacao {
-  id            Int        @id @default(autoincrement())
-  endereco      String     @db.VarChar(150)
-  numero        String     @db.VarChar(10)
-  referencia    String?    @db.VarChar(100)
-  bairro        String     @db.VarChar(100)
-  cidade        String     @db.VarChar(100)
-  uf            String     @db.Char(2)
-  cep           String     @db.Char(9)
-  observacao    String?    @db.VarChar(500)
-  status        Status     @default(criado)
+  id            Int         @id @default(autoincrement())
+  endereco      String      @db.VarChar(150)
+  numero        String      @db.VarChar(10)
+  referencia    String?     @db.VarChar(100)
+  bairro        String      @db.VarChar(100)
+  cidade        String      @db.VarChar(100)
+  uf            String      @db.Char(2)
+  cep           String      @db.Char(9)
+  observacao    String?     @db.VarChar(500)
+  status        Status      @default(criado)
   secretaria_id Int
   usuarios_id   Int
-  descricao     String     @db.VarChar(180)
+  descricao     String      @db.VarChar(180)
   atualizado_em DateTime?
-  criado_em     DateTime   @default(now())
-  secretaria    secretaria @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
-  usuarios      usuarios   @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
+  criado_em     DateTime    @default(now())
+  secretaria    secretaria  @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
+  usuarios      usuarios    @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
+  Mensagens     Mensagens[]
 }
 
 enum Status {
@@ -78,4 +80,14 @@ enum Role {
   usuario
   funcionario
   admin
+}
+
+model Mensagens {
+  id             Int         @id @default(autoincrement())
+  mensagem       String
+  usuario_id     Int
+  enviado_em     DateTime    @default(now())
+  solicitacao_id Int
+  Usuario        usuarios    @relation(references: [id], fields: [usuario_id])
+  Solicitacao    solicitacao @relation(references: [id], fields: [solicitacao_id])
 }
