@@ -1,6 +1,8 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import {
+  getMessagesScheme,
   getRequestScheme,
+  postMessagesScheme,
   postRequestScheme,
   putRequestScheme,
   secretariatRequestScheme,
@@ -247,4 +249,68 @@ requestRegistry.registerPath({
   },
 });
 
+//enviar mensagem
+requestRegistry.registerPath({
+  method: "post",
+  path: "/api/solicitacoes/{id}/mensagem",
+  summary: "Envia uma mensagem.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "application/json": { schema: postMessagesScheme },
+      },
+    },
+  },
+  responses: {
+    "201": defaultOKStatus("Mensagem enviada com sucesso"),
+    "401": unauthorized,
+    "404": {
+      description: "Registros não encontrados",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            requestError: {
+              summary: "Erro de Solicitação",
+              value: {
+                error: "Solicitação não encontrada.",
+              },
+            },
+            usertError: {
+              summary: "Erro de usuário",
+              value: {
+                error: "Usuário não encontrado.",
+              },
+            },
+          },
+        },
+      },
+    },
+    "500": internalError,
+  },
+});
+
+requestRegistry.registerPath({
+  method: "get",
+  path: "/api/solicitacoes/{id}/mensagem",
+  summary: "Retorna todas as mensagem.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Retorna um array com todas as mensagens",
+      content: {
+        "application/json": {
+          schema: z.array(getMessagesScheme),
+        },
+      },
+    },
+    "401": unauthorized,
+    "500": internalError,
+  },
+});
 export default requestRegistry;

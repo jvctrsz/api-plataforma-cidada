@@ -1,5 +1,6 @@
 import { index } from "../Models/Requests";
 import { destroy } from "../Models/Requests/destroy";
+import { messages } from "../Models/Requests/messages";
 import { secretariat } from "../Models/Requests/secretariat";
 import { send } from "../Models/Requests/send";
 import { show } from "../Models/Requests/show";
@@ -16,4 +17,5 @@ export const requestController = {
   status,
   secretariat,
   send,
+  messages,
 };

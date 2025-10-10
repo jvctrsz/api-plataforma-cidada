@@ -1,9 +1,9 @@
 import { Request } from "express";
-import { UserType } from "../../Controller/types";
+import { UserRole, UserType } from "../../Controller/types";
 declare module "express-serve-static-core" {
   interface Request {
     user_id: number;
-    role: string;
+    role: UserRole;
     token: string;
   }
 }

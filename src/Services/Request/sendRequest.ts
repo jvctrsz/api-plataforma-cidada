@@ -9,10 +9,10 @@ export const sendRequest = async (
 ) => {
   try {
     const request = await prisma.solicitacao.findUnique({ where: { id } });
-    if (!request) return new NotFoundError("Solicitação não encontrada.");
+    if (!request) throw new NotFoundError("Solicitação não encontrada.");
 
     const user = await prisma.usuarios.findUnique({ where: { id: user_id } });
-    if (!user) return new NotFoundError("Usuário não encontrado.");
+    if (!user) throw new NotFoundError("Usuário não encontrado.");
 
     const { mensagem, solicitacao_id, usuario_id } = parsed;
 

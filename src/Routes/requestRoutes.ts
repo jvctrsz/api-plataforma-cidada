@@ -27,5 +27,10 @@ requestRouter.post(
   authToken,
   requestController.send
 );
+requestRouter.get(
+  "/solicitacoes/:id/mensagem",
+  authToken,
+  requestController.messages
+);
 
 export default requestRouter;
