@@ -9,6 +9,7 @@ import {
   putUserScheme,
   recoveryScheme,
   redefineScheme,
+  roleScheme,
   userScheme,
 } from "../../Schemes/user.scheme";
 import {
@@ -17,6 +18,8 @@ import {
   tokenParams,
   unauthorized,
 } from "../../Schemes/default.scheme";
+import { defaultOKStatus } from "../../Utils/Functions/docFunctions";
+import { notAllowed } from "./secretariatsRegistry";
 
 const userRegistry = new OpenAPIRegistry();
 
@@ -365,6 +368,31 @@ userRegistry.registerPath({
         },
       },
     },
+    "500": internalError,
+  },
+});
+
+//troca role
+userRegistry.registerPath({
+  method: "post",
+  path: "/api/usuarios/role/{id}",
+  summary: "Troca a role de um usuário",
+  description:
+    "Somente usuário do tipo ADMIN podem trocar a role de outro usuário.",
+  tags: ["Usuários"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "application/json": { schema: roleScheme },
+      },
+    },
+  },
+  responses: {
+    "200": defaultOKStatus("Permissão alterada com sucesso"),
+    "401": unauthorized,
+    "404": userNotFound,
+    "403": notAllowed,
     "500": internalError,
   },
 });

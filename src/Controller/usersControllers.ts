@@ -3,6 +3,7 @@ import { change } from "../Models/Users/change";
 import { destroy } from "../Models/Users/destroy";
 import { recovery } from "../Models/Users/recovey";
 import { redefine } from "../Models/Users/redefine";
+import { role } from "../Models/Users/role";
 import { show } from "../Models/Users/show";
 import { store } from "../Models/Users/store";
 import { update } from "../Models/Users/update";
@@ -18,4 +19,5 @@ export const usersController = {
   recovery,
   redefine,
   user,
+  role,
 };

@@ -21,5 +21,5 @@ userRouter.post(
   authToken,
   usersController.redefine
 );
-
+userRouter.post("/usuarios/role/:id", authToken, usersController.role);
 export default userRouter;

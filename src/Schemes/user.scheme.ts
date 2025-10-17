@@ -16,7 +16,9 @@ const nome = z
   .string(stringRequired)
   .max(100, "deve ter no máximo 100 caracteres.")
   .openapi({ example: "Fernando da Silva" });
-const role = z.enum(["usuario", "funcionario", "admin"]);
+const role = z.enum(["usuario", "funcionario", "admin"], {
+  error: "deve ser usuario, funcionario ou admin.",
+});
 const valido = z.boolean();
 const senha = z.string(stringRequired).openapi({ example: "12345" });
 
@@ -84,3 +86,5 @@ export const userScheme = z.object({
   google_id: z.string().openapi({ enum: [null, 1] }),
   criado_em: isoDateFormat,
 });
+
+export const roleScheme = z.object({ role: role });

@@ -5,10 +5,11 @@ import {
   UnauthorizedError,
 } from "../../Utils/Errors/CError";
 import { verifyToken } from "../../Utils/Functions/verifyToken";
+import { UserRole } from "../../Controller/types";
 
 interface TokenProps {
   id: number;
-  role: string;
+  role: UserRole;
   iat: number;
   exp: number;
 }
