@@ -40,6 +40,7 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
         referencia,
         secretaria_id: Number(secretaria_id),
         usuarios_id: user.id,
+        funcionario_id: secretariat.secretario_id,
       },
     });
     return "Solicitação criada com sucesso.";
