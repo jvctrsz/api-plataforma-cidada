@@ -47,6 +47,7 @@ export interface RequestFields {
   descricao: string;
   observacao?: string;
   secretaria_id: string;
+  funcionario_id?: string;
 }
 
 export interface RequestsTypes extends RequestFields {
