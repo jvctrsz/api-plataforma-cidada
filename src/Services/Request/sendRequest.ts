@@ -1,11 +1,13 @@
-import { RequestMessageFields } from "../../Controller/types";
-import { NotFoundError } from "../../Utils/Errors/CError";
+import { RequestMessageFields, UserRole } from "../../Controller/types";
+import { ForbiddenError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
+import { canHandleMessage } from "./Utils/canHandleMessage";
 
 export const sendRequest = async (
   id: number,
   parsed: RequestMessageFields,
-  user_id: number
+  user_id: number,
+  role: UserRole
 ) => {
   try {
     const request = await prisma.solicitacao.findUnique({ where: { id } });
@@ -14,6 +16,12 @@ export const sendRequest = async (
     const user = await prisma.usuarios.findUnique({ where: { id: user_id } });
     if (!user) throw new NotFoundError("Usuário não encontrado.");
 
+    canHandleMessage(
+      request.funcionario_id,
+      request.usuarios_id,
+      user_id,
+      role
+    );
     const { mensagem } = parsed;
 
     const extractRecepientId = (() => {

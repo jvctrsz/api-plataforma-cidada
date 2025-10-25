@@ -224,7 +224,7 @@ requestRegistry.registerPath({
       },
     },
     "409": {
-      description: "Registro não encontrados",
+      description: "Conflitos nos registros",
       content: {
         "application/json": {
           schema: {},
@@ -266,6 +266,7 @@ requestRegistry.registerPath({
   responses: {
     "201": defaultOKStatus("Mensagem enviada com sucesso"),
     "401": unauthorized,
+    "403": defaultError("Usuário não pertence a esta solicitação"),
     "404": {
       description: "Registros não encontrados",
       content: {
@@ -310,6 +311,7 @@ requestRegistry.registerPath({
       },
     },
     "401": unauthorized,
+    "403": defaultError("Usuário não pertence a esta solicitação"),
     "500": internalError,
   },
 });
