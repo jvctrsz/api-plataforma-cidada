@@ -2,13 +2,14 @@ import { Router } from "express";
 import { authToken } from "../Services/MiddleWares/authToken";
 import { secretariatsController } from "../Controller/secretariatsControllers";
 import { permission } from "../Services/MiddleWares/permission";
+import { adminPermission } from "../Services/MiddleWares/admin";
 
 const secretariatsRouter = Router();
 
 secretariatsRouter.post(
   "/secretarias",
   authToken,
-  permission,
+  adminPermission,
   secretariatsController.store
 );
 secretariatsRouter.get(
@@ -31,19 +32,19 @@ secretariatsRouter.put(
 secretariatsRouter.delete(
   "/secretarias/:id",
   authToken,
-  permission,
+  adminPermission,
   secretariatsController.destroy
 );
 secretariatsRouter.post(
   "/secretarias/ativar/:id",
   authToken,
-  permission,
+  adminPermission,
   secretariatsController.active
 );
 secretariatsRouter.post(
   "/secretarias/desativar/:id",
   authToken,
-  permission,
+  adminPermission,
   secretariatsController.deactive
 );
 
