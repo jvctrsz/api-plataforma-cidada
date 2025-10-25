@@ -71,14 +71,14 @@ model solicitacao {
 }
 
 model mensagens {
-  id             Int         @id @default(autoincrement())
-  mensagem       String
-  enviado_em     DateTime    @default(now())
-  solicitacao_id Int
-  usuario_id     Int
-  remetente_id   Int
-  Solicitacao    solicitacao @relation(fields: [solicitacao_id], references: [id])
-  Usuario        usuarios    @relation(fields: [usuario_id], references: [id])
+  id              Int         @id @default(autoincrement())
+  mensagem        String
+  enviado_em      DateTime    @default(now())
+  solicitacao_id  Int
+  remetente_id    Int         @map("usuario_id")
+  destinatario_id Int
+  Solicitacao     solicitacao @relation(fields: [solicitacao_id], references: [id])
+  Usuario         usuarios    @relation(fields: [remetente_id], references: [id])
 }
 
 enum Status {

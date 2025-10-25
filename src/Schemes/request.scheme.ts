@@ -98,13 +98,14 @@ const defaultMessageScheme = {
   mensagem: z
     .string(stringRequired)
     .openapi({ example: "confirma o nome da rua." }),
-  usuario_id: secretaria_id,
-  solicitacao_id: secretaria_id,
 };
 
 export const postMessagesScheme = z.object(defaultMessageScheme);
 export const getMessagesScheme = z.object({
   ...defaultMessageScheme,
+  solicitacao_id: secretaria_id,
+  remetente_id: secretaria_id,
+  destinatario_id: secretaria_id,
   id: secretaria_id,
   enviado_em: isoDateFormat,
 });

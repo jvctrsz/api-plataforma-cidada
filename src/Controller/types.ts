@@ -60,10 +60,11 @@ export interface RequestsTypes extends RequestFields {
 
 export interface RequestMessageFields {
   mensagem: string;
-  usuario_id: string;
-  solicitacao_id: string;
 }
 export interface RequestMessages extends RequestMessageFields {
   id: number;
   enviado_em: string;
+  destinatario_id: number;
+  remetente_id: number;
+  solicitacao_id: number;
 }

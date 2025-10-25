@@ -14,13 +14,19 @@ export const sendRequest = async (
     const user = await prisma.usuarios.findUnique({ where: { id: user_id } });
     if (!user) throw new NotFoundError("Usuário não encontrado.");
 
-    const { mensagem, solicitacao_id, usuario_id } = parsed;
+    const { mensagem } = parsed;
+
+    const extractRecepientId = (() => {
+      if (request.funcionario_id === user_id) return request.usuarios_id;
+      return request.funcionario_id;
+    })();
 
     await prisma.mensagens.create({
       data: {
         mensagem,
-        solicitacao_id: Number(solicitacao_id),
-        usuario_id: Number(usuario_id),
+        solicitacao_id: id,
+        remetente_id: user_id,
+        destinatario_id: extractRecepientId,
         enviado_em: new Date(),
       },
     });
