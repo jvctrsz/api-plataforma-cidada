@@ -266,7 +266,9 @@ requestRegistry.registerPath({
   responses: {
     "201": defaultOKStatus("Mensagem enviada com sucesso"),
     "401": unauthorized,
-    "403": defaultError("Usuário não pertence a esta solicitação"),
+    "403": defaultError(
+      "Usuário não tem acesso as mensagens desta solicitação"
+    ),
     "404": {
       description: "Registros não encontrados",
       content: {
@@ -311,7 +313,31 @@ requestRegistry.registerPath({
       },
     },
     "401": unauthorized,
-    "403": defaultError("Usuário não pertence a esta solicitação"),
+    "404": {
+      description: "Registros não encontrados",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            requestError: {
+              summary: "Erro de Solicitação",
+              value: {
+                error: "Solicitação não encontrada.",
+              },
+            },
+            usertError: {
+              summary: "Erro de usuário",
+              value: {
+                error: "Usuário não encontrado.",
+              },
+            },
+          },
+        },
+      },
+    },
+    "403": defaultError(
+      "Usuário não tem acesso as mensagens desta solicitação"
+    ),
     "500": internalError,
   },
 });

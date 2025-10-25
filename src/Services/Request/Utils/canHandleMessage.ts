@@ -8,5 +8,7 @@ export const canHandleMessage = (
   role: UserRole
 ) => {
   if (![employee_id, user_request_id].includes(user_id) && role !== "admin")
-    throw new ForbiddenError("Usuário não pertence a esta solicitação.");
+    throw new ForbiddenError(
+      "Usuário não tem acesso as mensagens desta solicitação."
+    );
 };
