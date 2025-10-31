@@ -1,5 +1,5 @@
 import { RequestMessageFields, UserRole } from "../../Controller/types";
-import { ForbiddenError, NotFoundError } from "../../Utils/Errors/CError";
+import { NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 import { canHandleMessage } from "./Utils/canHandleMessage";
 

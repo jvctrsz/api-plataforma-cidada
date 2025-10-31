@@ -1,5 +1,6 @@
 import { index } from "../Models/Secretariats";
 import { active } from "../Models/Secretariats/active";
+import { change } from "../Models/Secretariats/change";
 import { deactive } from "../Models/Secretariats/deactive";
 import { destroy } from "../Models/Secretariats/destroy";
 import { show } from "../Models/Secretariats/show";
@@ -14,4 +15,5 @@ export const secretariatsController = {
   destroy,
   active,
   deactive,
+  change,
 };

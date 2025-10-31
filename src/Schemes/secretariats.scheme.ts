@@ -61,7 +61,7 @@ export const postSecretariatsScheme = z.object({
 });
 
 export const putSecretariatsScheme = z.object(defaultSecretariatScheme);
-
+export const changeEmployeeScheme = z.object({ secretario_id });
 export const getSecretariatsScheme = z.object({
   id: z.string(stringRequired).openapi({ example: 1 }),
   ativo: z.boolean(stringRequired).openapi({ example: true }),

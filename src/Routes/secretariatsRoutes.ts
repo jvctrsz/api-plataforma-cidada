@@ -47,5 +47,11 @@ secretariatsRouter.post(
   adminPermission,
   secretariatsController.deactive
 );
+secretariatsRouter.post(
+  "/secretarias/:id/alterar-secretario",
+  authToken,
+  adminPermission,
+  secretariatsController.change
+);
 
 export default secretariatsRouter;
