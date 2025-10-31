@@ -3,6 +3,7 @@ import {
   putSecretariatsScheme,
   getSecretariatsScheme,
   postSecretariatsScheme,
+  changeEmployeeScheme,
 } from "../../Schemes/secretariats.scheme";
 import {
   idParams,
@@ -10,6 +11,10 @@ import {
   unauthorized,
 } from "../../Schemes/default.scheme";
 import z from "zod";
+import {
+  defaultError,
+  defaultOKStatus,
+} from "../../Utils/Functions/docFunctions";
 
 const secretariatsRegistry = new OpenAPIRegistry();
 
@@ -324,6 +329,51 @@ secretariatsRegistry.registerPath({
         },
       },
     },
+    "500": internalError,
+  },
+});
+
+//alterar funcionario
+secretariatsRegistry.registerPath({
+  method: "post",
+  path: "/api/secretarias/{id}/alterar-secretario",
+  summary: "Altera o secretario responsável de uma secretaria.",
+  tags: ["Secretarias"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "application/json": { schema: changeEmployeeScheme },
+      },
+    },
+  },
+  responses: {
+    "201": defaultOKStatus("Secretario alterado com sucesso"),
+    "401": unauthorized,
+    "403": notAllowed,
+    "404": {
+      description: "Registros não encontrados",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            requestError: {
+              summary: "Erro de secretaria",
+              value: {
+                error: "Secretaria não encontrada.",
+              },
+            },
+            usertError: {
+              summary: "Erro de usuário",
+              value: {
+                error: "Usuário não encontrado.",
+              },
+            },
+          },
+        },
+      },
+    },
+    "409": defaultError("Secretario já vinculado a uma secretaria"),
     "500": internalError,
   },
 });
