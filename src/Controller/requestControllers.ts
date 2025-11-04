@@ -1,5 +1,6 @@
 import { index } from "../Models/Requests";
 import { destroy } from "../Models/Requests/destroy";
+import { images } from "../Models/Requests/images";
 import { messages } from "../Models/Requests/messages";
 import { secretariat } from "../Models/Requests/secretariat";
 import { send } from "../Models/Requests/send";
@@ -18,4 +19,5 @@ export const requestController = {
   secretariat,
   send,
   messages,
+  images,
 };

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { authToken } from "../Services/MiddleWares/authToken";
 import { requestController } from "../Controller/requestControllers";
 import { permission } from "../Services/MiddleWares/permission";
+import upload from "../Services/Images/upload";
 
 const requestRouter = Router();
 
@@ -31,6 +32,12 @@ requestRouter.get(
   "/solicitacoes/:id/mensagem",
   authToken,
   requestController.messages
+);
+requestRouter.post(
+  "/solicitacoes/:id/imagens",
+  authToken,
+  upload.array("imagens", 5),
+  requestController.images
 );
 
 export default requestRouter;
