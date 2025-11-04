@@ -1,8 +1,4 @@
-import {
-  BadRequestError,
-  ConflictError,
-  NotFoundError,
-} from "../../Utils/Errors/CError";
+import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 import cloudinary, { CloudFiles } from "./config";
 

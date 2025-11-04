@@ -39,5 +39,9 @@ requestRouter.post(
   upload.array("imagens", 5),
   requestController.images
 );
-
+requestRouter.get(
+  "/solicitacoes/:id/imagens",
+  authToken,
+  requestController.showImages
+);
 export default requestRouter;
