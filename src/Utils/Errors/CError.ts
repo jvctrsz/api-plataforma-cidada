@@ -65,7 +65,7 @@ export class BadRequestError extends Error {
   data: { error: string };
   constructor(message: string) {
     super("BadRequest Error");
-    this.status = 404;
+    this.status = 400;
     this.message = message;
     this.data = { error: message };
     Object.setPrototypeOf(this, CError.prototype);

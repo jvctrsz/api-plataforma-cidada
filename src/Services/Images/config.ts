@@ -1,5 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 
+export type CloudFiles = Express.Multer.File;
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,

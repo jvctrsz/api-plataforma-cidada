@@ -85,7 +85,7 @@ model mensagens {
 model imagens {
   id             Int         @id @default(autoincrement())
   url            String
-  public_id      Int
+  public_id      String
   solicitacao_id Int
   Solicitacao    solicitacao @relation(fields: [solicitacao_id], references: [id])
 }
