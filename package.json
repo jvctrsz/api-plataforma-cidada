@@ -25,10 +25,12 @@
     "@asteasolutions/zod-to-openapi": "^8.1.0",
     "@prisma/client": "^6.15.0",
     "argon2": "^0.44.0",
+    "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
     "nodemailer": "^7.0.6",
     "swagger-ui-express": "^5.0.1",
     "zod": "^4.1.9"

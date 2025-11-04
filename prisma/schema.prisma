@@ -68,6 +68,7 @@ model solicitacao {
   mensagens      mensagens[]
   secretaria     secretaria  @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
   usuarios       usuarios    @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
+  imagens        imagens[]
 }
 
 model mensagens {
@@ -79,6 +80,14 @@ model mensagens {
   destinatario_id Int
   Solicitacao     solicitacao @relation(fields: [solicitacao_id], references: [id])
   Usuario         usuarios    @relation(fields: [remetente_id], references: [id])
+}
+
+model imagens {
+  id             Int         @id @default(autoincrement())
+  url            String
+  public_id      Int
+  solicitacao_id Int
+  Solicitacao    solicitacao @relation(fields: [solicitacao_id], references: [id])
 }
 
 enum Status {
