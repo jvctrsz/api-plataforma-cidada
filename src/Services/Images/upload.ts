@@ -1,7 +1,7 @@
 import multer from "multer";
 
 const upload = multer({
-  dest: "uploads/",
+  storage: multer.memoryStorage(),
   limits: { files: 5 },
 });
 
