@@ -5,6 +5,7 @@ import {
   postMessagesScheme,
   postRequestScheme,
   putRequestScheme,
+  requestQueriesScheme,
   secretariatRequestScheme,
   statusRequestScheme,
 } from "../../Schemes/request.scheme";
@@ -104,6 +105,9 @@ requestRegistry.registerPath({
   path: "/api/solicitacoes",
   summary: "Retorna todas as solicitações.",
   tags: ["Solicitações"],
+  request: {
+    query: requestQueriesScheme,
+  },
   responses: {
     "200": {
       description: "Retorna um array com todas as solicitações",
