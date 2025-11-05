@@ -2,7 +2,6 @@ import { UploadApiResponse } from "cloudinary";
 import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 import cloudinary, { CloudFiles } from "./config";
-import streamifier from "streamifier";
 
 export const storeImages = async (id: number, files: CloudFiles[]) => {
   try {

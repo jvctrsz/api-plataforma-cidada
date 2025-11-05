@@ -5,9 +5,11 @@ import { CError } from "../Errors/CError";
 
 export const zodParse = <T extends ZodObject>(
   req: Request,
-  validation: T
+  validation: T,
+  isQuery: boolean = false
 ): { success: true; data: z.infer<T> } => {
-  const parsed = validation.safeParse(req.body);
+  const request = isQuery ? req.query : req.body;
+  const parsed = validation.safeParse(request);
   if (parsed.error) throw new CError(formatZodErrors(parsed.error), 400);
   return parsed;
 };

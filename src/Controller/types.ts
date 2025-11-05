@@ -58,6 +58,12 @@ export interface RequestsTypes extends RequestFields {
   usuarios_id: number;
 }
 
+export interface RequestQueries {
+  status?: StatusType;
+  funcionario_id?: string;
+  secretaria_id?: string;
+}
+
 export interface RequestMessageFields {
   mensagem: string;
 }

@@ -54,7 +54,9 @@ const observacao = z
 const secretaria_id = z.string(stringRequired).openapi({ example: "1" });
 export const requestStatus = z.enum(
   ["criado", "pendente", "andamento", "finalizado"],
-  { error: 'deve ser "criado", "pendente", "andamento" ou "finalizado".' }
+  {
+    error: 'deve ser "criado", "pendente", "andamento" ou "finalizado".',
+  }
 );
 const defaultRequestScheme = {
   endereco,
@@ -108,4 +110,20 @@ export const getMessagesScheme = z.object({
   destinatario_id: secretaria_id,
   id: secretaria_id,
   enviado_em: isoDateFormat,
+});
+
+export const queryStringError = z.string({
+  error: "Query: deve ser uma string.",
+});
+export const queryEnumError = z.enum(
+  ["criado", "pendente", "andamento", "finalizado"],
+  {
+    error: 'Query: deve ser "criado", "pendente", "andamento" ou "finalizado".',
+  }
+);
+
+export const requestQueriesScheme = z.object({
+  funcionario_id: queryStringError.openapi({ example: "1" }).optional(),
+  secretaria_id: queryStringError.openapi({ example: "2" }).optional(),
+  status: queryEnumError.optional(),
 });

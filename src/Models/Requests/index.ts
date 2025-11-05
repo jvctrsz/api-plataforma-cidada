@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
 import { indexRequests } from "../../Services/Request/indexRequest";
 import { TreatErrors } from "../../Utils/Errors/TreatErrors";
+import { zodParse } from "../../Utils/Functions/zodParse";
+import { requestQueriesScheme } from "../../Schemes/request.scheme";
 
 export const index = async (req: Request, res: Response) => {
   try {
-    const requests = await indexRequests();
+    const queries = zodParse(req, requestQueriesScheme, true);
+    const requests = await indexRequests(queries?.data);
     res.json(requests);
   } catch (error) {
     TreatErrors(error, res);
