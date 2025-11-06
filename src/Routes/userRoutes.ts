@@ -7,6 +7,7 @@ const userRouter = Router();
 userRouter.post("/usuarios", authToken, usersController.store);
 userRouter.get("/usuario", authToken, usersController.user);
 userRouter.get("/usuarios", authToken, usersController.index);
+userRouter.get("/usuarios/funcionarios", authToken, usersController.employees);
 userRouter.get("/usuarios/:id", authToken, usersController.show);
 userRouter.delete("/usuarios/:id", authToken, usersController.destroy);
 userRouter.put("/usuarios/:id", authToken, usersController.update);
