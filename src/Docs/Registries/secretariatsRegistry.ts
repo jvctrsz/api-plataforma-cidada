@@ -50,6 +50,12 @@ const secretariatConflict = {
           error: "Já existe uma secretaria vinculada a este secretario.",
         },
       },
+      userError: {
+        summary: "Erro role usuário",
+        value: {
+          error: "Usuário não é um funcionario ou admin.",
+        },
+      },
     },
   },
 };

@@ -31,6 +31,8 @@ export const createSecretariats = async (parsed: SecretariatsType) => {
     if (!user) throw new NotFoundError("Secretario não encontrado.");
     if (!user.valido)
       throw new ConflictError("Secretario aguardando validação.");
+    if (user.role === "usuario")
+      throw new ConflictError("Usuário não é um funcionario ou admin.");
 
     const existingSecretariat = await prisma.secretaria.findUnique({
       where: { secretario_id: Number(secretario_id) },
