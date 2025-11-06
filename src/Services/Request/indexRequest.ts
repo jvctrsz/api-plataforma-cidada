@@ -1,14 +1,24 @@
-import { RequestQueries } from "../../Controller/types";
+import { RequestQueries, UserRole } from "../../Controller/types";
 import { prisma } from "../../Utils/prisma";
 
-export const indexRequests = async (queries: RequestQueries) => {
+export const indexRequests = async (
+  queries: RequestQueries,
+  role: UserRole,
+  user_id: number
+) => {
   try {
+    const queryByRole = () => {
+      if (role === "usuario") return { usuarios_id: user_id };
+      if (role === "funcionario") return { funcionario_id: user_id };
+    };
     const { funcionario_id, secretaria_id, status } = queries;
     const requests = await prisma.solicitacao.findMany({
       where: {
-        ...(funcionario_id && {
-          funcionario_id: { equals: Number(funcionario_id) },
-        }),
+        ...queryByRole(),
+        ...(funcionario_id &&
+          role !== "funcionario" && {
+            funcionario_id: { equals: Number(funcionario_id) },
+          }),
         ...(secretaria_id && {
           secretaria_id: { equals: Number(secretaria_id) },
         }),

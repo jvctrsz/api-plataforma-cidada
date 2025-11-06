@@ -7,7 +7,9 @@ import { requestQueriesScheme } from "../../Schemes/request.scheme";
 export const index = async (req: Request, res: Response) => {
   try {
     const queries = zodParse(req, requestQueriesScheme, true);
-    const requests = await indexRequests(queries?.data);
+    const role = req.role;
+    const id = req.user_id;
+    const requests = await indexRequests(queries?.data, role, id);
     res.json(requests);
   } catch (error) {
     TreatErrors(error, res);
