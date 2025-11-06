@@ -88,3 +88,12 @@ export const userScheme = z.object({
 });
 
 export const roleScheme = z.object({ role: role });
+
+export const getEmployeeScheme = z.object({
+  id: id,
+  nome: nome,
+  email: email,
+  role: role,
+  criado_em: isoDateFormat,
+  valido: valido,
+});

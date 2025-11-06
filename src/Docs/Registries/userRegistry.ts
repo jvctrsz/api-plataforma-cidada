@@ -3,6 +3,7 @@ import { z } from "zod";
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import {
   changeScheme,
+  getEmployeeScheme,
   getUserScheme,
   postUserScheme,
   putErrorScheme,
@@ -393,6 +394,24 @@ userRegistry.registerPath({
     "401": unauthorized,
     "404": userNotFound,
     "403": notAllowed,
+    "500": internalError,
+  },
+});
+
+//get funcionario
+userRegistry.registerPath({
+  method: "get",
+  path: "/api/usuarios/funcionarios",
+  summary: "Retorna todos os funcionarios",
+  description: "Rota para que o front busque todos os funcionarios.",
+  tags: ["Usuários"],
+  responses: {
+    "200": {
+      description: "Retorna um array de funcionarios",
+      content: {
+        "application/json": { schema: z.array(getEmployeeScheme) },
+      },
+    },
     "500": internalError,
   },
 });
