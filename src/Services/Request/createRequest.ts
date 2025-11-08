@@ -1,6 +1,7 @@
 import { RequestFields } from "../../Controller/types";
 import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
+import { getNewProtocol } from "./Utils/generateProtocol";
 
 export const createRequest = async (id: number, parsed: RequestFields) => {
   try {
@@ -28,6 +29,10 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
     if (!secretariat.ativo)
       throw new ConflictError("Secretaria está desativada.");
 
+    const requests = await prisma.solicitacao.findMany();
+    const protocols = (requests ?? []).map(({ protocolo }) => protocolo);
+    const protocolo = getNewProtocol(protocols);
+
     await prisma.solicitacao.create({
       data: {
         bairro,
@@ -43,6 +48,7 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
         secretaria_id: Number(secretaria_id),
         usuarios_id: user.id,
         funcionario_id: secretariat.secretario_id,
+        protocolo,
       },
     });
     return "Solicitação criada com sucesso.";
