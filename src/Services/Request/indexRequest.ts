@@ -29,6 +29,7 @@ export const indexRequests = async (
           prioridade: { equals: prioridade },
         }),
       },
+      orderBy: { id: "asc" },
     });
     return requests;
   } catch (error) {

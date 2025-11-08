@@ -5,6 +5,7 @@ export const indexUsers = async () => {
   try {
     const users = await prisma.usuarios.findMany({
       omit: omitUser,
+      orderBy: { id: "asc" },
     });
     return users;
   } catch (error) {
