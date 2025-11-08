@@ -28,7 +28,7 @@ categoriesRegistry.registerPath({
     "401": unauthorized,
     "403": notAllowed,
     "404": defaultError("Secretaria não encontrada"),
-    "409": defaultError("Já existe uma categoria com este nome."),
+    "409": defaultError("Já existe uma categoria com este nome"),
     "500": internalError,
   },
 });

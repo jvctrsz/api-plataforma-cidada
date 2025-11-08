@@ -8,8 +8,8 @@ import categoriesRegistry from "./Registries/categoriesRegistry";
 const generator = new OpenApiGeneratorV3([
   ...authRegistry.definitions,
   ...userRegistry.definitions,
-  ...categoriesRegistry.definitions,
   ...secretariatsRegistry.definitions,
+  ...categoriesRegistry.definitions,
   ...requestRegistry.definitions,
 ]);
 
