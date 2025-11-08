@@ -3,10 +3,12 @@ import userRegistry from "./Registries/userRegistry";
 import authRegistry from "./Registries/authRegistry";
 import secretariatsRegistry from "./Registries/secretariatsRegistry";
 import requestRegistry from "./Registries/requestRegistry";
+import categoriesRegistry from "./Registries/categoriesRegistry";
 
 const generator = new OpenApiGeneratorV3([
   ...authRegistry.definitions,
   ...userRegistry.definitions,
+  ...categoriesRegistry.definitions,
   ...secretariatsRegistry.definitions,
   ...requestRegistry.definitions,
 ]);
