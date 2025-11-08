@@ -13,5 +13,11 @@ categoriesRouter.post(
 );
 categoriesRouter.get("/categorias", authToken, categoriesControllers.index);
 categoriesRouter.get("/categorias/:id", authToken, categoriesControllers.show);
+categoriesRouter.delete(
+  "/categorias/:id",
+  authToken,
+  adminPermission,
+  categoriesControllers.destroy
+);
 
 export default categoriesRouter;

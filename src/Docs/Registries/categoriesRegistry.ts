@@ -46,7 +46,7 @@ categoriesRegistry.registerPath({
 //get
 categoriesRegistry.registerPath({
   method: "get",
-  path: "/api/categorias",
+  path: "/api/categorias/{id}",
   summary: "Lista todas as categorias",
   tags: ["Categorias"],
   request: {
@@ -86,6 +86,27 @@ categoriesRegistry.registerPath({
     },
     "401": unauthorized,
     "404": defaultError("Categoria não encontrada"),
+    "500": internalError,
+  },
+});
+
+//delete
+categoriesRegistry.registerPath({
+  method: "delete",
+  path: "/api/categorias/{id}",
+  summary: "Deleta uma categoria",
+  tags: ["Categorias"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": defaultOKStatus("Categoria deletada com sucesso"),
+    "401": unauthorized,
+    "403": notAllowed,
+    "404": defaultError("Categoria não encontrada"),
+    "409": defaultError(
+      "Não é possível deletar esta categoria, há solicitações não finalizadas vinculadas a ela"
+    ),
     "500": internalError,
   },
 });
