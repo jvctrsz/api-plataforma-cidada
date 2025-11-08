@@ -66,6 +66,7 @@ export interface RequestQueries {
   funcionario_id?: string;
   secretaria_id?: string;
   prioridade?: RequestPriority;
+  protocolo?: string;
 }
 
 export interface RequestMessageFields {

@@ -54,6 +54,7 @@ const observacao = z
   .openapi({
     example: "Esta queimada a um mês, e ja queimou três vezes este ano.",
   });
+
 const prioridade = priorityEnum.optional();
 
 const secretaria_id = z.string(stringRequired).openapi({ example: "1" });
@@ -99,6 +100,7 @@ export const getRequestScheme = z.object({
   status: requestStatus,
   criado_em: isoDateFormat,
   atualizado_em: isoDateFormat,
+  protocolo: z.string().openapi({ example: "11/2025-uZaFne" }),
 });
 
 export const statusRequestScheme = z.object({ status: requestStatus });
@@ -131,7 +133,7 @@ export const queryEnumError = z.enum(
 );
 
 export const queryPriorityEnum = z.enum(["baixa", "normal", "alta"], {
-  error: 'deve ser "baixa", "normal" ou "alta".',
+  error: 'Query: deve ser "baixa", "normal" ou "alta".',
 });
 
 export const requestQueriesScheme = z.object({
@@ -139,4 +141,5 @@ export const requestQueriesScheme = z.object({
   secretaria_id: queryStringError.openapi({ example: "2" }).optional(),
   status: queryEnumError.optional(),
   prioridade: queryPriorityEnum.optional(),
+  protocolo: queryStringError.optional().openapi({ example: "11/2025-uZaFne" }),
 });
