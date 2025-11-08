@@ -1,6 +1,9 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { postCategoriesScheme } from "../../Schemes/categories.scheme";
-import { defaultOKStatus } from "../../Utils/Functions/docFunctions";
+import {
+  defaultError,
+  defaultOKStatus,
+} from "../../Utils/Functions/docFunctions";
 import { internalError, unauthorized } from "../../Schemes/default.scheme";
 import { notAllowed } from "./secretariatsRegistry";
 
@@ -24,6 +27,8 @@ categoriesRegistry.registerPath({
     "201": defaultOKStatus("Categoria cadastrada com sucesso"),
     "401": unauthorized,
     "403": notAllowed,
+    "404": defaultError("Secretaria não encontrada"),
+    "409": defaultError("Já existe uma categoria com este nome."),
     "500": internalError,
   },
 });
