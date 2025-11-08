@@ -50,7 +50,7 @@ model secretaria {
 
 model solicitacao {
   id             Int         @id @default(autoincrement())
-  protocolo      String?     @unique @db.VarChar(14)
+  protocolo      String      @unique @db.VarChar(14)
   endereco       String      @db.VarChar(150)
   numero         String      @db.VarChar(10)
   referencia     String?     @db.VarChar(100)
