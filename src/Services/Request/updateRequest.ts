@@ -19,6 +19,7 @@ export const updateRequest = async (
       observacao,
       referencia,
       uf,
+      prioridade,
     } = parsed;
     await prisma.solicitacao.update({
       where: { id },
@@ -32,6 +33,7 @@ export const updateRequest = async (
         observacao,
         referencia,
         uf,
+        prioridade,
         atualizado_em: new Date(),
       },
     });

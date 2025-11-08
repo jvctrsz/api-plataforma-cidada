@@ -15,6 +15,7 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
       uf,
       observacao,
       referencia,
+      prioridade,
     } = parsed;
 
     const user = await prisma.usuarios.findUnique({ where: { id } });
@@ -38,6 +39,7 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
         uf,
         observacao,
         referencia,
+        prioridade,
         secretaria_id: Number(secretaria_id),
         usuarios_id: user.id,
         funcionario_id: secretariat.secretario_id,

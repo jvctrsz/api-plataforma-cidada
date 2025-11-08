@@ -48,6 +48,7 @@ export interface RequestFields {
   observacao?: string;
   secretaria_id: string;
   funcionario_id?: string;
+  prioridade?: RequestPriority;
 }
 
 export interface RequestsTypes extends RequestFields {
@@ -58,10 +59,13 @@ export interface RequestsTypes extends RequestFields {
   usuarios_id: number;
 }
 
+export type RequestPriority = "baixa" | "normal" | "alta";
+
 export interface RequestQueries {
   status?: StatusType;
   funcionario_id?: string;
   secretaria_id?: string;
+  prioridade?: RequestPriority;
 }
 
 export interface RequestMessageFields {

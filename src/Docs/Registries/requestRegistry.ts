@@ -80,7 +80,7 @@ requestRegistry.registerPath({
 //put
 requestRegistry.registerPath({
   method: "put",
-  path: "/api/solicitacoes",
+  path: "/api/solicitacoes/{id}",
   summary: "Edita uma solicitação.",
   tags: ["Solicitações"],
   request: {

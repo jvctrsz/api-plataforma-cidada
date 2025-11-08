@@ -9,6 +9,10 @@ export const requesStatusEnum = [
   "finalizado",
 ];
 
+export const priorityEnum = z.enum(["baixa", "normal", "alta"], {
+  error: 'deve ser "baixa", "normal" ou "alta".',
+});
+
 export const cep = z
   .string(stringRequired)
   .regex(/^\d{5}-\d{3}$/, "deve ser no formato 00000-000.")
@@ -50,6 +54,7 @@ const observacao = z
   .openapi({
     example: "Esta queimada a um mês, e ja queimou três vezes este ano.",
   });
+const prioridade = priorityEnum.optional();
 
 const secretaria_id = z.string(stringRequired).openapi({ example: "1" });
 export const requestStatus = z.enum(
@@ -58,6 +63,7 @@ export const requestStatus = z.enum(
     error: 'deve ser "criado", "pendente", "andamento" ou "finalizado".',
   }
 );
+
 const defaultRequestScheme = {
   endereco,
   numero,
@@ -69,6 +75,7 @@ const defaultRequestScheme = {
   observacao,
   descricao,
   secretaria_id,
+  prioridade,
 };
 
 export const postRequestScheme = z.object(defaultRequestScheme);
@@ -82,6 +89,7 @@ export const putRequestScheme = z.object({
   cep: cep.optional(),
   observacao,
   descricao: descricao.optional(),
+  prioridade,
 });
 
 export const getRequestScheme = z.object({
@@ -122,8 +130,13 @@ export const queryEnumError = z.enum(
   }
 );
 
+export const queryPriorityEnum = z.enum(["baixa", "normal", "alta"], {
+  error: 'deve ser "baixa", "normal" ou "alta".',
+});
+
 export const requestQueriesScheme = z.object({
   funcionario_id: queryStringError.openapi({ example: "1" }).optional(),
   secretaria_id: queryStringError.openapi({ example: "2" }).optional(),
   status: queryEnumError.optional(),
+  prioridade: queryPriorityEnum.optional(),
 });
