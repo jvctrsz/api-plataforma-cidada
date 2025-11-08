@@ -1,5 +1,5 @@
 import { CategoriesType } from "../../Controller/types";
-import { ConflictError } from "../../Utils/Errors/CError";
+import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export const storeCategories = async (parsed: CategoriesType) => {
@@ -9,8 +9,17 @@ export const storeCategories = async (parsed: CategoriesType) => {
     if (!!existsName)
       throw new ConflictError("Já existe uma categoria com este nome.");
 
+    const secretary = await prisma.secretaria.findUnique({
+      where: { id: Number(secretaria_id) },
+    });
+    if (!secretary) throw new NotFoundError("Secretaria não encontrada.");
+
     await prisma.categorias.create({
-      data: { nome, secretaria_id: Number(secretaria_id) },
+      data: {
+        nome,
+        secretaria_id: Number(secretaria_id),
+        secretataria_nome: secretary.nome,
+      },
     });
     return "Categoria cadastrada com sucesso.";
   } catch (error) {
