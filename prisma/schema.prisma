@@ -45,6 +45,7 @@ model secretaria {
   secretario_nome String
   secretario_id   Int           @unique
   usuarios        usuarios      @relation(fields: [secretario_id], references: [id])
+  categorias      categorias[]
   solicitacao     solicitacao[]
 }
 
@@ -95,10 +96,12 @@ model imagens {
 }
 
 model categorias {
-  id          Int           @id @default(autoincrement())
-  nome        String        @unique
-  ativo       Boolean       @default(true)
-  Solicitacao solicitacao[]
+  id            Int           @id @default(autoincrement())
+  nome          String        @unique
+  ativo         Boolean       @default(true)
+  secretaria_id Int?
+  secretarias   secretaria?   @relation(fields: [secretaria_id], references: [id])
+  Solicitacao   solicitacao[]
 }
 
 enum Prioridade {
