@@ -57,7 +57,7 @@ const observacao = z
 
 const prioridade = priorityEnum.optional();
 
-const secretaria_id = z.string(stringRequired).openapi({ example: "1" });
+export const secretaria_id = z.string(stringRequired).openapi({ example: "1" });
 export const requestStatus = z.enum(
   ["criado", "pendente", "andamento", "finalizado"],
   {

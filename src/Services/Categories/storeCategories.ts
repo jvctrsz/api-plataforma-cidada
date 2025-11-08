@@ -4,12 +4,14 @@ import { prisma } from "../../Utils/prisma";
 
 export const storeCategories = async (parsed: CategoriesType) => {
   try {
-    const { nome } = parsed;
+    const { nome, secretaria_id } = parsed;
     const existsName = await prisma.categorias.findUnique({ where: { nome } });
     if (!!existsName)
       throw new ConflictError("Já existe uma categoria com este nome.");
 
-    await prisma.categorias.create({ data: { nome } });
+    await prisma.categorias.create({
+      data: { nome, secretaria_id: Number(secretaria_id) },
+    });
     return "Categoria cadastrada com sucesso.";
   } catch (error) {
     throw error;

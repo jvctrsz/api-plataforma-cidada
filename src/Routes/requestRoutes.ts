@@ -18,12 +18,6 @@ requestRouter.post(
   requestController.status
 );
 requestRouter.post(
-  "/solicitacoes/transferir/:id",
-  authToken,
-  permission,
-  requestController.secretariat
-);
-requestRouter.post(
   "/solicitacoes/:id/mensagem",
   authToken,
   requestController.send
