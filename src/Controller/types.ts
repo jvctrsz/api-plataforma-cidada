@@ -52,7 +52,6 @@ export interface RequestFields {
   cep: string;
   descricao: string;
   observacao?: string;
-  secretaria_id: string;
   funcionario_id?: string;
   prioridade?: RequestPriority;
   categoria_id: string;

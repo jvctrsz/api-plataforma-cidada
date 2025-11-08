@@ -12,7 +12,6 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
       descricao,
       endereco,
       numero,
-      secretaria_id,
       uf,
       observacao,
       referencia,
@@ -22,6 +21,12 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
 
     const user = await prisma.usuarios.findUnique({ where: { id } });
     if (!user) throw new NotFoundError("Usuário não encontrado.");
+
+    const category = await prisma.categorias.findUnique({
+      where: { id: Number(categoria_id) },
+    });
+    const secretaria_id = category?.secretaria_id;
+    if (!category) throw new NotFoundError("Categoria não encontrada.");
 
     const secretariat = await prisma.secretaria.findUnique({
       where: { id: Number(secretaria_id) },

@@ -62,7 +62,7 @@ model solicitacao {
   observacao     String?     @db.VarChar(500)
   status         Status      @default(criado)
   prioridade     Prioridade  @default(normal)
-  secretaria_id  Int
+  secretaria_id  Int //PRECISA PEGAR SECRETARIA_ID PELA CATEGORIA
   usuarios_id    Int
   descricao      String      @db.VarChar(180)
   atualizado_em  DateTime?
@@ -99,8 +99,8 @@ model categorias {
   id            Int           @id @default(autoincrement())
   nome          String        @unique
   ativo         Boolean       @default(true)
-  secretaria_id Int?
-  secretarias   secretaria?   @relation(fields: [secretaria_id], references: [id])
+  secretaria_id Int
+  secretarias   secretaria    @relation(fields: [secretaria_id], references: [id])
   Solicitacao   solicitacao[]
 }
 

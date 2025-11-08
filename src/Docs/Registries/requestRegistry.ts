@@ -62,6 +62,12 @@ requestRegistry.registerPath({
                 error: "Usuário não encontrado.",
               },
             },
+            categoryError: {
+              summary: "Erro de Categoria",
+              value: {
+                error: "Categoria não encontrada.",
+              },
+            },
             secretariatError: {
               summary: "Erro de secretaria",
               value: {
@@ -94,7 +100,28 @@ requestRegistry.registerPath({
   responses: {
     "201": defaultOKStatus("Solicitação editada com sucesso"),
     "401": unauthorized,
-    "404": requestNotFound,
+    "404": {
+      description: "Registro não encontrados",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            requestError: {
+              summary: "Erro de Solicitação",
+              value: {
+                error: "Solicitação não encontrada.",
+              },
+            },
+            categoryError: {
+              summary: "Erro de Categoria",
+              value: {
+                error: "Categoria não encontrada.",
+              },
+            },
+          },
+        },
+      },
+    },
     "500": internalError,
   },
 });

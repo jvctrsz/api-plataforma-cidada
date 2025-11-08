@@ -75,7 +75,6 @@ const defaultRequestScheme = {
   cep,
   observacao,
   descricao,
-  secretaria_id,
   prioridade,
   categoria_id: secretaria_id,
 };
@@ -92,13 +91,14 @@ export const putRequestScheme = z.object({
   observacao,
   descricao: descricao.optional(),
   prioridade,
-  categoria_id: secretaria_id,
+  categoria_id: secretaria_id.optional(),
 });
 
 export const getRequestScheme = z.object({
   id: secretaria_id,
   ...defaultRequestScheme,
   usuarios_id: secretaria_id,
+  secretaria_id,
   status: requestStatus,
   criado_em: isoDateFormat,
   atualizado_em: isoDateFormat,
