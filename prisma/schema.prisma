@@ -59,6 +59,7 @@ model solicitacao {
   cep            String      @db.Char(9)
   observacao     String?     @db.VarChar(500)
   status         Status      @default(criado)
+  prioridade     Prioridade  @default(normal)
   secretaria_id  Int
   usuarios_id    Int
   descricao      String      @db.VarChar(180)
@@ -88,6 +89,12 @@ model imagens {
   public_id      String
   solicitacao_id Int
   Solicitacao    solicitacao @relation(fields: [solicitacao_id], references: [id])
+}
+
+enum Prioridade {
+  alta
+  normal
+  baixa
 }
 
 enum Status {
