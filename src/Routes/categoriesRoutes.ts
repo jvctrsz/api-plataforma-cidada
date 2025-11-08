@@ -12,4 +12,6 @@ categoriesRouter.post(
   categoriesControllers.store
 );
 
+categoriesRouter.get("/categorias", authToken, categoriesControllers.index);
+
 export default categoriesRouter;
