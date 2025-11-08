@@ -129,6 +129,7 @@ export const queryStringError = z
     error: "Query: deve ser uma string.",
   })
   .optional();
+
 export const queryEnumError = z.enum(
   ["criado", "pendente", "andamento", "finalizado"],
   {
@@ -144,7 +145,7 @@ export const requestQueriesScheme = z.object({
   funcionario_id: queryStringError,
   secretaria_id: queryStringError,
   categoria_id: queryStringError,
-  status: queryEnumError,
-  prioridade: queryPriorityEnum,
+  status: queryEnumError.optional(),
+  prioridade: queryPriorityEnum.optional(),
   protocolo: queryStringError.optional().openapi({ example: "11/2025-uZaFne" }),
 });
