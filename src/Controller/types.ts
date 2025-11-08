@@ -55,6 +55,7 @@ export interface RequestFields {
   secretaria_id: string;
   funcionario_id?: string;
   prioridade?: RequestPriority;
+  categoria_id: string;
 }
 
 export interface RequestsTypes extends RequestFields {
@@ -73,6 +74,7 @@ export interface RequestQueries {
   secretaria_id?: string;
   prioridade?: RequestPriority;
   protocolo?: string;
+  categoria_id?: string;
 }
 
 export interface RequestMessageFields {

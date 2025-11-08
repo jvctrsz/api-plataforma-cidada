@@ -11,8 +11,14 @@ export const indexRequests = async (
       if (role === "usuario") return { usuarios_id: user_id };
       if (role === "funcionario") return { funcionario_id: user_id };
     };
-    const { funcionario_id, secretaria_id, status, prioridade, protocolo } =
-      queries;
+    const {
+      funcionario_id,
+      secretaria_id,
+      status,
+      prioridade,
+      protocolo,
+      categoria_id,
+    } = queries;
     const requests = await prisma.solicitacao.findMany({
       where: {
         ...queryByRole(),
@@ -22,6 +28,9 @@ export const indexRequests = async (
           }),
         ...(!!Number(secretaria_id) && {
           secretaria_id: { equals: Number(secretaria_id) },
+        }),
+        ...(!!Number(categoria_id) && {
+          categoria_id: { equals: Number(categoria_id) },
         }),
         ...(status && {
           status: { equals: status },

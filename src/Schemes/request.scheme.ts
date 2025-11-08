@@ -77,6 +77,7 @@ const defaultRequestScheme = {
   descricao,
   secretaria_id,
   prioridade,
+  categoria_id: secretaria_id,
 };
 
 export const postRequestScheme = z.object(defaultRequestScheme);
@@ -91,6 +92,7 @@ export const putRequestScheme = z.object({
   observacao,
   descricao: descricao.optional(),
   prioridade,
+  categoria_id: secretaria_id,
 });
 
 export const getRequestScheme = z.object({
@@ -139,8 +141,9 @@ export const queryPriorityEnum = z.enum(["baixa", "normal", "alta"], {
 });
 
 export const requestQueriesScheme = z.object({
-  funcionario_id: queryStringError.openapi({ example: "1" }),
-  secretaria_id: queryStringError.openapi({ example: "2" }),
+  funcionario_id: queryStringError,
+  secretaria_id: queryStringError,
+  categoria_id: queryStringError,
   status: queryEnumError,
   prioridade: queryPriorityEnum,
   protocolo: queryStringError.optional().openapi({ example: "11/2025-uZaFne" }),

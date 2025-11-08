@@ -20,6 +20,7 @@ export const updateRequest = async (
       referencia,
       uf,
       prioridade,
+      categoria_id,
     } = parsed;
     await prisma.solicitacao.update({
       where: { id },
@@ -35,6 +36,7 @@ export const updateRequest = async (
         uf,
         prioridade,
         atualizado_em: new Date(),
+        categoria_id: Number(categoria_id),
       },
     });
 
