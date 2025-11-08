@@ -34,6 +34,12 @@ export interface SecretariatsType {
   secretario_id?: string;
 }
 
+export interface SecretariatsQueries {
+  secretario_nome?: string;
+  secretario_id?: string;
+  nome?: string;
+}
+
 export type StatusType = "criado" | "pendente" | "andamento" | "finalizado";
 
 export interface RequestFields {

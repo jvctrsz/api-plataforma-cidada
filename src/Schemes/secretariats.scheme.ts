@@ -5,7 +5,7 @@ import {
   stringRequired,
   telefone,
 } from "../Utils/Errors/Zod/validation";
-import { cep } from "./request.scheme";
+import { cep, queryStringError } from "./request.scheme";
 import { isoDateFormat } from "./default.scheme";
 
 export const defaultSecretariatScheme = {
@@ -70,4 +70,10 @@ export const getSecretariatsScheme = z.object({
   secretario_nome: secretario_nome,
   criado_em: isoDateFormat,
   atualizado_em: isoDateFormat,
+});
+
+export const secretariatQueryScheme = z.object({
+  secretario_id: queryStringError,
+  secretario_nome: queryStringError,
+  nome: queryStringError,
 });

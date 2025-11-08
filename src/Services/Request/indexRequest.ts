@@ -16,11 +16,11 @@ export const indexRequests = async (
     const requests = await prisma.solicitacao.findMany({
       where: {
         ...queryByRole(),
-        ...(funcionario_id &&
+        ...(!!Number(funcionario_id) &&
           role !== "funcionario" && {
             funcionario_id: { equals: Number(funcionario_id) },
           }),
-        ...(secretaria_id && {
+        ...(!!Number(secretaria_id) && {
           secretaria_id: { equals: Number(secretaria_id) },
         }),
         ...(status && {

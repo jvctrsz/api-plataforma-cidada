@@ -122,9 +122,11 @@ export const getMessagesScheme = z.object({
   enviado_em: isoDateFormat,
 });
 
-export const queryStringError = z.string({
-  error: "Query: deve ser uma string.",
-});
+export const queryStringError = z
+  .string({
+    error: "Query: deve ser uma string.",
+  })
+  .optional();
 export const queryEnumError = z.enum(
   ["criado", "pendente", "andamento", "finalizado"],
   {
@@ -137,9 +139,9 @@ export const queryPriorityEnum = z.enum(["baixa", "normal", "alta"], {
 });
 
 export const requestQueriesScheme = z.object({
-  funcionario_id: queryStringError.openapi({ example: "1" }).optional(),
-  secretaria_id: queryStringError.openapi({ example: "2" }).optional(),
-  status: queryEnumError.optional(),
-  prioridade: queryPriorityEnum.optional(),
+  funcionario_id: queryStringError.openapi({ example: "1" }),
+  secretaria_id: queryStringError.openapi({ example: "2" }),
+  status: queryEnumError,
+  prioridade: queryPriorityEnum,
   protocolo: queryStringError.optional().openapi({ example: "11/2025-uZaFne" }),
 });

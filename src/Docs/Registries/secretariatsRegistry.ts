@@ -4,6 +4,7 @@ import {
   getSecretariatsScheme,
   postSecretariatsScheme,
   changeEmployeeScheme,
+  secretariatQueryScheme,
 } from "../../Schemes/secretariats.scheme";
 import {
   idParams,
@@ -176,6 +177,9 @@ secretariatsRegistry.registerPath({
   path: "/api/secretarias",
   summary: "Retorna todas as secretarias.",
   tags: ["Secretarias"],
+  request: {
+    query: secretariatQueryScheme,
+  },
   responses: {
     "200": {
       description: "Retorna um array com todas as secretarias",
