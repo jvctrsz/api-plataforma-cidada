@@ -91,5 +91,5 @@ export interface CategoriesType {
   id?: number;
   nome: string;
   secretaria_id: string;
-  secretaria_nome: string;
+  secretaria_nome?: string;
 }
