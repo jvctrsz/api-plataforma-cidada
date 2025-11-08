@@ -67,9 +67,11 @@ model solicitacao {
   atualizado_em  DateTime?
   criado_em      DateTime    @default(now())
   funcionario_id Int
+  categoria_id   Int? // precisa deixar OBRIGATORIO 
   mensagens      mensagens[]
   secretaria     secretaria  @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
   usuarios       usuarios    @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
+  categoria      categorias? @relation(fields: [categoria_id], references: [id])
   imagens        imagens[]
 }
 
@@ -90,6 +92,13 @@ model imagens {
   public_id      String
   solicitacao_id Int
   Solicitacao    solicitacao @relation(fields: [solicitacao_id], references: [id])
+}
+
+model categorias {
+  id          Int           @id @default(autoincrement())
+  nome        String        @unique
+  ativo       Boolean       @default(true)
+  Solicitacao solicitacao[]
 }
 
 enum Prioridade {
