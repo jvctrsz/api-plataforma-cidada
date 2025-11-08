@@ -8,7 +8,11 @@ import {
   defaultError,
   defaultOKStatus,
 } from "../../Utils/Functions/docFunctions";
-import { internalError, unauthorized } from "../../Schemes/default.scheme";
+import {
+  idParams,
+  internalError,
+  unauthorized,
+} from "../../Schemes/default.scheme";
 import { notAllowed } from "./secretariatsRegistry";
 import z from "zod";
 
@@ -58,6 +62,30 @@ categoriesRegistry.registerPath({
       },
     },
     "401": unauthorized,
+    "500": internalError,
+  },
+});
+
+//get id
+categoriesRegistry.registerPath({
+  method: "get",
+  path: "/api/categorias",
+  summary: "Lista uma única categoria",
+  tags: ["Categorias"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Retorna um objeto da categoria",
+      content: {
+        "application/json": {
+          schema: z.array(getCategoriesScheme),
+        },
+      },
+    },
+    "401": unauthorized,
+    "404": defaultError("Categoria não encontrada"),
     "500": internalError,
   },
 });

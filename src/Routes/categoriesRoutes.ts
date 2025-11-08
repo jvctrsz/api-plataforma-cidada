@@ -11,7 +11,7 @@ categoriesRouter.post(
   adminPermission,
   categoriesControllers.store
 );
-
 categoriesRouter.get("/categorias", authToken, categoriesControllers.index);
+categoriesRouter.get("/categorias/:id", authToken, categoriesControllers.show);
 
 export default categoriesRouter;
