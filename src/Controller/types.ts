@@ -87,3 +87,9 @@ export interface RequestMessages extends RequestMessageFields {
   remetente_id: number;
   solicitacao_id: number;
 }
+
+export interface CategoriesType {
+  id?: number;
+  nome: string;
+  ativo?: boolean;
+}
