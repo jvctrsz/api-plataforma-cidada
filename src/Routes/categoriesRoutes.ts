@@ -19,5 +19,11 @@ categoriesRouter.delete(
   adminPermission,
   categoriesControllers.destroy
 );
+categoriesRouter.put(
+  "/categorias/:id",
+  authToken,
+  adminPermission,
+  categoriesControllers.update
+);
 
 export default categoriesRouter;

@@ -3,6 +3,7 @@ import {
   categoriesQueryScheme,
   getCategoriesScheme,
   postCategoriesScheme,
+  putCategoriesScheme,
 } from "../../Schemes/categories.scheme";
 import {
   defaultError,
@@ -39,6 +40,73 @@ categoriesRegistry.registerPath({
     "403": notAllowed,
     "404": defaultError("Secretaria não encontrada"),
     "409": defaultError("Já existe uma categoria com este nome"),
+    "500": internalError,
+  },
+});
+
+//put
+categoriesRegistry.registerPath({
+  method: "put",
+  path: "/api/categorias/{id}",
+  summary: "Edita uma categoria",
+  tags: ["Categorias"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "application/json": { schema: putCategoriesScheme },
+      },
+    },
+  },
+  responses: {
+    "201": defaultOKStatus("Categoria editada com sucesso"),
+    "401": unauthorized,
+    "403": notAllowed,
+    "404": {
+      description: "Registros não encontrados",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            emailError: {
+              summary: "Erro de Categoria",
+              value: {
+                error: "Categoria não encontrada.",
+              },
+            },
+            cpfError: {
+              summary: "Erro de Secretaria",
+              value: {
+                error: "Secretaria não encontrada.",
+              },
+            },
+          },
+        },
+      },
+    },
+    "409": {
+      description: "Conflitos ao atualizar",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            emailError: {
+              summary: "Erro de Categoria",
+              value: {
+                error: "Já existe uma categoria com este nome.",
+              },
+            },
+            cpfError: {
+              summary: "Erro de Secretaria",
+              value: {
+                error:
+                  "Não é possivel trocar para outra secretaria, há solicitações não finalizdas vinculadas a ela.",
+              },
+            },
+          },
+        },
+      },
+    },
     "500": internalError,
   },
 });

@@ -9,6 +9,11 @@ const defaultScheme = {
 
 export const postCategoriesScheme = z.object(defaultScheme);
 
+export const putCategoriesScheme = z.object({
+  nome: z.string(stringRequired).optional(),
+  secretaria_id: secretaria_id.optional(),
+});
+
 export const getCategoriesScheme = z.object({
   id: secretaria_id,
   ...defaultScheme,
