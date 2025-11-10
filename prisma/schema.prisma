@@ -83,8 +83,8 @@ model mensagens {
   solicitacao_id  Int
   remetente_id    Int         @map("usuario_id")
   destinatario_id Int
-  Solicitacao     solicitacao @relation(fields: [solicitacao_id], references: [id])
-  Usuario         usuarios    @relation(fields: [remetente_id], references: [id])
+  solicitacao     solicitacao @relation(fields: [solicitacao_id], references: [id])
+  usuario         usuarios    @relation(fields: [remetente_id], references: [id])
 }
 
 model imagens {
@@ -92,7 +92,7 @@ model imagens {
   url            String
   public_id      String
   solicitacao_id Int
-  Solicitacao    solicitacao @relation(fields: [solicitacao_id], references: [id])
+  solicitacao    solicitacao @relation(fields: [solicitacao_id], references: [id])
 }
 
 model categorias {
@@ -101,7 +101,7 @@ model categorias {
   secretataria_nome String?
   secretaria_id     Int
   secretarias       secretaria    @relation(fields: [secretaria_id], references: [id])
-  Solicitacao       solicitacao[]
+  solicitacao       solicitacao[]
 }
 
 enum Prioridade {
