@@ -5,10 +5,10 @@ export const destroyCategories = async (id: number) => {
   try {
     const category = await prisma.categorias.findUnique({
       where: { id },
-      include: { Solicitacao: true },
+      include: { solicitacao: true },
     });
     if (!category) throw new NotFoundError("Categoria não encontrada.");
-    const openRequests = category.Solicitacao.filter(
+    const openRequests = category.solicitacao.filter(
       ({ status }) => status !== "finalizado"
     );
     if (!!openRequests.length)
