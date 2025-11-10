@@ -25,8 +25,8 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
     const category = await prisma.categorias.findUnique({
       where: { id: Number(categoria_id) },
     });
-    const secretaria_id = category?.secretaria_id;
     if (!category) throw new NotFoundError("Categoria não encontrada.");
+    const secretaria_id = category?.secretaria_id;
 
     const secretariat = await prisma.secretaria.findUnique({
       where: { id: Number(secretaria_id) },
