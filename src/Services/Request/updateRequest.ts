@@ -23,8 +23,10 @@ export const updateRequest = async (
       categoria_id,
     } = parsed;
 
+    const category_id = categoria_id ?? request.categoria_id;
+
     const category = await prisma.categorias.findUnique({
-      where: { id: Number(categoria_id) },
+      where: { id: Number(category_id) },
     });
     if (!category) throw new NotFoundError("Categoria não encontrada.");
 
@@ -43,7 +45,7 @@ export const updateRequest = async (
         prioridade,
         atualizado_em: new Date(),
         secretaria_id: Number(category.secretaria_id),
-        categoria_id: Number(categoria_id),
+        categoria_id: Number(category_id),
       },
     });
 
