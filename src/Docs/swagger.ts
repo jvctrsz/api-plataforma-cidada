@@ -4,6 +4,7 @@ import authRegistry from "./Registries/authRegistry";
 import secretariatsRegistry from "./Registries/secretariatsRegistry";
 import requestRegistry from "./Registries/requestRegistry";
 import categoriesRegistry from "./Registries/categoriesRegistry";
+import dashboardRegistry from "./Registries/dashboardRegistry";
 
 const generator = new OpenApiGeneratorV3([
   ...authRegistry.definitions,
@@ -11,6 +12,7 @@ const generator = new OpenApiGeneratorV3([
   ...secretariatsRegistry.definitions,
   ...categoriesRegistry.definitions,
   ...requestRegistry.definitions,
+  ...dashboardRegistry.definitions,
 ]);
 
 const openApiDoc = generator.generateDocument({
