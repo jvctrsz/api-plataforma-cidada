@@ -95,7 +95,7 @@ model imagens {
 model categorias {
   id                Int           @id @default(autoincrement())
   nome              String        @unique
-  secretataria_nome String?
+  secretataria_nome String
   secretaria_id     Int
   secretarias       secretaria    @relation(fields: [secretaria_id], references: [id])
   solicitacao       solicitacao[]
