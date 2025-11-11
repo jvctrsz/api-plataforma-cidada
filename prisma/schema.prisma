@@ -26,27 +26,26 @@ model usuarios {
 }
 
 model secretaria {
-  id              Int           @id @default(autoincrement())
-  nome            String        @unique @db.VarChar(150)
-  ativo           Boolean       @default(true)
+  id              Int          @id @default(autoincrement())
+  nome            String       @unique @db.VarChar(150)
+  ativo           Boolean      @default(true)
   atualizado_em   DateTime?
-  bairro          String?       @db.VarChar(30)
-  celular         String?       @db.VarChar(15)
-  cep             String?       @db.VarChar(9)
-  cidade          String?       @db.VarChar(100)
-  criado_em       DateTime?     @default(now())
-  descricao       String?       @db.VarChar(255)
-  email           String?       @db.VarChar(150)
-  logradouro      String?       @db.VarChar(150)
-  numero          String?       @db.VarChar(10)
-  telefone        String?       @db.VarChar(14)
-  uf              String?       @db.Char(2)
-  whatsapp        String?       @db.VarChar(15)
+  bairro          String?      @db.VarChar(30)
+  celular         String?      @db.VarChar(15)
+  cep             String?      @db.VarChar(9)
+  cidade          String?      @db.VarChar(100)
+  criado_em       DateTime?    @default(now())
+  descricao       String?      @db.VarChar(255)
+  email           String?      @db.VarChar(150)
+  logradouro      String?      @db.VarChar(150)
+  numero          String?      @db.VarChar(10)
+  telefone        String?      @db.VarChar(14)
+  uf              String?      @db.Char(2)
+  whatsapp        String?      @db.VarChar(15)
   secretario_nome String
-  secretario_id   Int           @unique
-  usuarios        usuarios      @relation(fields: [secretario_id], references: [id])
+  secretario_id   Int          @unique
+  usuarios        usuarios     @relation(fields: [secretario_id], references: [id])
   categorias      categorias[]
-  solicitacao     solicitacao[]
 }
 
 model solicitacao {
@@ -62,7 +61,6 @@ model solicitacao {
   observacao     String?     @db.VarChar(500)
   status         Status      @default(criado)
   prioridade     Prioridade  @default(normal)
-  secretaria_id  Int
   usuarios_id    Int
   descricao      String      @db.VarChar(180)
   atualizado_em  DateTime?
@@ -70,7 +68,6 @@ model solicitacao {
   funcionario_id Int
   categoria_id   Int
   mensagens      mensagens[]
-  secretaria     secretaria  @relation(fields: [secretaria_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_secretaria")
   usuarios       usuarios    @relation(fields: [usuarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solicitacao_usuarios")
   categoria      categorias  @relation(fields: [categoria_id], references: [id])
   imagens        imagens[]
