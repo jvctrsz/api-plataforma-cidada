@@ -114,7 +114,7 @@ categoriesRegistry.registerPath({
 //get
 categoriesRegistry.registerPath({
   method: "get",
-  path: "/api/categorias/{id}",
+  path: "/api/categorias",
   summary: "Lista todas as categorias",
   tags: ["Categorias"],
   request: {
@@ -137,7 +137,7 @@ categoriesRegistry.registerPath({
 //get id
 categoriesRegistry.registerPath({
   method: "get",
-  path: "/api/categorias",
+  path: "/api/categorias/{id}",
   summary: "Lista uma única categoria",
   tags: ["Categorias"],
   request: {
