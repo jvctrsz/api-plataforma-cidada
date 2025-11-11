@@ -15,11 +15,13 @@ export const updateCategories = async (
 
     const { nome, secretaria_id } = parsed;
 
-    const existsName = await prisma.categorias.findUnique({
-      where: { nome, AND: { id: { not: id } } },
-    });
-    if (!!existsName)
-      throw new ConflictError("Já existe uma categoria com este nome.");
+    if (!!nome) {
+      const existsName = await prisma.categorias.findUnique({
+        where: { nome, AND: { id: { not: id } } },
+      });
+      if (!!existsName)
+        throw new ConflictError("Já existe uma categoria com este nome.");
+    }
 
     const secretary_id = secretaria_id ?? category.secretaria_id;
 

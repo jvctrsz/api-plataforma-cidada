@@ -118,10 +118,17 @@ requestRegistry.registerPath({
                 error: "Categoria não encontrada.",
               },
             },
+            secretariatError: {
+              summary: "Erro de secretaria",
+              value: {
+                error: "Secretaria não encontrada.",
+              },
+            },
           },
         },
       },
     },
+    "409": defaultError("Secretaria esta desativada"),
     "500": internalError,
   },
 });

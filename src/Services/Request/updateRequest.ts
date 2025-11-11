@@ -1,5 +1,5 @@
 import { RequestFields } from "../../Controller/types";
-import { NotFoundError } from "../../Utils/Errors/CError";
+import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export const updateRequest = async (
@@ -29,6 +29,14 @@ export const updateRequest = async (
       where: { id: Number(category_id) },
     });
     if (!category) throw new NotFoundError("Categoria não encontrada.");
+    const secretaria_id = category?.secretaria_id;
+
+    const secretariat = await prisma.secretaria.findUnique({
+      where: { id: Number(secretaria_id) },
+    });
+    if (!secretariat) throw new NotFoundError("Secretaria não encontrada.");
+    if (!secretariat.ativo)
+      throw new ConflictError("Secretaria está desativada.");
 
     await prisma.solicitacao.update({
       where: { id },
@@ -43,8 +51,8 @@ export const updateRequest = async (
         referencia,
         uf,
         prioridade,
+        funcionario_id: secretariat.secretario_id,
         atualizado_em: new Date(),
-        secretaria_id: Number(category.secretaria_id),
         categoria_id: Number(category_id),
       },
     });

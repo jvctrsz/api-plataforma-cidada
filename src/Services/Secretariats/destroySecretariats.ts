@@ -5,8 +5,12 @@ export const destroySecretariats = async (id: number) => {
   try {
     const secretariat = await prisma.secretaria.findUnique({ where: { id } });
     if (!secretariat) throw new NotFoundError("Secretaria não encontrada.");
-    const solicitations = await prisma.solicitacao.findFirst({
-      where: { secretaria_id: { equals: id } },
+    const solicitations = await prisma.categorias.findFirst({
+      where: {
+        secretaria_id: id,
+        AND: { solicitacao: { every: { status: { not: "finalizado" } } } },
+      },
+      include: { solicitacao: true },
     });
     if (!!solicitations)
       throw new ConflictError(

@@ -51,7 +51,6 @@ export const createRequest = async (id: number, parsed: RequestFields) => {
         observacao,
         referencia,
         prioridade,
-        secretaria_id: Number(secretaria_id),
         usuarios_id: user.id,
         funcionario_id: secretariat.secretario_id,
         categoria_id: Number(categoria_id),
