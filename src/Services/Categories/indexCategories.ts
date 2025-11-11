@@ -14,6 +14,7 @@ export const indexCategories = async (parsed: Partial<CategoriesType>) => {
           secretaria_id: { equals: Number(secretaria_id) },
         }),
       },
+      orderBy: { id: "asc" },
     });
 
     return categories;

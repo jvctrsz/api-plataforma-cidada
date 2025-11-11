@@ -19,7 +19,10 @@ import {
   tokenParams,
   unauthorized,
 } from "../../Schemes/default.scheme";
-import { defaultOKStatus } from "../../Utils/Functions/docFunctions";
+import {
+  defaultError,
+  defaultOKStatus,
+} from "../../Utils/Functions/docFunctions";
 import { notAllowed } from "./secretariatsRegistry";
 
 const userRegistry = new OpenAPIRegistry();
@@ -167,6 +170,9 @@ userRegistry.registerPath({
     },
     "401": unauthorized,
     "404": userNotFound,
+    "409": defaultError(
+      "Esse usuário esta vinculado a uma secretaria, não é possível deletá-lo"
+    ),
     "500": internalError,
   },
 });
