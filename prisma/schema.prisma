@@ -11,7 +11,7 @@ model usuarios {
   id            Int           @id @default(autoincrement())
   nome          String        @db.VarChar(100)
   email         String        @unique @db.VarChar(150)
-  cpf           String        @unique @db.VarChar(14)
+  cpf           String?       @unique @db.VarChar(14)
   celular       String        @db.Char(15)
   telefone      String?       @db.VarChar(14)
   senha         String?
