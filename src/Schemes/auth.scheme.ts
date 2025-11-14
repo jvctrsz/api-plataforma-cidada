@@ -7,5 +7,5 @@ export const loginScheme = z.object({
 });
 
 export const googleLoginScheme = z.object({
-  token: z.string(stringRequired),
+  idToken: z.string(stringRequired),
 });

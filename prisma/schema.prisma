@@ -12,10 +12,10 @@ model usuarios {
   nome          String        @db.VarChar(100)
   email         String        @unique @db.VarChar(150)
   cpf           String?       @unique @db.VarChar(14)
-  celular       String        @db.Char(15)
+  celular       String?       @db.Char(15)
   telefone      String?       @db.VarChar(14)
   senha         String?
-  role          Role?         @default(usuario)
+  role          Role          @default(usuario)
   google_id     String?       @unique
   criado_em     DateTime?     @default(now()) @db.Timestamp(6)
   redefinido_em DateTime?

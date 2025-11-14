@@ -6,5 +6,6 @@ const authRouter = Router();
 authRouter.post("/auth/login", authController.login);
 authRouter.post("/auth/register", authController.register);
 authRouter.post("/auth/ativar-conta/:token", authController.active);
+authRouter.post("/auth/google/callback", authController.google);
 
 export default authRouter;
