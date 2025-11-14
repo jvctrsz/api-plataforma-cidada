@@ -6,7 +6,12 @@ import {
 import { UserType } from "../../Controller/types";
 import { redefineAndLoginHTML } from "../Users/Utils/redefineHTML";
 
-export const authRegister = async (user: UserType) => {
+interface RegisterInterface extends Omit<UserType, "cpf" | "celular"> {
+  cpf: string | null;
+  celular: string | null;
+}
+
+export const authRegister = async (user: RegisterInterface) => {
   try {
     const hash = process.env.LOGIN_JWT_SECRET;
 
