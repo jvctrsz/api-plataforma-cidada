@@ -27,7 +27,7 @@ export const authLogin = async (parsed: LoginType) => {
     const user = await prisma.usuarios.findUnique({ where: { email } });
     if (!user) throw new BadRequestError(defaultError);
 
-    if (!!user.google_id)
+    if (!!user.google_id && !user.senha)
       throw new ForbiddenError("Usuário cadastrado através do google.");
 
     if (!user.valido) {
