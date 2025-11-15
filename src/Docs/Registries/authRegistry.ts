@@ -28,7 +28,7 @@ authRegistry.registerPath({
   },
   responses: {
     "200": {
-      description: "Usuário cadastrado com sucesso",
+      description: "Usuário logado",
       content: {
         "application/json": {
           schema: z.object({
@@ -150,4 +150,61 @@ authRegistry.registerPath({
     "500": internalError,
   },
 });
+
+//google
+
+authRegistry.registerPath({
+  method: "post",
+  path: "/api/auth/google/callback",
+  summary: "Login/Registro com o google.",
+  description:
+    "O front deverá usar essa rota após o usuário ja ter feito o login e o front já ter recebido o token. Este token deve ser enviado como idToken.",
+  tags: ["Autenticação"],
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: z.object({
+            idToken: z.string().openapi({ example: tokenExample }),
+          }),
+        },
+      },
+    },
+  },
+  responses: {
+    "200": {
+      description: "Usuário logado",
+      content: {
+        "application/json": {
+          schema: z.object({
+            token: z.string().openapi({ example: tokenExample }),
+          }),
+        },
+      },
+    },
+    "500": {
+      description: "Erros de servidor",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            internalError: {
+              summary: "Internal Error",
+              value: {
+                error: "Internal Server Error!",
+              },
+            },
+            authError: {
+              summary: "Auth Error",
+              value: {
+                error: "Não foi possível conseguir as informações do usuário.",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+});
+
 export default authRegistry;
