@@ -1,5 +1,6 @@
 import { index } from "../Models/Requests";
 import { destroy } from "../Models/Requests/destroy";
+import { destroyImages } from "../Models/Requests/destroyImages";
 import { images } from "../Models/Requests/images";
 import { messages } from "../Models/Requests/messages";
 import { send } from "../Models/Requests/send";
@@ -20,4 +21,5 @@ export const requestController = {
   messages,
   images,
   showImages,
+  destroyImages,
 };

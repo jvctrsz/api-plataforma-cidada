@@ -149,3 +149,7 @@ export const requestQueriesScheme = z.object({
   prioridade: queryPriorityEnum.optional(),
   protocolo: queryStringError.optional().openapi({ example: "11/2025-uZaFne" }),
 });
+
+export const deleteImagesScheme = z.object({
+  ids: z.array(z.string(stringRequired)),
+});

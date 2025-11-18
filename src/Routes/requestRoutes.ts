@@ -38,4 +38,9 @@ requestRouter.get(
   authToken,
   requestController.showImages
 );
+requestRouter.delete(
+  "/solicitacoes/:id/imagens",
+  authToken,
+  requestController.destroyImages
+);
 export default requestRouter;
