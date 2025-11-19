@@ -151,5 +151,24 @@ export const requestQueriesScheme = z.object({
 });
 
 export const deleteImagesScheme = z.object({
-  ids: z.array(z.string(stringRequired)),
+  ids: z.array(z.string(stringRequired)).openapi({
+    example: [
+      "solicitacoes/gaugyv5dqj5mclxx5usl",
+      "solicitacoes/mdfr5o3fkub8stwkyu9c",
+    ],
+  }),
 });
+
+export const getImagesScheme = z.array(
+  z.object({
+    id: secretaria_id,
+    url: z.string().openapi({
+      example:
+        "https://res.cloudinary.com/dxpzj45cv/image/upload/v1762221529/solicitacoes/s4l14bnofeziqsil6o.png",
+    }),
+    public_id: z
+      .string()
+      .openapi({ example: "solicitacoes/s4l14bnofeziqsil6o" }),
+    solicitacao_id: secretaria_id,
+  })
+);

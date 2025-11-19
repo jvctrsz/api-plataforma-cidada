@@ -1,5 +1,7 @@
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import {
+  deleteImagesScheme,
+  getImagesScheme,
   getMessagesScheme,
   getRequestScheme,
   postMessagesScheme,
@@ -313,4 +315,91 @@ requestRegistry.registerPath({
     "500": internalError,
   },
 });
+
+//post images
+requestRegistry.registerPath({
+  method: "post",
+  path: "/api/solicitacoes/{id}/imagens",
+  summary: "Vincula imagens a uma solicitação",
+  description:
+    "Deve ser enviado um array de imagems, para que funcione deve ser enviado como FORM-DATA. Uma solicitação pode ter no máximo 5 imagens.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "multipart/form-data": {
+          schema: z.object({
+            files: z.array(
+              z.any().openapi({
+                type: "string",
+                format: "binary",
+              })
+            ),
+          }),
+        } as any,
+      },
+    },
+  },
+  responses: {
+    "200": defaultOKStatus("Imagens salvas com sucesso."),
+    "400": defaultError("Nenhuma imagem enviada"),
+    "401": unauthorized,
+    "404": defaultError("Solicitação não encontrada"),
+    "409": defaultError("Limite de 5 imagens atingido"),
+    "500": internalError,
+  },
+});
+
+//get images
+requestRegistry.registerPath({
+  method: "get",
+  path: "/api/solicitacoes/{id}/imagens",
+  summary: "Retorna todas as imagens vinculadas a uma solicitação",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+  },
+  responses: {
+    "200": {
+      description: "Retorna um array de imagens",
+      content: {
+        "application/json": {
+          schema: getImagesScheme,
+        },
+      },
+    },
+    "401": unauthorized,
+    "404": defaultError("Solicitação não encontrada"),
+    "500": internalError,
+  },
+});
+
+requestRegistry.registerPath({
+  method: "delete",
+  path: "/api/solicitacoes/{id}/imagens",
+  summary: "Deleta imagens vinculadas a uma solicitação",
+  description:
+    "Para deletar as imagens devem ser enviado o public_id de cada imagem. Pode ser enviado um único public_id, ou um array de public_id.",
+  tags: ["Solicitações"],
+  request: {
+    params: idParams,
+    body: {
+      content: {
+        "application/json": {
+          schema: deleteImagesScheme,
+        },
+      },
+    },
+  },
+  responses: {
+    "200": defaultOKStatus("Imagens deletadas com sucesso."),
+    "400": defaultError("Nenhum ID válido enviado"),
+    "401": unauthorized,
+    "404": defaultError("Solicitação não encontrada"),
+    "409": defaultError("Não há nenhuma imagem nesta solicitação"),
+    "500": internalError,
+  },
+});
+
 export default requestRegistry;

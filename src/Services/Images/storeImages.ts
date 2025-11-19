@@ -1,5 +1,9 @@
 import { UploadApiResponse } from "cloudinary";
-import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
+import {
+  BadRequestError,
+  ConflictError,
+  NotFoundError,
+} from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 import cloudinary, { CloudFiles } from "./config";
 
@@ -7,6 +11,8 @@ export const storeImages = async (id: number, files: CloudFiles[]) => {
   try {
     const request = await prisma.solicitacao.findUnique({ where: { id } });
     if (!request) throw new NotFoundError("Solicitação não encontrada.");
+
+    if (!files.length) throw new BadRequestError("Nenhuma imagem enviada.");
 
     const countImages = await prisma.imagens.count({
       where: { solicitacao_id: id },
