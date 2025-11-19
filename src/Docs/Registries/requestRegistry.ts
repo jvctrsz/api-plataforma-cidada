@@ -228,7 +228,7 @@ requestRegistry.registerPath({
   method: "post",
   path: "/api/solicitacoes/{id}/mensagem",
   summary: "Envia uma mensagem.",
-  tags: ["Solicitações"],
+  tags: ["Mensagens"],
   request: {
     params: idParams,
     body: {
@@ -273,7 +273,7 @@ requestRegistry.registerPath({
   method: "get",
   path: "/api/solicitacoes/{id}/mensagem",
   summary: "Retorna todas as mensagem.",
-  tags: ["Solicitações"],
+  tags: ["Mensagens"],
   request: {
     params: idParams,
   },
@@ -323,7 +323,7 @@ requestRegistry.registerPath({
   summary: "Vincula imagens a uma solicitação",
   description:
     "Deve ser enviado um array de imagems, para que funcione deve ser enviado como FORM-DATA. Uma solicitação pode ter no máximo 5 imagens.",
-  tags: ["Solicitações"],
+  tags: ["Imagens"],
   request: {
     params: idParams,
     body: {
@@ -356,7 +356,7 @@ requestRegistry.registerPath({
   method: "get",
   path: "/api/solicitacoes/{id}/imagens",
   summary: "Retorna todas as imagens vinculadas a uma solicitação",
-  tags: ["Solicitações"],
+  tags: ["Imagens"],
   request: {
     params: idParams,
   },
@@ -381,7 +381,7 @@ requestRegistry.registerPath({
   summary: "Deleta imagens vinculadas a uma solicitação",
   description:
     "Para deletar as imagens devem ser enviado o public_id de cada imagem. Pode ser enviado um único public_id, ou um array de public_id.",
-  tags: ["Solicitações"],
+  tags: ["Imagens"],
   request: {
     params: idParams,
     body: {
