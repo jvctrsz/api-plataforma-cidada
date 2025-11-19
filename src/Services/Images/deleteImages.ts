@@ -4,7 +4,7 @@ import {
   NotFoundError,
 } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
-import cloudinary from "./config";
+import { removeFromCloudinary } from "./Utils/functions";
 
 export const deleteImages = async (id: number, parsed: { ids: string[] }) => {
   try {
@@ -26,8 +26,8 @@ export const deleteImages = async (id: number, parsed: { ids: string[] }) => {
       images.some(({ public_id }) => public_id == id)
     );
 
-    await Promise.all(validIds.map((id) => cloudinary.uploader.destroy(id)));
-    await prisma.imagens.deleteMany({ where: { public_id: { in: ids } } });
+    await removeFromCloudinary(validIds);
+    await prisma.imagens.deleteMany({ where: { public_id: { in: validIds } } });
 
     return "Imagens deletadas com sucesso.";
   } catch (error) {
