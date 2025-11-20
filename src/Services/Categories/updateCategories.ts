@@ -43,7 +43,7 @@ export const updateCategories = async (
     await prisma.categorias.update({
       where: { id },
       data: {
-        nome,
+        nome: nome ?? category.nome,
         secretaria_id: Number(secretary_id),
         secretataria_nome: secretary?.nome,
       },
