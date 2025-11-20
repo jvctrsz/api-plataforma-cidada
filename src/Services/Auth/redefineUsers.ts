@@ -1,4 +1,4 @@
-import { RedefinePassword } from "../../Models/Users/redefine";
+import { RedefinePassword } from "../../Models/Auth/redefine";
 import {
   BadRequestError,
   CError,
@@ -6,7 +6,7 @@ import {
 } from "../../Utils/Errors/CError";
 import { hashPassword } from "../../Utils/Functions/hashPassword";
 import { prisma } from "../../Utils/prisma";
-import { verifyPasswordToken } from "./Utils/functions";
+import { verifyPasswordToken } from "../Users/Utils/functions";
 
 export const redefineUsers = async (
   token: string,

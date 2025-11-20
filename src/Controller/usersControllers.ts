@@ -2,8 +2,6 @@ import { index } from "../Models/Users";
 import { change } from "../Models/Users/change";
 import { destroy } from "../Models/Users/destroy";
 import { employees } from "../Models/Users/employees";
-import { recovery } from "../Models/Users/recovey";
-import { redefine } from "../Models/Users/redefine";
 import { role } from "../Models/Users/role";
 import { show } from "../Models/Users/show";
 import { store } from "../Models/Users/store";
@@ -17,8 +15,6 @@ export const usersController = {
   destroy,
   update,
   change,
-  recovery,
-  redefine,
   user,
   role,
   employees,

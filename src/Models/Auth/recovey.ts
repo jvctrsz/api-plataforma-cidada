@@ -1,14 +1,10 @@
 import { Request, Response } from "express";
-import { UserType } from "../../Controller/types";
-import { recoveryUsers } from "../../Services/Users/recoveryUsers";
 import { zodParse } from "../../Utils/Functions/zodParse";
 import { recoveryScheme } from "../../Schemes/user.scheme";
 import { TreatErrors } from "../../Utils/Errors/TreatErrors";
+import { recoveryUsers } from "../../Services/Auth/recoveryUsers";
 
-export const recovery = async (
-  req: Request<{}, {}, UserType>,
-  res: Response
-) => {
+export const recovery = async (req: Request, res: Response) => {
   try {
     const parsed = zodParse(req, recoveryScheme);
     const message = await recoveryUsers(parsed?.data);

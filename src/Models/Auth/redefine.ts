@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { zodParse } from "../../Utils/Functions/zodParse";
-import { redefineUsers } from "../../Services/Users/redefineUsers";
 import { redefineScheme } from "../../Schemes/user.scheme";
 import { TreatErrors } from "../../Utils/Errors/TreatErrors";
+import { redefineUsers } from "../../Services/Auth/redefineUsers";
 
 export interface RedefinePassword {
   email: string;
@@ -10,10 +10,7 @@ export interface RedefinePassword {
   confirma_senha: string;
 }
 
-export const redefine = async (
-  req: Request<{}, {}, RedefinePassword>,
-  res: Response
-) => {
+export const redefine = async (req: Request, res: Response) => {
   try {
     const { token } = req.params as { token: string };
     const parsed = zodParse(req, redefineScheme);

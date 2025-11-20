@@ -7,5 +7,7 @@ authRouter.post("/auth/login", authController.login);
 authRouter.post("/auth/register", authController.register);
 authRouter.post("/auth/ativar-conta/:token", authController.active);
 authRouter.post("/auth/google/callback", authController.google);
+authRouter.post("/auth/recuperar-senha", authController.recovery);
+authRouter.post("/auth/redefinir-senha/:token", authController.redefine);
 
 export default authRouter;

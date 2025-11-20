@@ -13,15 +13,5 @@ userRouter.get("/usuarios/:id", authToken, usersController.show);
 userRouter.delete("/usuarios/:id", authToken, usersController.destroy);
 userRouter.put("/usuarios/:id", authToken, usersController.update);
 userRouter.post("/usuarios/trocar-senha", authToken, usersController.change);
-userRouter.post(
-  "/usuarios/recuperar-senha",
-  authToken,
-  usersController.recovery
-);
-userRouter.post(
-  "/usuarios/redefinir-senha/:token",
-  authToken,
-  usersController.redefine
-);
 userRouter.post("/usuarios/role/:id", authToken, usersController.role);
 export default userRouter;

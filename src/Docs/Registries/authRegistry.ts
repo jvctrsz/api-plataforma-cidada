@@ -7,7 +7,11 @@ import {
   tokenParams,
   unauthorized,
 } from "../../Schemes/default.scheme";
-import { postUserScheme } from "../../Schemes/user.scheme";
+import {
+  postUserScheme,
+  recoveryScheme,
+  redefineScheme,
+} from "../../Schemes/user.scheme";
 import { userCpfEmail, userNotFound } from "./userRegistry";
 
 const authRegistry = new OpenAPIRegistry();
@@ -204,6 +208,97 @@ authRegistry.registerPath({
         },
       },
     },
+  },
+});
+
+//recupera senha
+authRegistry.registerPath({
+  method: "post",
+  path: "/api/auth/recuperar-senha",
+  summary: "Recupera a senha de um usuário",
+  description:
+    "Rota destinada para a recuperação da senha de um usuário. Deve ser utilizada no momento que o usuário clicar em esqueceu a senha. Será enviado um email com o link de recuperação para o usuário e após o usuário confirmar a recuperação em seu email, ele sera redirecionado para uma rota escolhida pelo front, e passará um token como parametro.",
+  tags: ["Autenticação"],
+  request: {
+    body: {
+      content: {
+        "application/json": { schema: recoveryScheme },
+      },
+    },
+  },
+  responses: {
+    "200": {
+      description: "Link enviado com sucesso",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Link de recuperação enviado com sucesso." }),
+          }),
+        },
+      },
+    },
+    "404": userNotFound,
+    "500": internalError,
+  },
+});
+
+//redefinir senha
+authRegistry.registerPath({
+  method: "post",
+  path: "/api/auth/redefinir-senha/{token}",
+  summary: "Redefine a senha de um usuário",
+  description:
+    "Rota destinada para redefinir a senha de um usuário. Esta rota será utilizada após a rota de 'Recuperar Senha'. Recebe como parametro um token JWT.",
+  tags: ["Autenticação"],
+  request: {
+    params: tokenParams,
+    body: {
+      content: {
+        "application/json": { schema: redefineScheme },
+      },
+    },
+  },
+  responses: {
+    "200": {
+      description: "Senha alterada com sucesso.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            message: z
+              .string()
+              .openapi({ example: "Senha alterada com sucesso." }),
+          }),
+        },
+      },
+    },
+    "400": {
+      description: "Valores incorretos.",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Nova senha e confirma senha não coincidem.",
+            }),
+          }),
+        },
+      },
+    },
+    "404": userNotFound,
+    "410": {
+      description: "Token inválido",
+      content: {
+        "application/json": {
+          schema: z.object({
+            error: z.string().openapi({
+              example: "Não foi possível continuar, token inválido.",
+            }),
+          }),
+        },
+      },
+    },
+    "500": internalError,
   },
 });
 

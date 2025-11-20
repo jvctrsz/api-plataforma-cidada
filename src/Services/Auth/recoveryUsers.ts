@@ -1,8 +1,8 @@
 import { sign } from "jsonwebtoken";
 import { prisma } from "../../Utils/prisma";
 import { NotFoundError } from "../../Utils/Errors/CError";
-import { redefineAndLoginHTML } from "./Utils/redefineHTML";
 import { createTransporter } from "../../Utils/Functions/transporter";
+import { redefineAndLoginHTML } from "../Users/Utils/redefineHTML";
 
 export const recoveryUsers = async (parsed: { email: string }) => {
   try {
