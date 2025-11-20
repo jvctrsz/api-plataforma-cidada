@@ -8,7 +8,10 @@ export const updateUser = async (id: number, parsed: Partial<UserType>) => {
     const user = await prisma.usuarios.findUnique({ where: { id } });
     if (!user) throw new BadRequestError("Usuário não encontrado.");
 
-    const { celular, cpf, email, nome, telefone } = parsed;
+    const { celular, cpf: bodyCpf, email: bodyEmail, nome, telefone } = parsed;
+
+    const email = bodyEmail ?? user.email;
+    const cpf = bodyCpf ?? user.cpf!;
 
     const existingEmail = await prisma.usuarios.findUnique({
       where: { email, AND: { id: { not: id } } },
@@ -20,15 +23,15 @@ export const updateUser = async (id: number, parsed: Partial<UserType>) => {
     });
     if (!!existingCPF)
       throw new ConflictError("Já existe usuário com este cpf.");
-    console.log(cpf?.length);
+
     const update = prisma.usuarios.update({
       where: { id },
       data: {
-        celular,
+        celular: celular ?? user.celular,
         cpf,
         email,
-        nome,
-        telefone,
+        nome: nome ?? user.nome,
+        telefone: telefone ?? user.telefone,
       },
       omit: omitUser,
     });

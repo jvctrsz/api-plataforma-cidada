@@ -120,6 +120,7 @@ userRegistry.registerPath({
       },
     },
     "401": unauthorized,
+    "403": notAllowed,
     "500": internalError,
   },
 });
@@ -141,6 +142,7 @@ userRegistry.registerPath({
       },
     },
     "401": unauthorized,
+    "403": notAllowed,
     "404": userNotFound,
     "500": internalError,
   },
@@ -170,6 +172,7 @@ userRegistry.registerPath({
     },
     "401": unauthorized,
     "404": userNotFound,
+    "403": notAllowed,
     "409": defaultError(
       "Esse usuário esta vinculado a uma secretaria, não é possível deletá-lo"
     ),
@@ -205,6 +208,7 @@ userRegistry.registerPath({
       },
     },
     "401": unauthorized,
+    "403": notAllowed,
     "404": userNotFound,
     "409": {
       description: "Conflitos na atualização",
@@ -398,8 +402,8 @@ userRegistry.registerPath({
   responses: {
     "200": defaultOKStatus("Permissão alterada com sucesso"),
     "401": unauthorized,
-    "404": userNotFound,
     "403": notAllowed,
+    "404": userNotFound,
     "500": internalError,
   },
 });

@@ -1,5 +1,6 @@
 import { verify } from "jsonwebtoken";
-import { CError } from "../../../Utils/Errors/CError";
+import { CError, ForbiddenError } from "../../../Utils/Errors/CError";
+import { UserRole } from "../../../Controller/types";
 
 export const omitUser = {
   google_id: true,
@@ -16,4 +17,14 @@ export const verifyPasswordToken = async (token: string, hash: string) => {
       422
     );
   }
+};
+
+interface UserPermission {
+  role: UserRole;
+  id: number | string;
+  user_id: number | string;
+}
+export const userPermission = ({ id, role, user_id }: UserPermission) => {
+  if (role !== "admin" && Number(id) !== Number(user_id))
+    throw new ForbiddenError("Usuário não tem permissão para esta operação.");
 };
