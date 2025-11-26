@@ -47,3 +47,12 @@ if (openApiDocJWT.paths["/api/auth/register"]?.post)
 
 if (openApiDocJWT.paths["/api/auth/ativar-conta/{token}"]?.post)
   openApiDocJWT.paths["/api/auth/ativar-conta/{token}"].post.security = [];
+
+if (openApiDocJWT.paths["/api/auth/google/callback"]?.post)
+  openApiDocJWT.paths["/api/auth/google/callback"].post.security = [];
+
+if (openApiDocJWT.paths["/api/auth/recuperar-senha"]?.post)
+  openApiDocJWT.paths["/api/auth/recuperar-senha"].post.security = [];
+
+if (openApiDocJWT.paths["/api/auth/redefinir-senha/{token}"]?.post)
+  openApiDocJWT.paths["/api/auth/redefinir-senha/{token}"].post.security = [];

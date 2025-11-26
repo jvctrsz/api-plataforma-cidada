@@ -12,7 +12,7 @@ dashboardRegistry.registerPath({
   summary: "Retorna total de solicitações",
   description:
     "Rota para utilizar card totalizador das solicitações por status",
-  tags: ["Dashboard"],
+  tags: ["Totalizador"],
   responses: {
     "200": {
       description: "Retorna um objeto com os totais",
