@@ -68,12 +68,20 @@ export interface RequestsTypes extends RequestFields {
 export type RequestPriority = "baixa" | "normal" | "alta";
 
 export interface RequestQueries {
-  status?: StatusType;
-  funcionario_id?: string;
-  secretaria_id?: string;
-  prioridade?: RequestPriority;
-  protocolo?: string;
-  categoria_id?: string;
+  status: StatusType;
+  funcionario_id: string;
+  secretaria_id: string;
+  prioridade: RequestPriority;
+  protocolo: string;
+  categoria_id: string;
+  cep: string;
+  endereco: string;
+  numero: string;
+  referencia: string;
+  bairro: string;
+  cidade: string;
+  uf: string;
+  descricao: string;
 }
 
 export interface RequestMessageFields {

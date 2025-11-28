@@ -2,7 +2,7 @@ import { RequestQueries, UserRole } from "../../Controller/types";
 import { prisma } from "../../Utils/prisma";
 
 export const indexRequests = async (
-  queries: RequestQueries,
+  queries: Partial<RequestQueries>,
   role: UserRole,
   user_id: number
 ) => {
@@ -18,6 +18,14 @@ export const indexRequests = async (
       prioridade,
       protocolo,
       categoria_id,
+      bairro,
+      cep,
+      cidade,
+      descricao,
+      endereco,
+      numero,
+      referencia,
+      uf,
     } = queries;
     const requests = await prisma.solicitacao.findMany({
       where: {
@@ -40,6 +48,30 @@ export const indexRequests = async (
         }),
         ...(protocolo && {
           protocolo: { contains: protocolo },
+        }),
+        ...(bairro && {
+          bairro: { contains: bairro },
+        }),
+        ...(cep && {
+          cep: { contains: cep },
+        }),
+        ...(cidade && {
+          cidade: { contains: cidade },
+        }),
+        ...(descricao && {
+          descricao: { contains: descricao },
+        }),
+        ...(endereco && {
+          endereco: { contains: endereco },
+        }),
+        ...(numero && {
+          numero: { contains: numero },
+        }),
+        ...(referencia && {
+          referencia: { contains: referencia },
+        }),
+        ...(uf && {
+          uf: { contains: uf },
         }),
       },
       orderBy: { id: "asc" },

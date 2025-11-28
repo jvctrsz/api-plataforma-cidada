@@ -148,6 +148,13 @@ export const requestQueriesScheme = z.object({
   status: queryEnumError.optional(),
   prioridade: queryPriorityEnum.optional(),
   protocolo: queryStringError.optional().openapi({ example: "11/2025-uZaFne" }),
+  cep: queryStringError,
+  endereco: queryStringError,
+  numero: queryStringError,
+  referencia: queryStringError,
+  bairro: queryStringError,
+  uf: queryStringError,
+  descricao: queryStringError,
 });
 
 export const deleteImagesScheme = z.object({
