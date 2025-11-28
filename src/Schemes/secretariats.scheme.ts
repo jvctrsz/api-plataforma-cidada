@@ -72,8 +72,23 @@ export const getSecretariatsScheme = z.object({
   atualizado_em: isoDateFormat,
 });
 
+export const queryDateError = z.iso.datetime("Query: deve ser no formato ISO.");
+
 export const secretariatQueryScheme = z.object({
   secretario_id: queryStringError,
   secretario_nome: queryStringError,
   nome: queryStringError,
+  celular: queryStringError,
+  telefone: queryStringError,
+  email: queryStringError,
+  logradouro: queryStringError,
+  numero: queryStringError,
+  cep: queryStringError,
+  bairro: queryStringError,
+  cidade: queryStringError,
+  uf: queryStringError,
+  descricao: queryStringError,
+  whatsapp: queryStringError,
+  criado_em: queryDateError,
+  atualizado_em: queryDateError,
 });
