@@ -95,18 +95,24 @@ const queryRole = z
   })
   .optional();
 
-export const userQueryScheme = z.object({
+const defaultQueryScheme = {
   nome: queryStringError,
   email: queryStringError,
-  cpf: queryStringError,
-  celular: queryStringError,
-  telefone: queryStringError,
   role: queryRole,
-  criado_em: queryDateError,
   valido: z
     .enum(["true", "false"], { error: "Query: deve ser true ou false." })
     .optional(),
+};
+
+export const userQueryScheme = z.object({
+  ...defaultQueryScheme,
+  cpf: queryStringError,
+  celular: queryStringError,
+  telefone: queryStringError,
+  criado_em: queryDateError,
 });
+
+export const employeeQueryScheme = z.object(defaultQueryScheme);
 
 export const roleScheme = z.object({ role: role });
 
