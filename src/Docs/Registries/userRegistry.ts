@@ -3,6 +3,7 @@ import { z } from "zod";
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import {
   changeScheme,
+  employeeQueryScheme,
   getEmployeeScheme,
   getUserScheme,
   postUserScheme,
@@ -327,6 +328,7 @@ userRegistry.registerPath({
   summary: "Retorna todos os funcionarios",
   description: "Rota para que o front busque todos os funcionarios.",
   tags: ["Usuários"],
+  request: { query: employeeQueryScheme },
   responses: {
     "200": {
       description: "Retorna um array de funcionarios",
