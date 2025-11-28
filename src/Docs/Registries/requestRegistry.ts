@@ -217,7 +217,28 @@ requestRegistry.registerPath({
     "200": defaultOKStatus("Status alterado com sucesso"),
     "401": unauthorized,
     "403": notAllowed,
-    "404": requestNotFound,
+    "404": {
+      description: "Registros não encontrados",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            requestError: {
+              summary: "Erro de Solicitação",
+              value: {
+                error: "Solicitação não encontrada.",
+              },
+            },
+            usertError: {
+              summary: "Erro de usuário",
+              value: {
+                error: "Usuário não encontrado.",
+              },
+            },
+          },
+        },
+      },
+    },
     "409": defaultError("A Solicitação já está com o status: criado"),
     "500": internalError,
   },
