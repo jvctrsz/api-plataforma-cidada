@@ -8,6 +8,8 @@ import {
   telefone,
 } from "../Utils/Errors/Zod/validation";
 import { exampleString, isoDateFormat } from "./default.scheme";
+import { queryDateError } from "./secretariats.scheme";
+import { queryStringError } from "./request.scheme";
 
 extendZodWithOpenApi(z);
 
@@ -85,6 +87,25 @@ export const userScheme = z.object({
   role: role,
   google_id: z.string().openapi({ enum: [null, 1] }),
   criado_em: isoDateFormat,
+});
+
+const queryRole = z
+  .enum(["usuario", "funcionario", "admin"], {
+    error: "Query: deve ser usuario, funcionario ou admin.",
+  })
+  .optional();
+
+export const userQueryScheme = z.object({
+  nome: queryStringError,
+  email: queryStringError,
+  cpf: queryStringError,
+  celular: queryStringError,
+  telefone: queryStringError,
+  role: queryRole,
+  criado_em: queryDateError,
+  valido: z
+    .enum(["true", "false"], { error: "Query: deve ser true ou false." })
+    .optional(),
 });
 
 export const roleScheme = z.object({ role: role });

@@ -13,6 +13,17 @@ export interface UserType {
   redefinido_em?: Date | null;
 }
 
+export interface UserQueries {
+  nome: string;
+  email: string;
+  cpf: string;
+  celular: string;
+  telefone: string;
+  role: UserRole;
+  criado_em: string | undefined;
+  valido: string;
+}
+
 export interface SecretariatsType {
   id?: number;
   nome: string;

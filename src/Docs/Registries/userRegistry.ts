@@ -11,6 +11,7 @@ import {
   recoveryScheme,
   redefineScheme,
   roleScheme,
+  userQueryScheme,
   userScheme,
 } from "../../Schemes/user.scheme";
 import {
@@ -112,6 +113,7 @@ userRegistry.registerPath({
   path: "/api/usuarios",
   summary: "Retorna um array com todos os usuário",
   tags: ["Usuários"],
+  request: { query: userQueryScheme },
   responses: {
     "200": {
       description: "Usuário retornado com sucesso",
