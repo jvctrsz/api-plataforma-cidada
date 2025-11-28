@@ -315,7 +315,7 @@ userRegistry.registerPath({
     "401": unauthorized,
     "403": notAllowed,
     "404": userNotFound,
-    "409": defaultError("O usuário já está com a permissão de: usuario."),
+    "409": defaultError("O usuário já está com a permissão de: usuario"),
     "500": internalError,
   },
 });
