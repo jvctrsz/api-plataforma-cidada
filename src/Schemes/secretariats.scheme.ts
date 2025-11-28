@@ -72,7 +72,9 @@ export const getSecretariatsScheme = z.object({
   atualizado_em: isoDateFormat,
 });
 
-export const queryDateError = z.iso.datetime("Query: deve ser no formato ISO.");
+export const queryDateError = z.iso
+  .datetime("Query: deve ser no formato ISO.")
+  .optional();
 
 export const secretariatQueryScheme = z.object({
   secretario_id: queryStringError,
