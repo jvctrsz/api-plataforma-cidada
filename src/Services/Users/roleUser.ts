@@ -1,5 +1,5 @@
 import { UserRole } from "../../Controller/types";
-import { NotFoundError } from "../../Utils/Errors/CError";
+import { ConflictError, NotFoundError } from "../../Utils/Errors/CError";
 import { prisma } from "../../Utils/prisma";
 
 export const roleUser = async (id: number, parsed: { role: UserRole }) => {
@@ -8,6 +8,8 @@ export const roleUser = async (id: number, parsed: { role: UserRole }) => {
     if (!user) throw new NotFoundError("Usuário não encontrado.");
 
     const { role } = parsed;
+    if (role === user.role)
+      throw new ConflictError(`O usuário já está com a permissão de: ${role}.`);
 
     await prisma.usuarios.update({
       where: { id },
