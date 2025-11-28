@@ -13,6 +13,10 @@ export const storeCategories = async (parsed: CategoriesType) => {
       where: { id: Number(secretaria_id) },
     });
     if (!secretary) throw new NotFoundError("Secretaria não encontrada.");
+    if (!secretary.ativo)
+      throw new ConflictError(
+        "Não foi possível vincular, secretaria esta inativa."
+      );
 
     await prisma.categorias.create({
       data: {

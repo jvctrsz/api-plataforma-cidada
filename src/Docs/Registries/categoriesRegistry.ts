@@ -39,7 +39,28 @@ categoriesRegistry.registerPath({
     "401": unauthorized,
     "403": notAllowed,
     "404": defaultError("Secretaria não encontrada"),
-    "409": defaultError("Já existe uma categoria com este nome"),
+    "409": {
+      description: "Conflitos ao atualizar",
+      content: {
+        "application/json": {
+          schema: {},
+          examples: {
+            categoryError: {
+              summary: "Erro de Categoria",
+              value: {
+                error: "Já existe uma categoria com este nome.",
+              },
+            },
+            secretaryError: {
+              summary: "Erro de Secretaria",
+              value: {
+                error: "Não foi possível vincular, secretaria esta inativa.",
+              },
+            },
+          },
+        },
+      },
+    },
     "500": internalError,
   },
 });
@@ -68,13 +89,13 @@ categoriesRegistry.registerPath({
         "application/json": {
           schema: {},
           examples: {
-            emailError: {
+            categoryError: {
               summary: "Erro de Categoria",
               value: {
                 error: "Categoria não encontrada.",
               },
             },
-            cpfError: {
+            secretaryError: {
               summary: "Erro de Secretaria",
               value: {
                 error: "Secretaria não encontrada.",
@@ -90,17 +111,23 @@ categoriesRegistry.registerPath({
         "application/json": {
           schema: {},
           examples: {
-            emailError: {
+            categoryError: {
               summary: "Erro de Categoria",
               value: {
                 error: "Já existe uma categoria com este nome.",
               },
             },
-            cpfError: {
-              summary: "Erro de Secretaria",
+            changeError: {
+              summary: "Erro de troca",
               value: {
                 error:
                   "Não é possivel trocar para outra secretaria, há solicitações não finalizdas vinculadas a ela.",
+              },
+            },
+            secretaryError: {
+              summary: "Erro de vinculação",
+              value: {
+                error: "Não foi possível vincular, secretaria esta inativa.",
               },
             },
           },

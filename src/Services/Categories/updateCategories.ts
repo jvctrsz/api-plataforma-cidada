@@ -29,7 +29,10 @@ export const updateCategories = async (
       where: { id: Number(secretary_id) },
     });
     if (!secretary) throw new NotFoundError("Secretaria não encontrada.");
-
+    if (!secretary.ativo)
+      throw new ConflictError(
+        "Não foi possível vincular, secretaria esta inativa."
+      );
     if (Number(secretary_id) !== category.secretaria_id) {
       const currentRequests = category.solicitacao.filter(
         ({ status }) => status !== "finalizado"
