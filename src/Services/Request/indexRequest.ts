@@ -73,6 +73,9 @@ export const indexRequests = async (
           uf: { contains: uf },
         }),
       },
+      include: {
+        categoria: true,
+      },
       orderBy: { id: "asc" },
     });
     return requests;

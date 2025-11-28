@@ -14,6 +14,9 @@ export const showRequests = async (
     };
     const request = await prisma.solicitacao.findUnique({
       where: { id, ...requestQuery() },
+      include: {
+        categoria: true,
+      },
     });
     if (!request) throw new NotFoundError("Solicitação não encontrada.");
     return request;
