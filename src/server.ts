@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://plataforma-cidada.vercel.app", "http://localhost:3000"],
+    origin: ["https://plataforma-cidada.vercel.app", "http://localhost:3000", "https://cidade-on.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
