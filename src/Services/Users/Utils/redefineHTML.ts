@@ -25,12 +25,18 @@ const htmlInfo: Record<
   },
 };
 
+const redirect: Record<HtmlType, string> = {
+  ativar: "ativar-conta",
+  redefinir: "redefinir-senha",
+};
+
 export const redefineAndLoginHTML = (
   nome: string,
   token: string,
   type: HtmlType
 ) => {
   const infos = htmlInfo[type];
+  const url = `${process.env.FRONT_END_URL}/${redirect[type]}?token=${token}`;
   return `
     <!DOCTYPE html>
     <html lang="pt-br">
@@ -109,9 +115,9 @@ export const redefineAndLoginHTML = (
                 <h1>Olá, ${nome}!</h1>
                 <p>${infos.message}</p>
                 <p>${infos.alert ?? ""}</p>
-                <a href="${token}" class="button">${infos.button}</a>
+                <a href="${url}" class="button">${infos.button}</a>
                 <p style="margin-top: 30px;">Se o botão não funcionar, copie e cole o link abaixo em seu navegador:</p>
-                <p class="link-text">${token}</p>
+                <p class="link-text">${url}</p>
             </div>
             <div class="footer">
                 <p>Este e-mail foi enviado automaticamente. Por favor, não responda.</p>
